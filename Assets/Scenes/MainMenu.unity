@@ -246,7 +246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Version: 0.0.2'
+  m_text: 'Version: 0.0.3'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dee2acffc270f574f8d1f62f66ddcc1c, type: 2}
   m_sharedMaterial: {fileID: -4942879724081092851, guid: dee2acffc270f574f8d1f62f66ddcc1c, type: 2}
@@ -380,13 +380,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0421\u0442\u0440\u043E\u0438\u0442\u044C \u0448\u0438\u043F\u044B G\n\u0421\u0442\u0440\u043E\u0438\u0442\u044C
-    \u043B\u0430\u043C\u043F\u044B F\n\u0421\u0442\u0440\u043E\u0438\u0442\u044C
-    \u043A\u043E\u043F\u0430\u0442\u0435\u043B\u044F C\n\u0421\u0442\u0440\u043E\u0438\u0442\u044C
-    \u0431\u043E\u0435\u0432\u0443\u044E \u0442\u0443\u0440\u0435\u043B\u044C X\n\u0414\u043E\u0431\u044B\u0432\u0430\u0442\u044C
-    \u0440\u0443\u0434\u0443 Q\n\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C
-    \u0444\u043E\u043D\u0430\u0440\u0438\u043A \u041F\u041A\u041C\n\u041E\u0442\u043A\u0440\u044B\u0442\u044C
-    \u043C\u0435\u043D\u044E \u043D\u0430\u0432\u044B\u043A\u043E\u0432 i\n\u0412\u044B\u043A\u043B/\u0432\u043A\u043B
+  m_text: "\u0421\u0442\u0440\u043E\u0438\u0442\u044C F\n\u041F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0430\u0442\u044C
+    \u0441\u043B\u043E\u0442\u044B \u041A\u043E\u043B\u0451\u0441\u0438\u043A\u043E
+    \u043C\u044B\u0448\u0438\n\u0414\u043E\u0431\u044B\u0432\u0430\u0442\u044C \u0440\u0443\u0434\u0443
+    Q\n\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0444\u043E\u043D\u0430\u0440\u0438\u043A
+    \u041F\u041A\u041C\n\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043C\u0435\u043D\u044E
+    \u043D\u0430\u0432\u044B\u043A\u043E\u0432 i\n\u0412\u044B\u043A\u043B/\u0432\u043A\u043B
     \u0442\u0443\u0440\u0435\u043B\u0438 Z\n \n\u0422\u0443\u0440\u0438\u043B\u0438
     \u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0442 \u043D\u0430 \u0431\u0430\u0442\u0430\u0440\u0435\u0439\u043A\u0430\u0445\n\n\u0417\u0432\u0443\u043A
     \u0432\u044B\u043A\u043B\u044E\u0447\u0430\u0435\u0442\u0441\u044F \u0432 Escape
@@ -1058,10 +1057,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2ac415f2cc6464f4aa89ef183c4d720c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 6df7bed4a712cfc4d824f00c0cdec853, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 0.2
+  m_Volume: 0.5
+  m_Pitch: 0.5
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -1104,7 +1103,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

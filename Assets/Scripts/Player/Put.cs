@@ -87,8 +87,19 @@ public class Put : MonoBehaviour
                 _sliderBuild.gameObject.SetActive(false);
                 _sliderBuild.value = 0;
                 
-                _player.LightCount -= 1;
-                _player.UpdateUI();
+                if(index == 0)
+                    _player.ShipCount -= 1;
+                
+                if(index == 1)
+                    _player.LightCount -= 1;
+                
+                if(index == 2)
+                    _player.AttackTurretCount -= 1;
+                
+                if(index == 3)
+                    _player.MineTurretCount -= 1;
+                
+                _player.UpdateScrollView();
             }                
         }
     }

@@ -122,6 +122,7 @@ public class Store : MonoBehaviour
     {
         _player.Money -= cost;
         _player.UpdateUI();
+        _player.UpdateScrollView();
     }
 
     private void TypeSell(int finalPrice, dynamic a)
@@ -129,6 +130,7 @@ public class Store : MonoBehaviour
         _player.Money += finalPrice;
         UpdateSliderSell();
         _player.UpdateUI();
+        _player.UpdateScrollView();
     }
 
     public void Buy(string type)
