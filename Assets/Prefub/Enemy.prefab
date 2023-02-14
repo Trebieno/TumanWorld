@@ -265,9 +265,9 @@ MonoBehaviour:
   _level: 0
   _exp: 0
   _player: {fileID: 0}
-  objects:
-  - {fileID: 160080721791465505, guid: 2fab422d6d01c9640ae16e7dcdd47a82, type: 3}
+  lootObjects:
   - {fileID: 539841047797425538, guid: a0fd7519ef03b45488e65cc7f6161b42, type: 3}
+  - {fileID: 160080721791465505, guid: 2fab422d6d01c9640ae16e7dcdd47a82, type: 3}
   _audioDeath: {fileID: 5262490997246548917}
   _skin: {fileID: 6833375670272998843}
   _particleDeath: {fileID: 1430280114217484986, guid: 86b793cd2bbba5a4b8070eb0887aa710, type: 3}
@@ -356,7 +356,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 49db08c127c90294f9f02f61fd0e13ae, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.08
   m_Pitch: 0.5
   Loop: 0
   Mute: 0

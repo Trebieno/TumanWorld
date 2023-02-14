@@ -15,7 +15,7 @@ public class Character : MonoBehaviour, IAttackeble
     [SerializeField] private int _exp;
     [SerializeField] private Player _player;
     
-    [SerializeField] private List<GameObject> objects;
+    [SerializeField] private List<GameObject> lootObjects;
 
     private Rigidbody2D _rb;
     private Vector2 _movement;
@@ -81,9 +81,9 @@ public class Character : MonoBehaviour, IAttackeble
         {
             if(Random.Range(0, 100) <= 40)
             {
-                int randomIndex = Random.Range(0, objects.Count);
+                int randomIndex = Random.Range(0, lootObjects.Count);
                 
-                Instantiate(objects[randomIndex], transform.position, transform.rotation);                
+                Instantiate(lootObjects[randomIndex], transform.position, transform.rotation);                
             }
             
             _player.AddExp(_exp + _player.GetExpMultiplier());

@@ -39,7 +39,7 @@ public class Store : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E) && _isTrigger) 
+        if(Input.GetButtonDown("OpenStore") && _isTrigger) 
         {
             ExitMenu();
             UpdateSliderSell();
@@ -49,14 +49,16 @@ public class Store : MonoBehaviour
         {
             if(_menu.activeSelf)
             {
-                _menu.SetActive(!_menu.activeSelf);
+                _menu.SetActive(false);
                 _player.GetComponent<Movement>().enabled = true;
-                _player.GetComponent<Shooting>().enabled = true;
+                _player.StateShooting(true);
+                _player.Movement.Rb.mass = 1;
             }
             else if(_menuExit.activeSelf)
             {
                 Time.timeScale = 1;
                 _player.StateShooting(true);
+                _menuScroll.SetActive(true);
                 _menuExit.SetActive(false);
             }
 
@@ -64,13 +66,15 @@ public class Store : MonoBehaviour
             {
                 _menuSkills.SetActive(false);
                 _menuScroll.SetActive(true);
+                _player.StateShooting(true);
             }
 
             else if(!_menu.activeSelf)
             {
                 Time.timeScale = 0;
                 _player.StateShooting(false);
-                _menuExit.SetActive(true);                
+                _menuScroll.SetActive(false);
+                _menuExit.SetActive(true);
             }
         }
     }
@@ -105,16 +109,18 @@ public class Store : MonoBehaviour
     private void ExitMenu()
     {
         _menu.SetActive(!_menu.activeSelf);            
-
+        Debug.Log(!_menu.activeSelf);
             if (_menu.activeSelf)
             {
                 _player.GetComponent<Movement>().enabled = false;
-                _player.GetComponent<Shooting>().enabled = false;
+                _player.StateShooting(false);
+                _player.Movement.Rb.mass = 1000000;
             }
             else            
             {
                 _player.GetComponent<Movement>().enabled = true;
-                _player.GetComponent<Shooting>().enabled = true;
+                _player.StateShooting(true);
+                _player.Movement.Rb.mass = 1;
             }
     }
 
@@ -139,7 +145,7 @@ public class Store : MonoBehaviour
         if(type == "light" && _player.Money >= 65) TypeBuy(65, _player.LightCount += 1);
         if(type == "clip" && _player.Money >= 20) TypeBuy(20, _player.AddClip(1));
         if(type == "health" && _player.Money >= 15) TypeBuy(15, _player.Healing());
-        if(type == "battory" && _player.Money >= 50) TypeBuy(50, _player.BattoryCount += 1);
+        if(type == "battory" && _player.Money >= 35) TypeBuy(35, _player.BattoryCount += 1);
         if(type == "flashlight" && _player.Money >= 150)
         {
             TypeBuy(150, _player.ActivateFlashLight());
@@ -177,6 +183,7 @@ public class Store : MonoBehaviour
     {
         Time.timeScale = 1;
         _player.StateShooting(true);
+        _menuScroll.SetActive(true);
         _menuExit.SetActive(false);
     }
 }

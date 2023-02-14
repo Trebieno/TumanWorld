@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public Rigidbody2D Rb => _rb;
+
     [SerializeField] private float _moveSpeed;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private Camera _camera;

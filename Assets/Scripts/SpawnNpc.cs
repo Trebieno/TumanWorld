@@ -6,39 +6,42 @@ public class SpawnNpc : MonoBehaviour
 {
     [SerializeField] private Player _player;
     [SerializeField] private List<Transform> _points;
-    [SerializeField] private GameObject _npcPrefub;
-    [SerializeField] private float _delay;
+    [SerializeField] private Character  _npcPrefub;
+
+    [SerializeField] private float _maxdelay;
+    [SerializeField] private float _curDelay;
+
     [SerializeField] private float _curTime;
     private int _countNpc;
     private bool _isStart;
 
-    public IEnumerator StartSpawn(int count)
+    public void StartSpawn(int count)
     {
         _isStart = true;
-        for (int i = 0; i < count; )
-        {
-            foreach (var item in _points)
-            {
-                if(i<count)
-                {
-                    yield return new WaitForSeconds(_delay);
-                    Instantiate(_npcPrefub, item.position, item.rotation);
-                    i++;
-                }                
-            }
-        }
-        
-
-        _curTime = Random.Range(1, _player.GetLevel()*10);
-        _isStart = false;
+        _curTime = Random.Range(1, _player.GetLevel()*5); // Изменил с 10 на 7
+        _countNpc = count;
     }
 
     private void Update() 
     {
-        _curTime -= Time.deltaTime;
-        if(_curTime <= 0 && !_isStart)
+
+        if(_curDelay <= 0 && _countNpc > 0)
         {
-            StartCoroutine(StartSpawn(Random.Range(0, _player.GetLevel()*7)));
+            Instantiate(_npcPrefub, _points[Random.Range(0, _points.Count)].position, Quaternion.identity);
+            _curDelay = _maxdelay;
+            _countNpc--;
+
+            if(_countNpc - 1 <= 0)
+                _isStart = false;
         }
+
+        if(_curDelay > 0)
+            _curDelay -= Time.deltaTime;
+
+        if(_curTime > 0 && !_isStart)
+            _curTime -= Time.deltaTime;
+
+        if(_curTime <= 0 && !_isStart)
+            StartSpawn(Random.Range(1, 5));
     }
 }

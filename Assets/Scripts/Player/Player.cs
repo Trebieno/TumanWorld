@@ -7,14 +7,17 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, IAttackeble
 {
+    [Header("Health")]
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _curHealth;
     
+    [Header("Ore")]
     [SerializeField] private int _maxOre;
     [SerializeField] private int _curOre;
     [SerializeField] private float _timeMiningOre;
     [SerializeField] private TextMeshProUGUI _textOre;
 
+    [Header("Level")]
     [SerializeField] private int _maxExp;
     [SerializeField] private int _curExp;
     
@@ -24,10 +27,12 @@ public class Player : MonoBehaviour, IAttackeble
     [SerializeField] private int _score;
     [SerializeField] private TextMeshProUGUI _textScore;
 
+    [Header("Up Multiplier")]
     [SerializeField] private int _moneyMultiplier;
     [SerializeField] private int _expMultiplier;
     [SerializeField] private int _miningMultiplier;
 
+    [Header("Slider")]
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private Slider _expSlider;
 
@@ -35,24 +40,36 @@ public class Player : MonoBehaviour, IAttackeble
     private Shooting _shooting;
     private SkillsUI _skillUI;
 
+    public Movement Movement => _movement;
+
+
+    [Header("Info Screen")]
+
     public int Money;
     [SerializeField] private TextMeshProUGUI _textMoney;
-
+    [Space(5)]
     public int LightCount;
+
+    [Space(5)]
     public int BattoryCount;
     [SerializeField] private TextMeshProUGUI _textBattory;
 
+    [Space(5)]
     public int ShipCount;
 
+    [Space(5)]
     public bool Flashlight;
     [SerializeField] private GameObject _imageFlaslight;
 
+    [Space(5)]
     public bool Pickaxe;
     [SerializeField] private GameObject _imagePickaxe;
 
+    [Space(5)]
     public int MineTurretCount;
     public int AttackTurretCount;
 
+    [Space(5)]
     [SerializeField] private AudioSource _audioLvlUp;
     [SerializeField] private AudioSource _audioHealting;
     [SerializeField] private ParticleSystem _particleLvlUp;
@@ -85,6 +102,7 @@ public class Player : MonoBehaviour, IAttackeble
         if(_scrollViewResourse.Index == 3)
             _scrollViewResourse.TextInventory.text = MineTurretCount.ToString();
     }
+
     public float Healing()
     {
         _audioHealting.Play();
@@ -124,6 +142,8 @@ public class Player : MonoBehaviour, IAttackeble
 
         _imageFlaslight.gameObject.SetActive(false);
         _imagePickaxe.gameObject.SetActive(false);
+
+        
         UpdateUI();
     }
 
@@ -141,11 +161,8 @@ public class Player : MonoBehaviour, IAttackeble
     public void CheckUpdateLevel()
     {
         if(_curExp >=_maxExp)
-        {
             UpgradeLevel();
-        }
     }
-
     
     private void UpgradeLevel()
     {
@@ -159,7 +176,7 @@ public class Player : MonoBehaviour, IAttackeble
         Instantiate(_particleLvlUp, transform.position, transform.rotation);
     }
 
-    public void UpgradeSkills(string type)
+    public void UpgradeSkills(string type) 
     {
         if(_score > 0)
         {
@@ -170,6 +187,7 @@ public class Player : MonoBehaviour, IAttackeble
             if(type == "exp") _expMultiplier += 1;
             if(type == "speedFire") _shooting.AddSpeedFire(0.003f);
             if(type == "ammo") _shooting.AddAmmo(1);
+      
 
             _skillUI.UpdateSkill(type);
             _score -= 1;
