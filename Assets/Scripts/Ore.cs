@@ -15,7 +15,7 @@ public class Ore : MonoBehaviour
     private Player _player;
     private bool _isTrigger;
     private bool _isMining;
-    private float _maxTimeMining => _player.GetTimeMiningOre();
+    private float _maxTimeMining => _player.Mining.GetTimeMiningOre();
     private float _curTimeMining;
     private bool _isZeroOre;
 
@@ -29,7 +29,7 @@ public class Ore : MonoBehaviour
         _textClickButton = GameObject.Find("TQ").GetComponent<TextMeshProUGUI>();
         _curOre = Random.Range(30, 100);
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        _curTimeMining = _player.GetTimeMiningOre();
+        _curTimeMining = _player.Mining.GetTimeMiningOre();
         _textCountOre.text = _curOre.ToString();
         _sliderMining.gameObject.SetActive(false);
         _textCountOre.enabled = false;
@@ -113,9 +113,8 @@ public class Ore : MonoBehaviour
         if(_curOre > 0)
         {
             _audioMiningFinaly.Play();
-            _textCountOre.text = (_curOre -= 1 + _player.GetMiningMultiplier()).ToString();
-            _player.AddOre(1 + _player.GetMiningMultiplier());
-            _player.UpdateTextOre();
+            _textCountOre.text = (_curOre -= 1 + _player.Mining.GetMiningMultiplier()).ToString();
+            _player.Mining.AddOre(1 + _player.Mining.GetMiningMultiplier());
             _sliderMining.value = 0;
         }
 

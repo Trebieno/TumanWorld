@@ -81,6 +81,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -147,6 +148,42 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -569,6 +606,26 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Graphics_PNG_15: 6935083604979451686
+      Graphics_PNG_4: 491261580309118718
+      Graphics_PNG_17: 5697787960839047967
+      Graphics_PNG_16: 4035678787659865102
+      Graphics_PNG_11: -8228849427119653692
+      Graphics_PNG_9: -4718303127036806059
+      Graphics_PNG_0: 4384739835809574361
+      Graphics_PNG_5: -7260650070795718754
+      Graphics_PNG_1: 7248383494484415408
+      Graphics_PNG_13: 4182125438679442313
+      Graphics_PNG_2: 1924018966131901424
+      Graphics_PNG_7: 3356927204397881417
+      Graphics_PNG_6: -6692597834518051770
+      Graphics_PNG_14: -1837834231205564546
+      Graphics_PNG_12: -7418566221737646462
+      Graphics_PNG_10: -6049499438184819615
+      Graphics_PNG_8: 5793011743274074612
+      Graphics_PNG_18: 3124795988730782059
+      Graphics_PNG_3: -1905773984782519522
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

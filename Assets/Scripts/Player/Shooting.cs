@@ -28,7 +28,7 @@ public class Shooting : MonoBehaviour
     private bool _isDelaingReload;
     private Rigidbody2D _rb;
 
-    private void Start() 
+    private void Start()
     {
         _audioShoot = GetComponent<AudioSource>();
         StartCoroutine(Delay(_delayShoot));
@@ -37,30 +37,31 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
-            _isFire = true;            
-        }
-        if(Input.GetButtonUp("Fire1"))
-        {
-            _isFire = false;            
+            _isFire = true;
         }
 
-        if(_isFire)
+        if (Input.GetButtonUp("Fire1"))
         {
-            if(!_isDelaingShoot)
+            _isFire = false;
+        }
+
+        if (_isFire)
+        {
+            if (!_isDelaingShoot)
             {
                 Shoot();
-            }            
+            }
         }
         else if (!_isFire && _isDelaingReload)
         {
             _audioReload.Pause();
         }
 
-        if(Input.GetKeyDown(KeyCode.R) && _clips > 0)
+        if (Input.GetKeyDown(KeyCode.R) && _clips > 0)
         {
-            if(_curAmmo < _maxAmmo)
+            if (_curAmmo < _maxAmmo)
             {
                 _curAmmo = 0;
                 UpdateAmmo();
@@ -70,15 +71,14 @@ public class Shooting : MonoBehaviour
 
     private void Shoot()
     {
-        
         if (_curAmmo > 0)
         {
             _curAmmo -= 1;
             _audioShoot.Play();
-            Bullet bullet = Instantiate(_bulletPrefub, _firePoint.position, _firePoint.rotation);        
+            Bullet bullet = Instantiate(_bulletPrefub, _firePoint.position, _firePoint.rotation);
             bullet.damage = _bulletDamage;
             _rb = bullet.GetComponent<Rigidbody2D>();
-            _rb.AddForce(_firePoint.up * _bulletForce, ForceMode2D.Impulse);             
+            _rb.AddForce(_firePoint.up * _bulletForce, ForceMode2D.Impulse);
 
             _isDelaingShoot = true;
             StartCoroutine(Delay(_delayShoot));
@@ -87,19 +87,19 @@ public class Shooting : MonoBehaviour
         {
             if (_clips > 0)
             {
-                if(!_reloadSlider.gameObject.activeSelf)
+                if (!_reloadSlider.gameObject.activeSelf)
                     _reloadSlider.gameObject.SetActive(true);
-                
-                if(!_audioReload.isPlaying)
+
+                if (!_audioReload.isPlaying)
                     _audioReload.Play();
                 _reloadSlider.maxValue = _delayReload;
                 _reloadSlider.value += Time.deltaTime;
-                if(_reloadSlider.value >= _delayReload)
+                if (_reloadSlider.value >= _delayReload)
                 {
                     Reload(_delayReload);
-                } 
+                }
+
                 _isDelaingReload = true;
-                
             }
         }
     }
@@ -122,38 +122,36 @@ public class Shooting : MonoBehaviour
         _isDelaingReload = false;
         _reloadSlider.gameObject.SetActive(false);
         _reloadSlider.value = 0;
-        
-
     }
 
-    public void AddBulletDamage (float damage) 
+    public void AddBulletDamage(float damage)
     {
         _bulletDamage += damage;
     }
 
-   public void AddSpeedFire (float delay) 
-   {
+    public void AddSpeedFire(float delay)
+    {
         _delayShoot -= delay;
-   }
-   
-   public void AddClip(int clip)
-   {
+    }
+
+    public void AddClip(int clip)
+    {
         _clips += clip;
         UpdateClip();
-   }
+    }
 
-   public void AddAmmo(int ammo)
-   {
+    public void AddAmmo(int ammo)
+    {
         _maxAmmo += ammo;
-   }
+    }
 
-   public void UpdateAmmo()
-   {
+    public void UpdateAmmo()
+    {
         _textAmmo.text = $"{_curAmmo} / {_maxAmmo}";
-   }
+    }
 
-   public void UpdateClip()
-   {
+    public void UpdateClip()
+    {
         _textClip.text = _clips.ToString();
-   }
+    }
 }

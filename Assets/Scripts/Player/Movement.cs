@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
 
     private Vector2 _movement;
     private Vector2 _mousePosition;
-    private PlayerContol _input;    
+    private PlayerContol _input;
 
     private void Awake()
     {
@@ -26,15 +26,15 @@ public class Movement : MonoBehaviour
         _movement.x = Input.GetAxisRaw("Horizontal");
         _movement.y = Input.GetAxisRaw("Vertical");
 
-        _mousePosition = _camera.ScreenToWorldPoint( Input.mousePosition);
+        _mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
         _rb.MovePosition(_rb.position + _movement * _moveSpeed * Time.fixedDeltaTime);
 
         Vector2 lookDir = _mousePosition - _rb.position;
-        float angle = Mathf.Atan2(lookDir.y,lookDir.x) * Mathf.Rad2Deg - 90;
+        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90;
         _rb.rotation = angle;
     }
 
