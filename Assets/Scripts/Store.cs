@@ -13,7 +13,7 @@ public class Store : MonoBehaviour
     [SerializeField] private GameObject _menuSkills;
     [SerializeField] private GameObject _menuScroll;
     [SerializeField] private GameObject _pressMenu;
-    
+    [SerializeField] private TextMeshProUGUI _textScoreMainMenu;
 
     [SerializeField] private Slider _sliderOreSell;
     [SerializeField] private TextMeshProUGUI _textCountSell;
@@ -51,6 +51,7 @@ public class Store : MonoBehaviour
                 _player.GetComponent<Movement>().enabled = true;
                 _player.StateShooting(true);
                 _player.Movement.Rb.freezeRotation = false;
+                _menuScroll.SetActive(true);
             }
             else if(_menuExit.activeSelf)
             {
@@ -58,6 +59,7 @@ public class Store : MonoBehaviour
                 _player.StateShooting(true);
                 _menuScroll.SetActive(true);
                 _menuExit.SetActive(false);
+                
             }
 
             else if(_menuSkills.activeSelf)
@@ -65,6 +67,8 @@ public class Store : MonoBehaviour
                 _menuSkills.SetActive(false);
                 _menuScroll.SetActive(true);
                 _player.StateShooting(true);
+                if(_player.Score > 0)
+                    _textScoreMainMenu.gameObject.SetActive(true);
             }
 
             else if(!_menu.activeSelf)
@@ -98,10 +102,10 @@ public class Store : MonoBehaviour
     private void UpdateSliderSell()
     {
         
-        _sliderOreSell.maxValue = _player.GetCountOre();
+        _sliderOreSell.maxValue = _player.CountOre;
         _sliderOreSell.value = 0;
         _textFinalPrice.text = ((int)_oreCost * (int)_sliderOreSell.value).ToString();
-        _textCountSell.text = $"{(int)_sliderOreSell.value} / {_player.GetCountOre()}";
+        _textCountSell.text = $"{(int)_sliderOreSell.value} / {_player.CountOre}";
     }
 
     private void ExitMenu()
@@ -113,12 +117,14 @@ public class Store : MonoBehaviour
                 _player.GetComponent<Movement>().enabled = false;
                 _player.StateShooting(false);
                 _player.Movement.Rb.freezeRotation = true;
+                _menuScroll.SetActive(false);
             }
             else            
             {
                 _player.GetComponent<Movement>().enabled = true;
                 _player.StateShooting(true);
                 _player.Movement.Rb.freezeRotation = false;
+                _menuScroll.SetActive(true);
             }
     }
 
@@ -168,7 +174,7 @@ public class Store : MonoBehaviour
     public void ChangeSlider()
     {
         _textFinalPrice.text = ((int)_oreCost * (int)_sliderOreSell.value).ToString();
-        _textCountSell.text = $"{(int)_sliderOreSell.value} / {_player.GetCountOre()}";
+        _textCountSell.text = $"{(int)_sliderOreSell.value} / {_player.CountOre}";
     }
 
     public void ExitMainMenu()

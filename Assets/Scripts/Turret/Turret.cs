@@ -76,6 +76,11 @@ public class Turret : MonoBehaviour, IAttackeble
                     textPowerTime.gameObject.SetActive(isPower);
                     indicatorActive.SetActive(isPower);
                 }
+
+                if(Input.GetKey(KeyCode.X))
+                {
+                    
+                }
                     
                 player = true;
                 textPowerTime.gameObject.SetActive(true);

@@ -17,7 +17,7 @@ public class SpawnNpc : MonoBehaviour
     public void StartSpawn(int count)
     {
         _isStart = true;
-        _curTime = Random.Range(1, _player.GetLevel()*7); // Изменил с 10 на 7
+        _curTime = Random.Range(1, _player.Level*7); // Изменил с 10 на 7
         _countNpc = count;
     }
 
@@ -41,6 +41,6 @@ public class SpawnNpc : MonoBehaviour
             _curTime -= Time.deltaTime;
 
         if(_curTime <= 0 && !_isStart)
-            StartSpawn(Random.Range(4, _player.GetLevel()*5));
+            StartSpawn(Random.Range(_player.Level*4, _player.Level*_player.Level));
     }
 }

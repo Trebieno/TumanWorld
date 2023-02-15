@@ -22,6 +22,7 @@ public class Player : MonoBehaviour, IAttackeble
     [SerializeField] private int _level;
     [SerializeField] private TextMeshProUGUI _textLevel;
 
+    [Header("Score")]
     [SerializeField] private int _score;
     [SerializeField] private TextMeshProUGUI _textScore;
 
@@ -37,8 +38,10 @@ public class Player : MonoBehaviour, IAttackeble
     private Movement _movement;
     private Shooting _shooting;
     private SkillsUI _skillUI;
+    private ScoreMenu _scoreMenu;
 
     public Movement Movement => _movement;
+    public int Score => _score;
 
 
     [Header("Info Screen")]
@@ -73,21 +76,25 @@ public class Player : MonoBehaviour, IAttackeble
     [SerializeField] private ParticleSystem _particleLvlUp;
     [SerializeField] private ScrollViewResourse _scrollViewResourse;
 
-    public int GetLevel() => _level;
-    public int GetMoneyMultiplier() => _moneyMultiplier;
-    public int GetExpMultiplier() => _expMultiplier;
+    public int Level => _level;
+    public int MoneyMultiplier => _moneyMultiplier;
+    public int ExpMultiplier => _expMultiplier;
+    public int CountOre => _curOre;
+    public int MiningMultiplier => _miningMultiplier;
+    public float TimeMiningOre => _timeMiningOre;
+
     public void AddExp(int exp) => _curExp += exp;
     public void UpdateAmmo() => _shooting.UpdateAmmo();
-    
     public void UpdateMoney() => _textMoney.text = Money.ToString();
-
-    public int GetCountOre() => _curOre;
     public int RemoveOre(int ore) => _curOre -= ore;
-    public int GetMiningMultiplier() => _miningMultiplier;
     public void AddOre(int ore) => _curOre += ore;
-    public float GetTimeMiningOre() => _timeMiningOre;
     public void UpdateTextOre() => _textOre.text = _curOre.ToString();
-    public void UpdateScore() => _textScore.text = $"Очки навыков: {_score.ToString()}";
+    public void UpdateScore()
+    {   
+        _textScore.text = $"Очки навыков: {_score.ToString()}";
+        _scoreMenu.TextScoreMainMenu.text = $"Очков: {_score.ToString()}";
+        
+    }
     public void UpdateBattory() => _textBattory.text = BattoryCount.ToString();
     public void UpdateScrollView()
     {
@@ -137,6 +144,7 @@ public class Player : MonoBehaviour, IAttackeble
         _movement = GetComponent<Movement>();
         _shooting = GetComponent<Shooting>();
         _skillUI = GetComponent<SkillsUI>();
+        _scoreMenu = GetComponent<ScoreMenu>();
 
         _imageFlaslight.gameObject.SetActive(false);
         _imagePickaxe.gameObject.SetActive(false);
@@ -172,6 +180,8 @@ public class Player : MonoBehaviour, IAttackeble
         UpdateScore();
         _audioLvlUp.Play();
         Instantiate(_particleLvlUp, transform.position, transform.rotation);
+
+        _scoreMenu.TextScoreMainMenu.gameObject.SetActive(true);
     }
 
     public void UpgradeSkills(string type) 
@@ -180,7 +190,7 @@ public class Player : MonoBehaviour, IAttackeble
         {
             if(type == "health") _maxHealth += 10;
             if(type == "speed") _movement.AddSpeedMovement(0.01f);
-            if(type == "damage") _shooting.AddBulletDamage(0.3f);
+            if(type == "damage") _shooting.AddBulletDamage(0.6f);
             if(type == "money") _moneyMultiplier += 1;
             if(type == "exp") _expMultiplier += 1;
             if(type == "speedFire") _shooting.AddSpeedFire(0.003f);

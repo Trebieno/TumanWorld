@@ -53,8 +53,8 @@ public class Character : MonoBehaviour, IAttackeble
         _audioDamage = GetComponent<AudioSource>();
         _rb = GetComponent<Rigidbody2D>();     
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        _level = Random.Range((int)_player.GetLevel()/2, _player.GetLevel()+5);
-        _exp = Random.Range(_player.GetLevel(), _player.GetLevel()+5);
+        _level = Random.Range((int)_player.Level/2, _player.Level+5);
+        _exp = Random.Range(_player.Level, _player.Level+5);
         maxHealth = Random.Range(10, _level);
         curHealth = maxHealth;
         damage = Random.Range(1, _level+3);
@@ -134,7 +134,7 @@ public class Character : MonoBehaviour, IAttackeble
                 Instantiate(lootObjects[randomIndex], transform.position, transform.rotation);                
             }
             
-            _player.AddExp(_exp + _player.GetExpMultiplier());
+            _player.AddExp(_exp + _player.ExpMultiplier);
             _player.CheckUpdateLevel();
             _player.UpdateSliders();
             

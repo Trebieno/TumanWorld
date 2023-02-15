@@ -11,7 +11,6 @@ public class Money : MonoBehaviour
     private void Start() 
     {
         _audioTake = GetComponent<AudioSource>();
-        _countMoney = Random.Range(1, 10);
         _text = GameObject.Find("TMoney").GetComponent<TextMeshProUGUI>();
     }
 
@@ -19,7 +18,7 @@ public class Money : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            other.GetComponent<Player>().Money += _countMoney + other.GetComponent<Player>().GetMoneyMultiplier();
+            other.GetComponent<Player>().Money += Random.Range(0, 10 + other.GetComponent<Player>().MoneyMultiplier);
             _text.text = other.GetComponent<Player>().Money.ToString();
             _audioTake.Play();
             Destroy(gameObject, _audioTake.clip.length);
