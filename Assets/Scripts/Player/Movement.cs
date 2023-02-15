@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -14,15 +12,15 @@ public class Movement : MonoBehaviour
 
     private Vector2 _movement;
     private Vector2 _mousePosition;
-    
+    private PlayerContol _input;    
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
+        _input = new PlayerContol();
     }
 
-    
     private void Update()
     {
         _movement.x = Input.GetAxisRaw("Horizontal");

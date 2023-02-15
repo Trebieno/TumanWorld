@@ -58,7 +58,7 @@ public class Shooting : MonoBehaviour
             _audioReload.Pause();
         }
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.R) && _clips > 0)
         {
             if(_curAmmo < _maxAmmo)
             {

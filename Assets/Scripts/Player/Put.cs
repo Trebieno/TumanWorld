@@ -1,20 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Put : MonoBehaviour
 {
+    [Header("Prefabs")]
     [SerializeField] private GameObject _lampPrefab;
     [SerializeField] private GameObject _shipPrefab;
     [SerializeField] private GameObject _mineTurretPrefab;
     [SerializeField] private GameObject _attackTurretPrefab;
 
+    [Header("Time")]
     [SerializeField] private float _lampPutTime;
     [SerializeField] private float _shipPutTime;
     [SerializeField] private float _mineTurretPutTime;
     [SerializeField] private float _attackTurretPutTime;
 
+    [Header("Preferens")]
     [SerializeField] private Slider _sliderBuild;
     [SerializeField] private AudioSource _audioBuild;
     [SerializeField] private AudioSource _audioFinaly;

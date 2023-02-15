@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,57 +5,108 @@ using UnityEngine.AI;
 public class Character : MonoBehaviour, IAttackeble
 {
     
-    [SerializeField] protected int maxHealth;
-    [SerializeField] protected int curHealth;
+    [SerializeField] protected float maxHealth;
+    [SerializeField] protected float curHealth;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float damage;
+    [SerializeField] protected float maxDistanceToPlayer;
 
+    [Header("Culldown attack")]
+    [SerializeField] private float _maxCulldown;
+    [SerializeField] private float _curCulldown;
+
+    [Space(10)]
     [SerializeField] private int _level;
     [SerializeField] private int _exp;
-    [SerializeField] private Player _player;
-    
+    [SerializeField] private Transform _target;
+
+    [Space(10)]
     [SerializeField] private List<GameObject> lootObjects;
 
     private Rigidbody2D _rb;
     private Vector2 _movement;
     private AudioSource _audioDamage;
+    private Player _player;
+    private NavMeshAgent _agent;
+
+    [Space(10)]
     [SerializeField] private AudioSource _audioDeath;
     [SerializeField] private SpriteRenderer _skin;
     [SerializeField] private ParticleSystem _particleDeath;
+
+    [Space(10)]
+    [SerializeField] private LayerMask _attackMask;
+    [SerializeField] private float _radius;
+
+    [Space(10)]
+    [SerializeField] private Transform _attackPoint;
+
+    private Collider2D _collider;
     
 
     private void Start()
     {
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.updateRotation = false;
+        _agent.updateUpAxis = false;
+
         _audioDamage = GetComponent<AudioSource>();
         _rb = GetComponent<Rigidbody2D>();     
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _level = Random.Range((int)_player.GetLevel()/2, _player.GetLevel()+5);
         _exp = Random.Range(_player.GetLevel(), _player.GetLevel()+5);
-
         maxHealth = Random.Range(10, _level);
         curHealth = maxHealth;
         damage = Random.Range(1, _level+3);
-        moveSpeed = Random.Range(0.4f, _level / 100);
+        moveSpeed = Random.Range(0.7f, _level / 80); // с 100 на 80
+        _agent.speed = moveSpeed;
     } 
 
     
     private void Update()
     {
-        if(_player != null)
+        if(_target != null)
         {
-            Vector3 direction = _player.transform.position - transform.position;
+            _agent.SetDestination(_target.position);
+            Vector3 direction = _target.transform.position - transform.position;
+
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             _rb.rotation = angle;
             direction.Normalize();
             _movement = direction;
         }
+        else if(_target == null && Turret.s_Turrets.Count > 0)
+        {
+            Turret.s_Turrets.RemoveAll(x => x == null);
+            int rnd = Random.Range(0, 100);
+            if(rnd > 50)
+                _target = Turret.s_Turrets[Random.Range(0, Turret.s_Turrets.Count - 1)].transform;
+            else
+                _target = _player.transform;
+        }
+        else
+        {
+            _target = _player.transform;
+        }
+
     }
 
     private void FixedUpdate() 
     {
-        if(_player != null)
+        if(_target != null)
         {
-            MoveCharacter(_movement);
+            // MoveCharacter(_movement);
+        }
+
+        if(_curCulldown > 0)
+            _curCulldown -= Time.fixedDeltaTime;
+
+        _collider = Physics2D.OverlapCircle(_attackPoint.position, _radius, _attackMask);
+
+        if(_collider != null && _curCulldown <= 0)
+        {
+            _collider.GetComponent<IAttackeble>().SetDamage(damage);
+            _curCulldown = _maxCulldown;
         }
     }
 
@@ -65,15 +115,13 @@ public class Character : MonoBehaviour, IAttackeble
         _rb.MovePosition(_rb.position + _movement * moveSpeed * Time.fixedDeltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D other) 
+    private void OnDrawGizmos() 
     {
-        if(other.transform.CompareTag("Player"))
-        {
-            _player.SetDamage((int)damage);
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_attackPoint.position, _radius);
     }
 
-    public void SetDamage(int damage)
+    public void SetDamage(float damage)
     {        
         curHealth -= damage;
         _audioDamage.Play();
@@ -99,8 +147,8 @@ public class Character : MonoBehaviour, IAttackeble
 
             Destroy(gameObject, _audioDeath.clip.length);    
         }
-    
-        Debug.Log(curHealth +" "+ gameObject.name);
     }
+
+    
 }
 

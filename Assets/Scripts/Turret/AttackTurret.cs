@@ -50,6 +50,8 @@ public class AttackTurret : Turret
         isPower = false;
         indicatorActive.SetActive(isPower);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();        
+        s_Turrets.Add(this);
+        UpdateUIHealth();
     }
 
     private void Update() 

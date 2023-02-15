@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -52,7 +50,7 @@ public class Store : MonoBehaviour
                 _menu.SetActive(false);
                 _player.GetComponent<Movement>().enabled = true;
                 _player.StateShooting(true);
-                _player.Movement.Rb.mass = 1;
+                _player.Movement.Rb.freezeRotation = false;
             }
             else if(_menuExit.activeSelf)
             {
@@ -114,13 +112,13 @@ public class Store : MonoBehaviour
             {
                 _player.GetComponent<Movement>().enabled = false;
                 _player.StateShooting(false);
-                _player.Movement.Rb.mass = 1000000;
+                _player.Movement.Rb.freezeRotation = true;
             }
             else            
             {
                 _player.GetComponent<Movement>().enabled = true;
                 _player.StateShooting(true);
-                _player.Movement.Rb.mass = 1;
+                _player.Movement.Rb.freezeRotation = false;
             }
     }
 

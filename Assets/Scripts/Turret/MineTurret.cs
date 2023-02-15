@@ -10,6 +10,8 @@ public class MineTurret : Turret
         isPower = false;
         indicatorActive.SetActive(isPower);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        s_Turrets.Add(this);
+        UpdateUIHealth();
     }
 
     public override bool Action(bool player)

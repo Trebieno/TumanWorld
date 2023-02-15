@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -169,7 +167,7 @@ public class Player : MonoBehaviour, IAttackeble
         _level += 1;
         _maxExp += (_maxExp * 10) / 100;
         _curExp = 0;
-        _score += 2;
+        _score += 3;
         _textLevel.text =  $"Level {_level.ToString()}";
         UpdateScore();
         _audioLvlUp.Play();
@@ -197,7 +195,7 @@ public class Player : MonoBehaviour, IAttackeble
         UpdateSliders();
     }
 
-    public void SetDamage(int damage)
+    public void SetDamage(float damage)
     {        
         _curHealth -= damage;
         UpdateSliders();
@@ -205,7 +203,6 @@ public class Player : MonoBehaviour, IAttackeble
         {
             SceneManager.LoadScene("MainMenu");
         }
-        Debug.Log(_curHealth +" "+ gameObject.name);
     }
 
     public void UpdateSliders()

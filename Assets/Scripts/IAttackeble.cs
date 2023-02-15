@@ -1,5 +1,5 @@
 
 public interface IAttackeble
 {
-    public void SetDamage(int damage);
+    public void SetDamage(float damage);
 }

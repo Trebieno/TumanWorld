@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Turret : MonoBehaviour
+public class Turret : MonoBehaviour, IAttackeble
 {
+    public static List<Turret> s_Turrets = new List<Turret>();
+
     [SerializeField] protected float radiusTargets;
     [SerializeField] protected float radiusPlayer;
 
     [SerializeField] protected Collider2D[] hitCollidersTargets;
     [SerializeField] protected Collider2D[] hitCollidersPlayer;
-
+    
     [SerializeField] protected float maxPowerTime = 120;
     [SerializeField] protected float curPowerTime = 120;
 
@@ -23,6 +25,11 @@ public class Turret : MonoBehaviour
     [SerializeField] protected LayerMask triggerEnemy;
     [SerializeField] protected LayerMask triggerPlayer;
 
+    [SerializeField] protected float maxHealth;
+    [SerializeField] protected float curHealth;
+
+    [SerializeField] protected TextMeshProUGUI textHealth;
+    
     protected void Checking()
     {
         hitCollidersTargets = Physics2D.OverlapCircleAll(transform.position, radiusTargets, triggerEnemy);
@@ -86,5 +93,20 @@ public class Turret : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, radiusPlayer);
+    }
+
+    public void UpdateUIHealth()
+    {
+        textHealth.text = curHealth.ToString() + "/" + maxHealth;
+    }
+
+    public void SetDamage(float damage)
+    {
+        curHealth -= damage;
+        UpdateUIHealth();
+        if (curHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

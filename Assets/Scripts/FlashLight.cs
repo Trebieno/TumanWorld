@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -23,13 +21,13 @@ public class FlashLight : MonoBehaviour
     {
         if(_player.Flashlight)
         {
-            if(Input.GetMouseButtonDown(1) && _player.BattoryCount > 0)
+            if(Input.GetMouseButtonDown(1))
             {                
                 _flashLight.SetActive(!_flashLight.activeSelf);
                 _timeFlashlight.gameObject.SetActive(_flashLight.activeSelf);
             }
 
-            else if(_flashLight.activeSelf)
+            if(_flashLight.activeSelf)
             {
                 _curPowerTime -= Time.deltaTime;
                 _timeFlashlight.text = $"{((int)_curPowerTime).ToString()}s";
