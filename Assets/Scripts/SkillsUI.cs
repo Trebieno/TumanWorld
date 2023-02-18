@@ -3,22 +3,22 @@ using TMPro;
 
 public class SkillsUI : MonoBehaviour
 {
-    public TextMeshProUGUI HealthSkill;
-    public TextMeshProUGUI SpeedSkill;
-    public TextMeshProUGUI DamageSkill;
-    public TextMeshProUGUI MoneySkill;
-    public TextMeshProUGUI EpxSkill;
-    public TextMeshProUGUI SpeedFireSkill;
-    public TextMeshProUGUI AmmoSkill;
+    [SerializeField] private TMP_Text _healthSkill;
+    [SerializeField] private TMP_Text _speedSkill;
+    [SerializeField] private TMP_Text _damageSkill;
+    [SerializeField] private TMP_Text _moneySkill;
+    [SerializeField] private TMP_Text _expSkill;
+    [SerializeField] private TMP_Text _speedFireSkill;
+    [SerializeField] private TMP_Text _ammoSkill;
 
-    public void UpdateSkill(string type) 
+    public void UpdateSkill(Perks type)
     {
-        if(type == "health")  HealthSkill.text = (int.Parse(HealthSkill.text) + 1).ToString();
-        if(type == "speed") SpeedSkill.text = (int.Parse(SpeedSkill.text) + 1).ToString();
-        if(type == "damage") DamageSkill.text = (int.Parse(DamageSkill.text) + 1).ToString();
-        if(type == "money") MoneySkill.text = (int.Parse(MoneySkill.text) + 1).ToString();
-        if(type == "exp") EpxSkill.text = (int.Parse(EpxSkill.text) + 1).ToString();
-        if(type == "speedFire") SpeedFireSkill.text = (int.Parse(SpeedFireSkill.text) + 1).ToString();
-        if(type == "ammo")  AmmoSkill.text = (int.Parse(AmmoSkill.text) + 1).ToString();
-    }    
+        if (type == Perks.Health) _healthSkill.text = (int.Parse(_healthSkill.text) + 1).ToString();
+        if (type == Perks.Speed) _speedSkill.text = (int.Parse(_speedSkill.text) + 1).ToString();
+        if (type == Perks.Damage) _damageSkill.text = (int.Parse(_damageSkill.text) + 1).ToString();
+        if (type == Perks.Money) _moneySkill.text = (int.Parse(_moneySkill.text) + 1).ToString();
+        if (type == Perks.Expirience) _expSkill.text = (int.Parse(_expSkill.text) + 1).ToString();
+        if (type == Perks.FireSpeed) _speedFireSkill.text = (int.Parse(_speedFireSkill.text) + 1).ToString();
+        if (type == Perks.Ammo) _ammoSkill.text = (int.Parse(_ammoSkill.text) + 1).ToString();
+    }
 }

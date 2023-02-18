@@ -106,11 +106,6 @@ public class AttackTurret : Turret
                 if(Target != null)
                 {
                     float distanceToTarget = Vector3.Distance(Target.transform.position, transform.position);
-                    // if (distanceToTarget <= DetectionDistance || IsInView())  
-                    // {
-                    //     Debug.Log("111");
-                    //     // RotateToTarget();
-                    // }
 
                     if(_audioReload.isPlaying)
                         _audioReload.Pause();                   
@@ -143,7 +138,7 @@ public class AttackTurret : Turret
         if(_isDelaingShoot)
         {            
             _isDelaingShoot = true;
-            // Delay(_curDelayShoot);
+
             base.player.UpdateUI();
             _curDelayShoot -= Time.deltaTime;
             if(_curDelayShoot <= 0)

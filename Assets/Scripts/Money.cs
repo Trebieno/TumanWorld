@@ -1,28 +1,24 @@
 using UnityEngine;
-using TMPro;
 
 public class Money : MonoBehaviour
 {
     private int _countMoney;
-    [SerializeField] private TextMeshProUGUI _text;
-
     [SerializeField] private AudioSource _audioTake;
 
-    private void Start() 
+    private void Start()
     {
-        _audioTake = GetComponent<AudioSource>();
-        _text = GameObject.Find("TMoney").GetComponent<TextMeshProUGUI>();
+        _countMoney = Random.Range(1, 10);
     }
 
-    private void OnTriggerEnter2D(Collider2D other) 
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            other.GetComponent<Player>().Money += Random.Range(0, 10 + other.GetComponent<Player>().MoneyMultiplier);
-            _text.text = other.GetComponent<Player>().Money.ToString();
+            var economic = other.GetComponent<Economic>();
+            
+            economic.Money += _countMoney + economic.MoneyMultiplier;
             _audioTake.Play();
             Destroy(gameObject, _audioTake.clip.length);
-            
         }
     }
 }

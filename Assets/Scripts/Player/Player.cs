@@ -1,228 +1,150 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour, IAttackeble
+
+
+public class Player : MonoBehaviour
 {
-    [Header("Health")]
-    [SerializeField] private float _maxHealth;
-    [SerializeField] private float _curHealth;
-    
-    [Header("Ore")]
-    [SerializeField] private int _maxOre;
-    [SerializeField] private int _curOre;
-    [SerializeField] private float _timeMiningOre;
-    [SerializeField] private TextMeshProUGUI _textOre;
-
-    [Header("Level")]
-    [SerializeField] private int _maxExp;
-    [SerializeField] private int _curExp;
-    
-    [SerializeField] private int _level;
-    [SerializeField] private TextMeshProUGUI _textLevel;
-
-    [Header("Score")]
-    [SerializeField] private int _score;
-    [SerializeField] private TextMeshProUGUI _textScore;
-
-    [Header("Up Multiplier")]
-    [SerializeField] private int _moneyMultiplier;
-    [SerializeField] private int _expMultiplier;
-    [SerializeField] private int _miningMultiplier;
-
-    [Header("Slider")]
-    [SerializeField] private Slider _healthSlider;
-    [SerializeField] private Slider _expSlider;
-
-    private Movement _movement;
-    private Shooting _shooting;
-    private SkillsUI _skillUI;
-    private ScoreMenu _scoreMenu;
-
-    public Movement Movement => _movement;
-    public int Score => _score;
-
-
-    [Header("Info Screen")]
-
-    public int Money;
-    [SerializeField] private TextMeshProUGUI _textMoney;
-    [Space(5)]
     public int LightCount;
 
-    [Space(5)]
     public int BattoryCount;
+
     [SerializeField] private TextMeshProUGUI _textBattory;
 
-    [Space(5)]
     public int ShipCount;
 
-    [Space(5)]
     public bool Flashlight;
+
     [SerializeField] private GameObject _imageFlaslight;
 
-    [Space(5)]
     public bool Pickaxe;
+
     [SerializeField] private GameObject _imagePickaxe;
 
-    [Space(5)]
     public int MineTurretCount;
     public int AttackTurretCount;
-
-    [Space(5)]
-    [SerializeField] private AudioSource _audioLvlUp;
-    [SerializeField] private AudioSource _audioHealting;
+    
     [SerializeField] private ParticleSystem _particleLvlUp;
     [SerializeField] private ScrollViewResourse _scrollViewResourse;
 
-    public int Level => _level;
-    public int MoneyMultiplier => _moneyMultiplier;
-    public int ExpMultiplier => _expMultiplier;
-    public int CountOre => _curOre;
-    public int MiningMultiplier => _miningMultiplier;
-    public float TimeMiningOre => _timeMiningOre;
+    
+    private Movement _movement;
+    private Shooting _shooting;
+    private Health _health;
+    private Mining _mining;
+    private Leveling _leveling;
+    private Economic _economic;
+    private UpgradablePerks _upgradablePerks;
 
-    public void AddExp(int exp) => _curExp += exp;
-    public void UpdateAmmo() => _shooting.UpdateAmmo();
-    public void UpdateMoney() => _textMoney.text = Money.ToString();
-    public int RemoveOre(int ore) => _curOre -= ore;
-    public void AddOre(int ore) => _curOre += ore;
-    public void UpdateTextOre() => _textOre.text = _curOre.ToString();
-    public void UpdateScore()
-    {   
-        _textScore.text = $"Очки навыков: {_score.ToString()}";
-        _scoreMenu.TextScoreMainMenu.text = $"Очков: {_score.ToString()}";
-        
+    public Movement Movement => _movement;
+    public Shooting Shooting => _shooting;
+    public Health Health => _health;
+    public Mining Mining 
+    {
+        get{
+            if(_mining == null)
+                _mining = GetComponent<Mining>();
+
+            return _mining;
+        }
     }
-    public void UpdateBattory() => _textBattory.text = BattoryCount.ToString();
+
+    public Leveling Leveling 
+    {
+        get{
+            if(_leveling == null)
+                _leveling = GetComponent<Leveling>();
+
+            return _leveling;
+        }
+    }
+
+    public Economic Economic 
+    {
+        get{
+            if(_economic == null)
+                _economic = GetComponent<Economic>();
+
+            return _economic;
+        }
+    }
+
+    public UpgradablePerks UpgradablePerks => _upgradablePerks;
+
+    #region PublicApi
+
     public void UpdateScrollView()
     {
-        if(_scrollViewResourse.Index == 0)
+        if (_scrollViewResourse.Index == 0)
             _scrollViewResourse.TextInventory.text = ShipCount.ToString();
-        if(_scrollViewResourse.Index == 1)
+        if (_scrollViewResourse.Index == 1)
             _scrollViewResourse.TextInventory.text = LightCount.ToString();
-        if(_scrollViewResourse.Index == 2)
+        if (_scrollViewResourse.Index == 2)
             _scrollViewResourse.TextInventory.text = AttackTurretCount.ToString();
-        if(_scrollViewResourse.Index == 3)
+        if (_scrollViewResourse.Index == 3)
             _scrollViewResourse.TextInventory.text = MineTurretCount.ToString();
     }
 
-    public float Healing()
-    {
-        _audioHealting.Play();
-        _curHealth += 50;
-        if(_curHealth > _maxHealth)
-            _curHealth = _maxHealth;
-        return 0;
-        
-    } 
-
-    public int ActivateFlashLight()
+    public void ActivateFlashLight()
     {
         Flashlight = true;
         _imageFlaslight.gameObject.SetActive(true);
-        return 0;
     }
 
-    public int ActivatePickaxe()
+    public void ActivatePickaxe()
     {
         Pickaxe = true;
         _imagePickaxe.gameObject.SetActive(true);
-        return 0;
     }
 
-    public int AddClip(int clip)
+    public void AddClip(int clip)
     {
         _shooting.AddClip(clip);
-        return 0;
     }
 
-    private void Start() 
+    #endregion
+
+    #region Methods
+
+    private void Start()
     {
-        _textLevel.text =  $"Level {_level.ToString()}";
         _movement = GetComponent<Movement>();
         _shooting = GetComponent<Shooting>();
-        _skillUI = GetComponent<SkillsUI>();
-        _scoreMenu = GetComponent<ScoreMenu>();
+        _health   = GetComponent<Health>();
+        _mining   = GetComponent<Mining>();
+        _leveling = GetComponent<Leveling>();
+        _economic = GetComponent<Economic>();
+        _upgradablePerks = GetComponent<UpgradablePerks>();
 
         _imageFlaslight.gameObject.SetActive(false);
         _imagePickaxe.gameObject.SetActive(false);
 
-        
         UpdateUI();
+        _health.Died += Health_OnDied;
     }
+
+    private void OnDestroy() => _health.Died -= Health_OnDied;
+
+    private void Health_OnDied() => RestartGame();
+
 
     public void UpdateUI()
     {
-        UpdateSliders();
-        UpdateMoney();
-        UpdateTextOre();
         UpdateAmmo();
-        UpdateScore();
-        UpdateBattory();        
-        _shooting.UpdateClip();        
+        UpdateBattory();
+        _shooting.UpdateClip();
     }
 
-    public void CheckUpdateLevel()
+    private void RestartGame()
     {
-        if(_curExp >=_maxExp)
-            UpgradeLevel();
+        SceneManager.LoadScene("MainMenu");
     }
+
+    public void UpdateAmmo() => _shooting.UpdateAmmo();
+    public void UpdateBattory() => _textBattory.text = BattoryCount.ToString();
     
-    private void UpgradeLevel()
-    {
-        _level += 1;
-        _maxExp += (_maxExp * 10) / 100;
-        _curExp = 0;
-        _score += 3;
-        _textLevel.text =  $"Level {_level.ToString()}";
-        UpdateScore();
-        _audioLvlUp.Play();
-        Instantiate(_particleLvlUp, transform.position, transform.rotation);
-
-        _scoreMenu.TextScoreMainMenu.gameObject.SetActive(true);
-    }
-
-    public void UpgradeSkills(string type) 
-    {
-        if(_score > 0)
-        {
-            if(type == "health") _maxHealth += 10;
-            if(type == "speed") _movement.AddSpeedMovement(0.01f);
-            if(type == "damage") _shooting.AddBulletDamage(0.6f);
-            if(type == "money") _moneyMultiplier += 1;
-            if(type == "exp") _expMultiplier += 1;
-            if(type == "speedFire") _shooting.AddSpeedFire(0.003f);
-            if(type == "ammo") _shooting.AddAmmo(1);
-      
-
-            _skillUI.UpdateSkill(type);
-            _score -= 1;
-            UpdateUI();
-        }
-        
-        UpdateSliders();
-    }
-
-    public void SetDamage(float damage)
-    {        
-        _curHealth -= damage;
-        UpdateSliders();
-        if (_curHealth <= 0)
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
-    }
-
-    public void UpdateSliders()
-    {
-        _healthSlider.maxValue = _maxHealth;
-        _healthSlider.value = _curHealth;
-        _expSlider.maxValue = _maxExp;
-        _expSlider.value = _curExp;
-    }
-
     public void StateShooting(bool state) => _shooting.enabled = state;
-}
 
+    #endregion
+}
