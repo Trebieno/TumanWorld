@@ -21,7 +21,7 @@ public class MineTurret : Turret
             {
                 if(!AudioEffects.Instance.AudioMiningTurret.isPlaying)
                     AudioEffects.Instance.AudioMiningTurret.Play();
-                    
+
                 ore.MineTurret();
             }
         }
@@ -36,6 +36,8 @@ public class MineTurret : Turret
                     isPower = !isPower;
                     textPowerTime.gameObject.SetActive(isPower);
                     indicatorActive.SetActive(isPower);
+                    if(!isPower)
+                        AudioEffects.Instance.AudioMiningTurret.Stop();
                 }
                     
                 player = true;
