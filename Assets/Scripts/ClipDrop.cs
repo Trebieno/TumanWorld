@@ -1,12 +1,11 @@
 using UnityEngine;
+using Feeling;
 
 public class ClipDrop : MonoBehaviour
 {
     private int _count;
-    [SerializeField] private AudioSource _audioTake;
     private void Start() 
     {
-        _audioTake = GetComponent<AudioSource>();
         _count = Random.Range(1, 2);
     }
 
@@ -15,9 +14,8 @@ public class ClipDrop : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             other.GetComponent<Player>().AddClip(_count);
-            other.GetComponent<Player>().UpdateAmmo();
-            _audioTake.Play();
-            Destroy(gameObject, _audioTake.clip.length);            
+             AudioEffects.Instance.AudioTakeDrop.Play();
+            Destroy(gameObject, AudioEffects.Instance.AudioTakeDrop.clip.length);            
         }
     }
 }

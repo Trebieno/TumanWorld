@@ -6,6 +6,8 @@ public class LevelView : MonoBehaviour
     [SerializeField] private Leveling _leveling;
     private TMP_Text _textLevel;
 
+
+
     private void Awake()
     {
         _textLevel = GetComponent<TMP_Text>();
@@ -19,7 +21,8 @@ public class LevelView : MonoBehaviour
     }
 
     private void Leveling_OnLevelChanged(int level)
-    {
+    {        
+        
         _textLevel.text =  $"Level {_leveling.Level.ToString()}";
     }
 }

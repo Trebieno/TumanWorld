@@ -28,8 +28,24 @@ public class Shooting : MonoBehaviour
     private Rigidbody2D _rb;
 
     public int MaximumAmmo => _maximumAmmo;
-    public int CurrentAmmo => _currentAmmo;
-    public int Clips => _clips;
+    public int CurrentAmmo 
+    {
+        get{return _currentAmmo;}
+        set
+        {
+            CurrentAmmo = value;
+            AmmoChanged?.Invoke(_currentAmmo, _maximumAmmo);
+        }
+    }
+    public int Clips
+    {
+        get{return _clips;}
+        set
+        {
+            Clips = value;
+            ClipChanged?.Invoke(_clips);
+        }
+    }
 
     public event Action<int, int> AmmoChanged;
     public event Action<int> ClipChanged;
@@ -69,7 +85,6 @@ public class Shooting : MonoBehaviour
             if (_currentAmmo < _maximumAmmo)
             {
                 _currentAmmo = 0;
-                UpdateAmmo();
             }
         }
     }
@@ -79,7 +94,6 @@ public class Shooting : MonoBehaviour
         if (_currentAmmo > 0)
         {
             _currentAmmo -= 1;
-            UpdateAmmo();
 
             AudioEffects.Instance.AudioFire.Play();
 
@@ -114,8 +128,6 @@ public class Shooting : MonoBehaviour
 
     private IEnumerator Delay(float delay)
     {
-        UpdateAmmo();
-        UpdateClip();
         yield return new WaitForSeconds(delay);
         _isDelaingShoot = false;
     }
@@ -125,8 +137,6 @@ public class Shooting : MonoBehaviour
         AudioEffects.Instance.AudioReload.Stop();
         _clips -= 1;
         _currentAmmo = _maximumAmmo;
-        UpdateAmmo();
-        UpdateClip();
         _isDelaingReload = false;
         _reloadSlider.gameObject.SetActive(false);
         _reloadSlider.value = 0;
@@ -145,21 +155,10 @@ public class Shooting : MonoBehaviour
     public void AddClip(int clip)
     {
         _clips += clip;
-        UpdateClip();
     }
 
     public void AddAmmo(int ammo)
     {
         _maximumAmmo += ammo;
-    }
-
-    public void UpdateAmmo()
-    {
-        AmmoChanged.Invoke(_currentAmmo, _maximumAmmo);
-    }
-
-    public void UpdateClip()
-    {
-        ClipChanged.Invoke(_clips);
     }
 }

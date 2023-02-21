@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class Ore : MonoBehaviour
 {
@@ -22,12 +23,27 @@ public class Ore : MonoBehaviour
     [SerializeField] private AudioSource _audioMining;
     [SerializeField] private AudioSource _audioMiningFinaly;
 
+    public event Action<int> OreChanged;
+
+    public int CurrentOre
+    {
+        get
+        {
+            return _curOre;
+        }
+
+        set
+        {
+            CurrentOre = value;
+            OreChanged?.Invoke(_curOre);
+        }
+    }
 
     private void Start() 
     {
         _audioMining = GetComponent<AudioSource>();
         _textClickButton = GameObject.Find("TQ").GetComponent<TextMeshProUGUI>();
-        _curOre = Random.Range(30, 100);
+        _curOre = UnityEngine.Random.Range(30, 100);
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
         _curTimeMining = _player.Mining.GetTimeMiningOre();
@@ -99,7 +115,7 @@ public class Ore : MonoBehaviour
             _curResetTime -= Time.deltaTime;
             if(_curResetTime <= 0)
             {
-                _curOre = Random.Range(30, 100);
+                _curOre = UnityEngine.Random.Range(30, 100);
                 _curResetTime = _maxResetTime;
                 _textCountOre.text = _curOre.ToString();
                 _isZeroOre = false;

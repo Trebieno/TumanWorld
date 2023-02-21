@@ -131,9 +131,7 @@ public class Player : MonoBehaviour
 
     public void UpdateUI()
     {
-        UpdateAmmo();
-        UpdateBattory();
-        _shooting.UpdateClip();
+        UpdateBattory();        
     }
 
     private void RestartGame()
@@ -141,7 +139,6 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void UpdateAmmo() => _shooting.UpdateAmmo();
     public void UpdateBattory() => _textBattory.text = BattoryCount.ToString();
     
     public void StateShooting(bool state) => _shooting.enabled = state;

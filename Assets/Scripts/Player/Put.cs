@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Feeling;
 
 public class Put : MonoBehaviour
 {
@@ -17,8 +18,6 @@ public class Put : MonoBehaviour
 
     [Header("Preferens")]
     [SerializeField] private Slider _sliderBuild;
-    [SerializeField] private AudioSource _audioBuild;
-    [SerializeField] private AudioSource _audioFinaly;
     [SerializeField] private ParticleSystem _particleBuild;
     [SerializeField] private ScrollViewResourse _scrollViewResourse;
 
@@ -51,7 +50,7 @@ public class Put : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.F) && !_isBuild)
         {
-            // _audioBuild.Play();
+            AudioEffects.Instance.AudioBuild.Play();
             _sliderBuild.value = 0;    
             _sliderBuild.maxValue = time;                        
             _isBuild = true;
@@ -59,7 +58,7 @@ public class Put : MonoBehaviour
 
         if(Input.GetKeyUp(KeyCode.F) && _isBuild)
         {
-            // _audioBuild.Stop();
+            AudioEffects.Instance.AudioBuild.Stop();
             _isBuild = false;
             _sliderBuild.value = 0;
             if(_sliderBuild.gameObject.activeSelf)
@@ -80,8 +79,8 @@ public class Put : MonoBehaviour
             _sliderBuild.value += Time.deltaTime;
             if(_sliderBuild.value >= time)
             {
-                // _audioBuild.Stop();
-                _audioFinaly.Play();
+                AudioEffects.Instance.AudioBuild.Stop();
+                AudioEffects.Instance.AudioBuildFinaly.Play();
                 Instantiate(prefab, transform.position, transform.rotation);
                 Instantiate(_particleBuild, transform.position, transform.rotation);
                 _isBuild = false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using TMPro;
 
 public class UpgradablePerks : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class UpgradablePerks : MonoBehaviour
     [SerializeField] private float _fireSpeedIncreaseStep = 0.003f;
     [SerializeField] private int _ammoIncreaseStep = 1;
 
+    [SerializeField] private TMP_Text _textMainScreenScore;
     public event Action<int> ScoreChanged;
 
     public int Score
@@ -40,8 +42,10 @@ public class UpgradablePerks : MonoBehaviour
     }
 
     private void Leveling_OnLevelChanged(int obj)
-    {
+    {        
         Score += 3;
+        _textMainScreenScore.gameObject.SetActive(true);
+        _textMainScreenScore.text = $"Очки навыков: {Score.ToString()}";
     }
 
     public void UpgradeSkills(int typeId)

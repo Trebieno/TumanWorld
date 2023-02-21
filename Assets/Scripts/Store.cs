@@ -16,8 +16,9 @@ public class Store : MonoBehaviour
     [SerializeField] private GameObject _pressMenu;
 
     [SerializeField] private Slider _sliderOreSell;
-    [SerializeField] private TextMeshProUGUI _textCountSell;
-    [SerializeField] private TextMeshProUGUI _textFinalPrice;
+    [SerializeField] private TMP_Text _textCountSell;
+    [SerializeField] private TMP_Text _textFinalPrice;
+    [SerializeField] private TMP_Text _textMainScreen;
     [SerializeField] private int _oreCost;
 
     [SerializeField] private GameObject _itemFlashlight;

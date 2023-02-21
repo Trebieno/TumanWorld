@@ -482,6 +482,7 @@ MonoBehaviour:
   _textCountOre: {fileID: 6295513436774384712}
   _textClickButton: {fileID: 0}
   _sliderMining: {fileID: 4143130253632489681}
+  _player: {fileID: 0}
   _audioMining: {fileID: 0}
   _audioMiningFinaly: {fileID: 4877980377190798841}
 --- !u!58 &6295513436354625153
@@ -623,8 +624,9 @@ GameObject:
   - component: {fileID: 6295513436774384718}
   - component: {fileID: 6295513436774384713}
   - component: {fileID: 6295513436774384712}
+  - component: {fileID: 1187639391130067881}
   m_Layer: 9
-  m_Name: Text (TMP)
+  m_Name: TCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,6 +748,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1187639391130067881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6295513436774384715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e26e24b7c9f83049a007ddb1be7e71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ore: {fileID: 6295513436354625154}
 --- !u!1 &6295513437347929020
 GameObject:
   m_ObjectHideFlags: 0

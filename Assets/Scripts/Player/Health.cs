@@ -37,11 +37,14 @@ public class Health : MonoBehaviour, IAttackeble
 
     public void SetDamage(float damage)
     {
+        if(!AudioEffects.Instance.AudioDamageToPlayer.isPlaying)
+            AudioEffects.Instance.AudioDamageToPlayer.Play();
         CurrentHealth -= damage;
     }
 
     public void IncreaseMaxHealth(float newMaxHealth)
     {
         _maxHealth += newMaxHealth;
+        HealthChanged?.Invoke(_curHealth, _maxHealth);
     }
 }

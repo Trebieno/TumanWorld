@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using Feeling;
 
 public class MineTurret : Turret
 {
@@ -21,6 +19,9 @@ public class MineTurret : Turret
             Ore ore = item.GetComponent<Ore>();
             if(ore != null && isPower)
             {
+                if(!AudioEffects.Instance.AudioMiningTurret.isPlaying)
+                    AudioEffects.Instance.AudioMiningTurret.Play();
+                    
                 ore.MineTurret();
             }
         }

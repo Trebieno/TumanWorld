@@ -10,6 +10,7 @@ public class Ship : MonoBehaviour
     {
         _audio = GetComponent<AudioSource>();
     }
+
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if(other.CompareTag("Enemy"))

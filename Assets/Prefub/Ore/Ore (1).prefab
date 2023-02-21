@@ -86,8 +86,9 @@ GameObject:
   - component: {fileID: 3573186929780139186}
   - component: {fileID: 3573186929780139189}
   - component: {fileID: 3573186929780139188}
+  - component: {fileID: 3368197520381562334}
   m_Layer: 9
-  m_Name: Text (TMP)
+  m_Name: TCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,6 +210,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3368197520381562334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3573186929780139191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e26e24b7c9f83049a007ddb1be7e71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ore: {fileID: 3573186930166357630}
 --- !u!1 &3573186929795029220
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,6 +490,7 @@ MonoBehaviour:
   _textCountOre: {fileID: 3573186929780139188}
   _textClickButton: {fileID: 0}
   _sliderMining: {fileID: 3573186930403403907}
+  _player: {fileID: 0}
   _audioMining: {fileID: 0}
   _audioMiningFinaly: {fileID: 4427650223362386285}
 --- !u!58 &3573186930166357629

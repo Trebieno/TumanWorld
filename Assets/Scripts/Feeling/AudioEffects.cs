@@ -6,6 +6,8 @@ namespace Feeling
     {
         public static AudioEffects Instance { get; private set; }
 
+        [SerializeField] private AudioSource[] _audioSteps;
+        public AudioSource[] AudioSteps => _audioSteps;
         
         [SerializeField] private AudioSource _audioLvlUp;
         [SerializeField] private AudioSource _audioHealting;
@@ -13,7 +15,7 @@ namespace Feeling
         [SerializeField] private AudioSource _audioMining;
         [SerializeField] private AudioSource _audioMiningFinaly;
         [SerializeField] private AudioSource _audioBuy;
-        [SerializeField] private AudioSource _audioSteps;
+        [SerializeField] private AudioSource _audioStep;
         [SerializeField] private AudioSource _audioTakeDrop;
         [SerializeField] private AudioSource _audioReload;
         [SerializeField] private AudioSource _audioFire;
@@ -25,11 +27,11 @@ namespace Feeling
         [SerializeField] private AudioSource _audioReloadTurret;
 
         [SerializeField] private AudioSource _audioBuild;
+        [SerializeField] private AudioSource _audioBuildFinaly;
         [SerializeField] private AudioSource _audioBuildingLamp;
         [SerializeField] private AudioSource _audioBuildingShip;
         [SerializeField] private AudioSource _audioBuildingMineTurret;
         [SerializeField] private AudioSource _audioBuildingAttackTurret;
-        
         
 
 
@@ -39,7 +41,7 @@ namespace Feeling
         public AudioSource AudioMining => _audioMining;
         public AudioSource AudioMininFinaly => _audioMiningFinaly;
         public AudioSource AudioBuy => _audioBuy;
-        public AudioSource AudioSteps => _audioSteps;
+        public AudioSource AudioStep => _audioStep;
         public AudioSource AudioTakeDrop => _audioTakeDrop;
         public AudioSource AudioReload => _audioReload;
         public AudioSource AudioFire => _audioFire;
@@ -54,6 +56,7 @@ namespace Feeling
         public AudioSource AudioBuldingMineTurret => _audioBuildingMineTurret;
         public AudioSource AudioBuldingAttackTurret => _audioBuildingAttackTurret;
         public AudioSource AudioBuild => _audioBuild;
+        public AudioSource AudioBuildFinaly => _audioBuildFinaly;
 
 
         private void Awake()

@@ -1,9 +1,9 @@
 using UnityEngine;
+using Feeling;
 
 public class Money : MonoBehaviour
 {
     private int _countMoney;
-    [SerializeField] private AudioSource _audioTake;
 
     private void Start()
     {
@@ -17,8 +17,8 @@ public class Money : MonoBehaviour
             var economic = other.GetComponent<Economic>();
             
             economic.Money += _countMoney + economic.MoneyMultiplier;
-            _audioTake.Play();
-            Destroy(gameObject, _audioTake.clip.length);
+            AudioEffects.Instance.AudioTakeDrop.Play();
+            Destroy(gameObject, AudioEffects.Instance.AudioTakeDrop.clip.length);
         }
     }
 }
