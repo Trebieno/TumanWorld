@@ -3,10 +3,13 @@ using Feeling;
 
 public class ClipDrop : MonoBehaviour
 {
+    [SerializeField] private AudioSource _audioTakeDrop;
     private int _count;
+
     private void Start() 
     {
         _count = Random.Range(1, 2);
+        _audioTakeDrop.clip = AudioEffects.Instance.AudioTakeDrop;
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
@@ -14,8 +17,8 @@ public class ClipDrop : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             other.GetComponent<Player>().AddClip(_count);
-             AudioEffects.Instance.AudioTakeDrop.Play();
-            Destroy(gameObject, AudioEffects.Instance.AudioTakeDrop.clip.length);            
+             _audioTakeDrop.Play();
+            Destroy(gameObject, _audioTakeDrop.clip.length);            
         }
     }
 }

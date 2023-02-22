@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a74f9fdcc93ca4fa109ac0cac995f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioTake: {fileID: 530739322978685879}
+  _audioTakeDrop: {fileID: 530739322978685879}
 --- !u!61 &160080721791465509
 BoxCollider2D:
   m_ObjectHideFlags: 0

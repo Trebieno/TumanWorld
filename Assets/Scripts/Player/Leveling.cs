@@ -9,6 +9,8 @@ public class Leveling : MonoBehaviour
     
     [SerializeField] private int _level;
     [SerializeField] private int _expMultiplier;
+    
+    [SerializeField] private AudioSource _audioLvlUp;
 
     public event Action<int> LevelChanged; 
     public event Action<int, int> ExpirienceChanged; 
@@ -28,6 +30,12 @@ public class Leveling : MonoBehaviour
     }
 
     public int ExpirienceMultiplier => _expMultiplier;
+
+    private void Start()
+    {
+        _audioLvlUp.clip = AudioEffects.Instance.AudioLvlUp;
+    }
+
     public void AddExp(int exp) => CurrentExpirience += exp;
     
     public void CheckUpdateLevel()
@@ -44,7 +52,7 @@ public class Leveling : MonoBehaviour
         
         LevelChanged?.Invoke(_level);
         
-        AudioEffects.Instance.AudioLvlUp.Play();
+        _audioLvlUp.Play();
         
         //Instantiate(_particleLvlUp, transform.position, transform.rotation);
     }

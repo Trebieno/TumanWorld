@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _maximumTimeStep;
 
     [SerializeField] private float _currentTimeStep;
+
+    [SerializeField] private AudioSource _audioSteps;
     private Vector2 _movement;
     private Vector2 _mousePosition;
     private PlayerContol _input;
@@ -25,6 +27,11 @@ public class Movement : MonoBehaviour
         _input = new PlayerContol();
     }
 
+    private void Start()
+    {
+        _audioSteps.clip = AudioEffects.Instance.AudioSteps[_index];
+    }
+
     private void Update()
     {
         float x = Input.GetAxisRaw("Horizontal");
@@ -34,16 +41,17 @@ public class Movement : MonoBehaviour
 
         if (x != 0 || y != 0)
         {
-            AudioSource[] clips = AudioEffects.Instance.AudioSteps;
-            if (!clips[_index].isPlaying)
+            AudioClip[] clips = AudioEffects.Instance.AudioSteps;
+            if (!_audioSteps.isPlaying)
             {
                 _index++;
                 if (_index >= clips.Length)
                     _index = 0;
-                clips[_index].Play();
+
+                _audioSteps.clip = clips[_index];
+                _audioSteps.Play();
             }
         }
-
 
         if (_currentTimeStep > 0)
             _currentTimeStep -= Time.deltaTime;

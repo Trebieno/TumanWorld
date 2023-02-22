@@ -21,6 +21,10 @@ public class Put : MonoBehaviour
     [SerializeField] private ParticleSystem _particleBuild;
     [SerializeField] private ScrollViewResourse _scrollViewResourse;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource _audioBuild;
+    [SerializeField] private AudioSource _audioBuildFinaly;
+
     private bool _isBuild;
     private Player _player;
 
@@ -28,6 +32,8 @@ public class Put : MonoBehaviour
     {
         _player = GetComponent<Player>();
         _sliderBuild.gameObject.SetActive(false);
+        _audioBuild.clip = AudioEffects.Instance.AudioBuild;
+        _audioBuildFinaly.clip = AudioEffects.Instance.AudioBuildFinaly;
     }
 
     private void Update()
@@ -50,7 +56,7 @@ public class Put : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.F) && !_isBuild)
         {
-            AudioEffects.Instance.AudioBuild.Play();
+            _audioBuild.Play();
             _sliderBuild.value = 0;    
             _sliderBuild.maxValue = time;                        
             _isBuild = true;
@@ -58,7 +64,7 @@ public class Put : MonoBehaviour
 
         if(Input.GetKeyUp(KeyCode.F) && _isBuild)
         {
-            AudioEffects.Instance.AudioBuild.Stop();
+            _audioBuild.Stop();
             _isBuild = false;
             _sliderBuild.value = 0;
             if(_sliderBuild.gameObject.activeSelf)
@@ -79,8 +85,8 @@ public class Put : MonoBehaviour
             _sliderBuild.value += Time.deltaTime;
             if(_sliderBuild.value >= time)
             {
-                AudioEffects.Instance.AudioBuild.Stop();
-                AudioEffects.Instance.AudioBuildFinaly.Play();
+                _audioBuild.Stop();
+                _audioBuildFinaly.Play();
                 Instantiate(prefab, transform.position, transform.rotation);
                 Instantiate(_particleBuild, transform.position, transform.rotation);
                 _isBuild = false;

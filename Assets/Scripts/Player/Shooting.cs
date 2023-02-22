@@ -22,6 +22,9 @@ public class Shooting : MonoBehaviour
 
     [SerializeField] private Slider _reloadSlider;
 
+    [SerializeField] private AudioSource _audioReload;
+    [SerializeField] private AudioSource _audioFire;
+
     private bool _isFire;
     private bool _isDelaingShoot;
     private bool _isDelaingReload;
@@ -38,6 +41,8 @@ public class Shooting : MonoBehaviour
     {
         StartCoroutine(Delay(_delayShoot));
         _reloadSlider.gameObject.SetActive(false);
+        _audioReload.clip = AudioEffects.Instance.AudioReload;
+        _audioFire.clip = AudioEffects.Instance.AudioFire;
     }
 
     private void Update()
@@ -61,7 +66,7 @@ public class Shooting : MonoBehaviour
         }
         else if (!_isFire && _isDelaingReload)
         {
-             AudioEffects.Instance.AudioReload.Pause();
+             _audioReload.Pause();
         }
 
         if (Input.GetKeyDown(KeyCode.R) && _clips > 0)
@@ -72,33 +77,14 @@ public class Shooting : MonoBehaviour
                 AmmoChanged?.Invoke();
             }
         }
-    }
 
-    private void Shoot()
-    {
-        if (_currentAmmo > 0)
-        {
-            _currentAmmo -= 1;
-            AmmoChanged?.Invoke();
-            AudioEffects.Instance.AudioFire.Play();
-
-            Bullet bullet = Instantiate(_bulletPrefub, _firePoint.position, _firePoint.rotation);
-            bullet.damage = _bulletDamage;
-            _rb = bullet.GetComponent<Rigidbody2D>();
-            _rb.AddForce(_firePoint.up * _bulletForce, ForceMode2D.Impulse);
-
-            _isDelaingShoot = true;
-            StartCoroutine(Delay(_delayShoot));
-        }
-        else
-        {
-            if (_clips > 0)
+        if (_clips > 0 && _currentAmmo <= 0)
             {
                 if (!_reloadSlider.gameObject.activeSelf)
                     _reloadSlider.gameObject.SetActive(true);
 
-                if (!AudioEffects.Instance.AudioReload.isPlaying)
-                    AudioEffects.Instance.AudioReload.Play();
+                if (!_audioReload.isPlaying)
+                    _audioReload.Play();
                 _reloadSlider.maxValue = _delayReload;
                 _reloadSlider.value += Time.deltaTime;
                 if (_reloadSlider.value >= _delayReload)
@@ -108,6 +94,23 @@ public class Shooting : MonoBehaviour
 
                 _isDelaingReload = true;
             }
+    }
+
+    private void Shoot()
+    {
+        if (_currentAmmo > 0)
+        {
+            _currentAmmo -= 1;
+            AmmoChanged?.Invoke();
+            _audioFire.Play();
+
+            Bullet bullet = Instantiate(_bulletPrefub, _firePoint.position, _firePoint.rotation);
+            bullet.damage = _bulletDamage;
+            _rb = bullet.GetComponent<Rigidbody2D>();
+            _rb.AddForce(_firePoint.up * _bulletForce, ForceMode2D.Impulse);
+
+            _isDelaingShoot = true;
+            StartCoroutine(Delay(_delayShoot));
         }
     }
 
@@ -119,7 +122,7 @@ public class Shooting : MonoBehaviour
 
     private void Reload(float delay)
     {
-        AudioEffects.Instance.AudioReload.Stop();
+        _audioReload.Stop();
         _clips -= 1;
         _currentAmmo = _maximumAmmo;
         ClipChanged?.Invoke();

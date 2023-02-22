@@ -5,58 +5,58 @@ namespace Feeling
     public class AudioEffects : MonoBehaviour
     {
         public static AudioEffects Instance { get; private set; }
-
-        [SerializeField] private AudioSource[] _audioSteps;
-        public AudioSource[] AudioSteps => _audioSteps;
         
-        [SerializeField] private AudioSource _audioLvlUp;
-        [SerializeField] private AudioSource _audioHealting;
-        [SerializeField] private AudioSource _audioDamageToPlayer;
-        [SerializeField] private AudioSource _audioMining;
-        [SerializeField] private AudioSource _audioMiningFinaly;
-        [SerializeField] private AudioSource _audioBuy;
-        [SerializeField] private AudioSource _audioStep;
-        [SerializeField] private AudioSource _audioTakeDrop;
-        [SerializeField] private AudioSource _audioReload;
-        [SerializeField] private AudioSource _audioFire;
+        [SerializeField] private AudioClip[] _audioSteps;
+        public AudioClip[] AudioSteps => _audioSteps;
+        
+        [SerializeField] private AudioClip _audioLvlUp;
+        [SerializeField] private AudioClip _audioHealting;
+        [SerializeField] private AudioClip _audioDamageToPlayer;
+        [SerializeField] private AudioClip _audioMining;
+        [SerializeField] private AudioClip _audioMiningFinaly;
+        [SerializeField] private AudioClip _audioBuy;
+        [SerializeField] private AudioClip _audioStep;
+        [SerializeField] private AudioClip _audioTakeDrop;
+        [SerializeField] private AudioClip _audioReload;
+        [SerializeField] private AudioClip _audioFire;
 
-        [SerializeField] private AudioSource _audioBtn1;
+        [SerializeField] private AudioClip _audioBtn1;
 
-        [SerializeField] private AudioSource _audioMiningTurret;
-        [SerializeField] private AudioSource _audioFireTurret;
-        [SerializeField] private AudioSource _audioReloadTurret;
+        [SerializeField] private AudioClip _audioMiningTurret;
+        [SerializeField] private AudioClip _audioFireTurret;
+        [SerializeField] private AudioClip _audioReloadTurret;
 
-        [SerializeField] private AudioSource _audioBuild;
-        [SerializeField] private AudioSource _audioBuildFinaly;
-        [SerializeField] private AudioSource _audioBuildingLamp;
-        [SerializeField] private AudioSource _audioBuildingShip;
-        [SerializeField] private AudioSource _audioBuildingMineTurret;
-        [SerializeField] private AudioSource _audioBuildingAttackTurret;
+        [SerializeField] private AudioClip _audioBuild;
+        [SerializeField] private AudioClip _audioBuildFinaly;
+        [SerializeField] private AudioClip _audioBuildingLamp;
+        [SerializeField] private AudioClip _audioBuildingShip;
+        [SerializeField] private AudioClip _audioBuildingMineTurret;
+        [SerializeField] private AudioClip _audioBuildingAttackTurret;
         
 
 
-        public AudioSource AudioLvlUp => _audioLvlUp;
-        public AudioSource AudioHealting => _audioHealting;
-        public AudioSource AudioDamageToPlayer => _audioDamageToPlayer;
-        public AudioSource AudioMining => _audioMining;
-        public AudioSource AudioMininFinaly => _audioMiningFinaly;
-        public AudioSource AudioBuy => _audioBuy;
-        public AudioSource AudioStep => _audioStep;
-        public AudioSource AudioTakeDrop => _audioTakeDrop;
-        public AudioSource AudioReload => _audioReload;
-        public AudioSource AudioFire => _audioFire;
-        public AudioSource AudioBtn1 => _audioBtn1;
+        public AudioClip AudioLvlUp => _audioLvlUp;
+        public AudioClip AudioHealting => _audioHealting;
+        public AudioClip AudioDamageToPlayer => _audioDamageToPlayer;
+        public AudioClip AudioMining => _audioMining;
+        public AudioClip AudioMininFinaly => _audioMiningFinaly;
+        public AudioClip AudioBuy => _audioBuy;
+        public AudioClip AudioStep => _audioStep;
+        public AudioClip AudioTakeDrop => _audioTakeDrop;
+        public AudioClip AudioReload => _audioReload;
+        public AudioClip AudioFire => _audioFire;
+        public AudioClip AudioBtn1 => _audioBtn1;
         
-        public AudioSource AudioMiningTurret => _audioMiningTurret;
-        public AudioSource AudioFireTurret => _audioFireTurret;
-        public AudioSource AudioReloadTurret => _audioReloadTurret;
+        public AudioClip AudioMiningTurret => _audioMiningTurret;
+        public AudioClip AudioFireTurret => _audioFireTurret;
+        public AudioClip AudioReloadTurret => _audioReloadTurret;
 
-        public AudioSource AudioBuldingLamp => _audioBuildingLamp;
-        public AudioSource AudioBuldingShip => _audioBuildingShip;
-        public AudioSource AudioBuldingMineTurret => _audioBuildingMineTurret;
-        public AudioSource AudioBuldingAttackTurret => _audioBuildingAttackTurret;
-        public AudioSource AudioBuild => _audioBuild;
-        public AudioSource AudioBuildFinaly => _audioBuildFinaly;
+        public AudioClip AudioBuldingLamp => _audioBuildingLamp;
+        public AudioClip AudioBuldingShip => _audioBuildingShip;
+        public AudioClip AudioBuldingMineTurret => _audioBuildingMineTurret;
+        public AudioClip AudioBuldingAttackTurret => _audioBuildingAttackTurret;
+        public AudioClip AudioBuild => _audioBuild;
+        public AudioClip AudioBuildFinaly => _audioBuildFinaly;
 
 
         private void Awake()

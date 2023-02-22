@@ -3,6 +3,7 @@ using Feeling;
 
 public class Money : MonoBehaviour
 {
+    [SerializeField] private AudioSource _audioTakeDrop;
     private int _countMoney;
 
     private void Start()
@@ -17,8 +18,8 @@ public class Money : MonoBehaviour
             var economic = other.GetComponent<Economic>();
             
             economic.Money += _countMoney + economic.MoneyMultiplier;
-            AudioEffects.Instance.AudioTakeDrop.Play();
-            Destroy(gameObject, AudioEffects.Instance.AudioTakeDrop.clip.length);
+            _audioTakeDrop.Play();
+            Destroy(gameObject, _audioTakeDrop.clip.length);
         }
     }
 }

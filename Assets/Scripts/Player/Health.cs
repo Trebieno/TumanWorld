@@ -6,6 +6,8 @@ public class Health : MonoBehaviour, IAttackeble
 {
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _curHealth;
+    
+    [SerializeField] private AudioSource _audioHealting;
 
     public event Action Died;
     public event Action<float, float> HealthChanged;
@@ -27,9 +29,14 @@ public class Health : MonoBehaviour, IAttackeble
 
     public float MaxHealth => _maxHealth;
 
+    private void Start()
+    {
+        _audioHealting.clip = AudioEffects.Instance.AudioHealting;
+    }
+
     public void Healing()
     {
-        AudioEffects.Instance.AudioHealting.Play();
+        _audioHealting.Play();
         _curHealth += 50;
         if (_curHealth > _maxHealth)
             _curHealth = _maxHealth;
@@ -37,8 +44,8 @@ public class Health : MonoBehaviour, IAttackeble
 
     public void SetDamage(float damage)
     {
-        if(!AudioEffects.Instance.AudioDamageToPlayer.isPlaying)
-            AudioEffects.Instance.AudioDamageToPlayer.Play();
+        if(!_audioHealting.isPlaying)
+            _audioHealting.Play();
         CurrentHealth -= damage;
     }
 

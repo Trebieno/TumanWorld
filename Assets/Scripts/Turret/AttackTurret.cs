@@ -43,6 +43,8 @@ public class AttackTurret : Turret
     //направление вращения ( "0" - не вращать, "1" - вправо и "-1" - влево)
     private float _rotateDirection = 0;
 
+    private Turrets turret = Turrets.Attack;
+
     private void Start()
     {
         rotationSpeed = 2;
@@ -119,9 +121,30 @@ public class AttackTurret : Turret
             if(item.CompareTag("Player"))
             {
                 if(Input.GetKeyDown(KeyCode.Z))
-                {                    
-                    isPower = !isPower;
-                    indicatorActive.SetActive(isPower);
+                {      
+                    isDownKey = true;         
+                    currentTimeDismantling = maximimTimeDismantling;
+                }
+
+                else if (Input.GetKeyUp(KeyCode.Z))
+                {
+                    isDownKey = false;
+                    if(currentTimeDismantling > 0)
+                    {
+                        isPower = !isPower;
+                        textPowerTime.gameObject.SetActive(isPower);
+                        indicatorActive.SetActive(isPower);
+                    }
+                    
+                }
+
+                if(isDownKey)
+                {
+                    if(currentTimeDismantling > 0)
+                        currentTimeDismantling -= Time.deltaTime;
+                    
+                    else
+                        Dismantling(turret);
                 }
                     
                 player = true;

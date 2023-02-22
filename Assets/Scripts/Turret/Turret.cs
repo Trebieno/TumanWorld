@@ -10,8 +10,8 @@ public class Turret : MonoBehaviour, IAttackeble
     [SerializeField] protected float radiusTargets;
     [SerializeField] protected float radiusPlayer;
 
-    [SerializeField] protected Collider2D[] hitCollidersTargets;
-    [SerializeField] protected Collider2D[] hitCollidersPlayer;
+    protected Collider2D[] hitCollidersTargets;
+    protected Collider2D[] hitCollidersPlayer;
     
     [SerializeField] protected float maxPowerTime = 120;
     [SerializeField] protected float curPowerTime = 120;
@@ -29,6 +29,11 @@ public class Turret : MonoBehaviour, IAttackeble
     [SerializeField] protected float curHealth;
 
     [SerializeField] protected TextMeshProUGUI textHealth;
+
+    
+    [SerializeField] protected float maximimTimeDismantling = 1;
+    protected float currentTimeDismantling = 0;
+    protected bool isDownKey = false;
     
     protected void Checking()
     {
@@ -53,16 +58,15 @@ public class Turret : MonoBehaviour, IAttackeble
                 {
                     this.player.BattoryCount -= 1;
                     this.player.UpdateBattory();
-                curPowerTime = maxPowerTime;
+                    curPowerTime = maxPowerTime;
                 }                        
                 else
                 {
-                isPower = false;
-                indicatorActive.SetActive(isPower);
+                    isPower = false;
+                    indicatorActive.SetActive(isPower);
                 }                        
             }
     }
-
     public virtual bool Action(bool player)
     {
         player = false;
@@ -71,11 +75,32 @@ public class Turret : MonoBehaviour, IAttackeble
             if(item.CompareTag("Player"))
             {
                 if(Input.GetKeyDown(KeyCode.Z))
-                {                    
-                    isPower = !isPower;
-                    textPowerTime.gameObject.SetActive(isPower);
-                    indicatorActive.SetActive(isPower);
+                {      
+                    isDownKey = true;         
+                    currentTimeDismantling = maximimTimeDismantling;
                 }
+
+                else if (Input.GetKeyUp(KeyCode.Z))
+                {
+                    isDownKey = false;
+                    if(currentTimeDismantling > 0)
+                    {
+                        isPower = !isPower;
+                        textPowerTime.gameObject.SetActive(isPower);
+                        indicatorActive.SetActive(isPower);
+                    }
+                    
+                }
+
+                if(isDownKey)
+                {
+                    if(currentTimeDismantling > 0)
+                        currentTimeDismantling -= Time.deltaTime;
+                    
+                    // else
+                    //     Dismantling();
+                }
+
                     
                 player = true;
                 textPowerTime.gameObject.SetActive(true);
@@ -95,6 +120,24 @@ public class Turret : MonoBehaviour, IAttackeble
         Gizmos.DrawWireSphere(transform.position, radiusPlayer);
     }
 
+    public void Dismantling(Turrets turret)
+    {
+        switch (turret)
+        {
+            case Turrets.Mining:
+            player.MineTurretCount += 1;
+            break;
+
+            case Turrets.Attack:
+            player.AttackTurretCount += 1;
+            break;            
+        }
+
+        player.UpdateUI();
+        Destroy(gameObject);
+
+    }
+
     public void UpdateUIHealth()
     {
         textHealth.text = curHealth.ToString() + "/" + maxHealth;
@@ -109,4 +152,10 @@ public class Turret : MonoBehaviour, IAttackeble
             Destroy(gameObject);
         }
     }
+}
+
+public enum Turrets
+{
+    Mining,
+    Attack,
 }

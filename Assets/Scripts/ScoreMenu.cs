@@ -13,7 +13,7 @@ public class ScoreMenu : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I) && !_exitMenu.activeSelf) 
+        if(Input.GetKeyDown(KeyCode.C) && !_exitMenu.activeSelf) 
         {
             _menu.SetActive(!_menu.activeSelf);
             if(_menu.activeSelf)

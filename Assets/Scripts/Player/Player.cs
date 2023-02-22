@@ -131,6 +131,7 @@ public class Player : MonoBehaviour
 
     public void UpdateUI()
     {
+        UpdateScrollView();
         UpdateBattory();        
     }
 
