@@ -20,8 +20,8 @@ public class ClipCounter : MonoBehaviour
         _shooting.ClipChanged -= Shooting_OnClipChanged;
     }
 
-    private void Shooting_OnClipChanged(int curClip)
+    private void Shooting_OnClipChanged()
     {
-        _textClip.text = curClip.ToString();
+        _textClip.text = _shooting.CurrentAmmo.ToString();
     }
 }

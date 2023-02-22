@@ -28,27 +28,11 @@ public class Shooting : MonoBehaviour
     private Rigidbody2D _rb;
 
     public int MaximumAmmo => _maximumAmmo;
-    public int CurrentAmmo 
-    {
-        get{return _currentAmmo;}
-        set
-        {
-            CurrentAmmo = value;
-            AmmoChanged?.Invoke(_currentAmmo, _maximumAmmo);
-        }
-    }
-    public int Clips
-    {
-        get{return _clips;}
-        set
-        {
-            Clips = value;
-            ClipChanged?.Invoke(_clips);
-        }
-    }
+    public int CurrentAmmo => _currentAmmo;
+    public int Clips => _clips;
 
-    public event Action<int, int> AmmoChanged;
-    public event Action<int> ClipChanged;
+    public event Action AmmoChanged;
+    public event Action ClipChanged;
     
     private void Start()
     {
@@ -85,6 +69,7 @@ public class Shooting : MonoBehaviour
             if (_currentAmmo < _maximumAmmo)
             {
                 _currentAmmo = 0;
+                AmmoChanged?.Invoke();
             }
         }
     }
@@ -94,7 +79,7 @@ public class Shooting : MonoBehaviour
         if (_currentAmmo > 0)
         {
             _currentAmmo -= 1;
-
+            AmmoChanged?.Invoke();
             AudioEffects.Instance.AudioFire.Play();
 
             Bullet bullet = Instantiate(_bulletPrefub, _firePoint.position, _firePoint.rotation);
@@ -137,6 +122,8 @@ public class Shooting : MonoBehaviour
         AudioEffects.Instance.AudioReload.Stop();
         _clips -= 1;
         _currentAmmo = _maximumAmmo;
+        ClipChanged?.Invoke();
+        AmmoChanged?.Invoke();
         _isDelaingReload = false;
         _reloadSlider.gameObject.SetActive(false);
         _reloadSlider.value = 0;
@@ -155,6 +142,7 @@ public class Shooting : MonoBehaviour
     public void AddClip(int clip)
     {
         _clips += clip;
+        ClipChanged?.Invoke();
     }
 
     public void AddAmmo(int ammo)

@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class AmmoCounter : MonoBehaviour
 {
     [SerializeField] private Shooting _shooting;
-    private TMP_Text _textAmmo;
+    [SerializeField] private TMP_Text _textAmmo;
 
     private void Awake()
     {
@@ -20,8 +18,8 @@ public class AmmoCounter : MonoBehaviour
         _shooting.AmmoChanged -= Shooting_OnAmmoChanged;
     }
 
-    private void Shooting_OnAmmoChanged(int curAmmo, int maxAmmo)
+    private void Shooting_OnAmmoChanged()
     {
-        _textAmmo.text = $"{curAmmo} / {maxAmmo}";
+        _textAmmo.text = $"{_shooting.CurrentAmmo} / {_shooting.MaximumAmmo}";
     }
 }
