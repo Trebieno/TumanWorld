@@ -32,28 +32,21 @@ public class Movement : MonoBehaviour
         _movement = new Vector3(x, y, 0) * _moveSpeed;
         _mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
 
-        if(x != 0 || y != 0 )
+        if (x != 0 || y != 0)
         {
-            if(_currentTimeStep <= 0)
+            AudioSource[] clips = AudioEffects.Instance.AudioSteps;
+            if (!clips[_index].isPlaying)
             {
-                AudioEffects.Instance.AudioSteps[_index].gameObject.SetActive(false);
-
-                _index = Random.Range(0, AudioEffects.Instance.AudioSteps.Length - 1);            
-                
-                AudioEffects.Instance.AudioSteps[_index].gameObject.SetActive(true);
-
-                _currentTimeStep = _maximumTimeStep;
+                _index++;
+                if (_index >= clips.Length)
+                    _index = 0;
+                clips[_index].Play();
             }
         }
 
-        else if(x == 0 && y == 0)
-        {
-            AudioEffects.Instance.AudioSteps[_index].gameObject.SetActive(false);
-        }
 
-        if(_currentTimeStep > 0)
+        if (_currentTimeStep > 0)
             _currentTimeStep -= Time.deltaTime;
-        
     }
 
     private void FixedUpdate()

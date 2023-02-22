@@ -308,7 +308,7 @@ MonoBehaviour:
   _particleDeath: {fileID: 1430280114217484986, guid: 86b793cd2bbba5a4b8070eb0887aa710, type: 3}
   _attackMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2112
   _radius: 0.1
   _attackPoint: {fileID: 5778491860388324896}
 --- !u!50 &7839822329359853229

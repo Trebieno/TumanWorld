@@ -143,8 +143,8 @@ public class Ore : MonoBehaviour
 
     public void MineTurret()
     {
-        if(!_audioMining.isPlaying)
-            _audioMining.Play();
+      //  if(!_audioMining.isPlaying)
+      //     _audioMining.Play();
         _sliderMining.maxValue = _curTimeMining;
         _sliderMining.value += Time.deltaTime / 3;
         if(_sliderMining.value >= _sliderMining.maxValue )
