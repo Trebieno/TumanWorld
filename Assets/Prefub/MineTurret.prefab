@@ -591,8 +591,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radiusTargets: 0.62
   radiusPlayer: 0.6
-  hitCollidersTargets: []
-  hitCollidersPlayer: []
   maxPowerTime: 120
   curPowerTime: 120
   textPowerTime: {fileID: 5709322956121299000}
@@ -608,6 +606,7 @@ MonoBehaviour:
   maxHealth: 140
   curHealth: 140
   textHealth: {fileID: 6927514311024752128}
+  maximimTimeDismantling: 1
   _audioMiningTurret: {fileID: 6606698759722014258}
 --- !u!82 &6606698759722014258
 AudioSource:
@@ -618,9 +617,9 @@ AudioSource:
   m_GameObject: {fileID: 3990928953399320636}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  OutputAudioMixerGroup: {fileID: 6076653850957295441, guid: e6d0e05b36460904fabc6603fb2a46dd, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 20d79f4abf3a0074ea400fb573abde75, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -628,11 +627,11 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 5
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 5
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -641,7 +640,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.9730835
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -665,7 +664,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.989
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -680,7 +679,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -694,8 +693,8 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 0.011493683
+      value: 0.9407692
       inSlope: 0
       outSlope: 0
       tangentMode: 0
