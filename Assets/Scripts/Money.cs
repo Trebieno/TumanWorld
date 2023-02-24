@@ -4,7 +4,7 @@ using Feeling;
 public class Money : MonoBehaviour
 {
     [SerializeField] private AudioSource _audioTakeDrop;
-    private int _countMoney;
+    private float _countMoney;
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class Money : MonoBehaviour
         {
             var economic = other.GetComponent<Economic>();
             
-            economic.Money += _countMoney + economic.MoneyMultiplier;
+            economic.Money += Random.Range(0, _countMoney + economic.MoneyMultiplier);
             _audioTakeDrop.Play();
             Destroy(gameObject, _audioTakeDrop.clip.length);
         }

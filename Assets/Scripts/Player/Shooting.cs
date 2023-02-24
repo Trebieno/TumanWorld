@@ -134,12 +134,12 @@ public class Shooting : MonoBehaviour
 
     public void AddBulletDamage(float damage)
     {
-        _bulletDamage += damage;
+        _bulletDamage += (_bulletDamage / 100) * damage;
     }
 
     public void AddSpeedFire(float delay)
     {
-        _delayShoot -= delay;
+        _delayShoot -= (_delayShoot / 100) * delay;
     }
 
     public void AddClip(int clip)
@@ -150,6 +150,6 @@ public class Shooting : MonoBehaviour
 
     public void AddAmmo(int ammo)
     {
-        _maximumAmmo += ammo;
+        _maximumAmmo += (_maximumAmmo / 100) * ammo;
     }
 }

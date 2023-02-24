@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class Leveling : MonoBehaviour
 {
-    [SerializeField] private int _maxExpirience;
-    [SerializeField] private int _curExp;
+    [SerializeField] private float _maxExpirience;
+    [SerializeField] private float _curExp;
     
     [SerializeField] private int _level;
-    [SerializeField] private int _expMultiplier;
+    [SerializeField] private float _expMultiplier;
     
     [SerializeField] private AudioSource _audioLvlUp;
 
     public event Action<int> LevelChanged; 
-    public event Action<int, int> ExpirienceChanged; 
+    public event Action<float, float> ExpirienceChanged; 
 
     public int Level => _level;
 
-    public int MaxExpirience => _maxExpirience;
+    public float MaxExpirience => _maxExpirience;
 
-    public int CurrentExpirience
+    public float CurrentExpirience
     {
         get => _curExp;
         private set
@@ -29,14 +29,14 @@ public class Leveling : MonoBehaviour
         }
     }
 
-    public int ExpirienceMultiplier => _expMultiplier;
+    public float ExpirienceMultiplier => _expMultiplier;
 
     private void Start()
     {
         _audioLvlUp.clip = AudioEffects.Instance.AudioLvlUp;
     }
 
-    public void AddExp(int exp) => CurrentExpirience += exp;
+    public void AddExp(float exp) => CurrentExpirience += exp;
     
     public void CheckUpdateLevel()
     {
@@ -57,8 +57,8 @@ public class Leveling : MonoBehaviour
         //Instantiate(_particleLvlUp, transform.position, transform.rotation);
     }
 
-    public void IncreaseExpirienceMultiplier(int step)
+    public void IncreaseExpirienceMultiplier(float step)
     {
-        _expMultiplier += step;
+        _expMultiplier += (_expMultiplier / 100) * step;
     }
 }

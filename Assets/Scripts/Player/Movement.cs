@@ -69,6 +69,6 @@ public class Movement : MonoBehaviour
 
     public void AddSpeedMovement(float speed)
     {
-        _moveSpeed += speed;
+        _moveSpeed += (_moveSpeed / 100) * speed;
     }
 }

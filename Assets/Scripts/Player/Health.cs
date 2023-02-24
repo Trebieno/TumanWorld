@@ -37,7 +37,8 @@ public class Health : MonoBehaviour, IAttackeble
     public void Healing()
     {
         _audioHealting.Play();
-        _curHealth += 50;
+        CurrentHealth += 50;
+        // HealthChanged?.Invoke(_curHealth, _maxHealth);
         if (_curHealth > _maxHealth)
             _curHealth = _maxHealth;
     }
@@ -51,7 +52,7 @@ public class Health : MonoBehaviour, IAttackeble
 
     public void IncreaseMaxHealth(float newMaxHealth)
     {
-        _maxHealth += newMaxHealth;
+        _maxHealth += (_maxHealth / 100) * newMaxHealth;
         HealthChanged?.Invoke(_curHealth, _maxHealth);
     }
 }

@@ -20,7 +20,7 @@ public class ExpirienceCounter : MonoBehaviour
         _leveling.ExpirienceChanged -= Leveling_OnExpirienceChanged;
     }
 
-    private void Leveling_OnExpirienceChanged(int curExp, int maxExp)
+    private void Leveling_OnExpirienceChanged(float curExp, float maxExp)
     {
         _expSlider.value = curExp;
         _expSlider.maxValue = maxExp;

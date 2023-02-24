@@ -18,7 +18,7 @@ public class MoneyCounter : MonoBehaviour
         _economic.MoneyChanged -= Economic_OnMoneyChanged;
     }
 
-    private void Economic_OnMoneyChanged(int moneyValue)
+    private void Economic_OnMoneyChanged(float moneyValue)
     {
         _textMoney.text = _economic.Money.ToString();
     }

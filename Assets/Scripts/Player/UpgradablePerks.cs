@@ -10,13 +10,13 @@ public class UpgradablePerks : MonoBehaviour
     [SerializeField] private Player _player;
     
     
-    [SerializeField] private int _maxHealthIncreaseStep = 10;
-    [SerializeField] private float _speedIncreaseStep = 0.01f;
-    [SerializeField] private float _damageIncreaseStep = 0.3f;
-    [SerializeField] private int _moneyIncreaseStep = 1;
-    [SerializeField] private int _expirienceIncreaseStep = 1;
-    [SerializeField] private float _fireSpeedIncreaseStep = 0.003f;
-    [SerializeField] private int _ammoIncreaseStep = 1;
+    [SerializeField] private float _maxHealthIncreaseStep = 5;
+    [SerializeField] private float _speedIncreaseStep = 1;
+    [SerializeField] private float _damageIncreaseStep = 3;
+    [SerializeField] private float _moneyIncreaseStep = 10;
+    [SerializeField] private float _expirienceIncreaseStep = 2;
+    [SerializeField] private float _fireSpeedIncreaseStep = 3;
+    [SerializeField] private int _ammoIncreaseStep = 5;
 
     [SerializeField] private TMP_Text _textMainScreenScore;
     public event Action<int> ScoreChanged;
@@ -45,7 +45,7 @@ public class UpgradablePerks : MonoBehaviour
     {        
         Score += 3;
         _textMainScreenScore.gameObject.SetActive(true);
-        _textMainScreenScore.text = $"Очки навыков: {Score.ToString()}";
+        _textMainScreenScore.text = $"Очки: {Score.ToString()}";
     }
 
     public void UpgradeSkills(int typeId)

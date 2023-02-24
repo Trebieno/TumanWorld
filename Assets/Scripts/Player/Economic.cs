@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class Economic : MonoBehaviour
 {
-    [SerializeField] private int _moneyMultiplier;
-    [SerializeField] private int _money;
+    [SerializeField] private float _moneyMultiplier = 1;
+    [SerializeField] private float _money;
 
-    public event Action<int> MoneyChanged;
+    public event Action<float> MoneyChanged;
 
-    public int Money
+    public float Money
     {
         get => _money;
         set
@@ -18,10 +18,10 @@ public class Economic : MonoBehaviour
         }
     }
 
-    public int MoneyMultiplier => _moneyMultiplier;
+    public float MoneyMultiplier => _moneyMultiplier;
 
-    public void IncreaseMoneyMultiplier(int step)
+    public void IncreaseMoneyMultiplier(float step)
     {
-        _moneyMultiplier += step;
+        _moneyMultiplier += (_moneyMultiplier / 100) * step;
     }
 }
