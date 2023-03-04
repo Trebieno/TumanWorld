@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fa0085f50d5e54f8144f766051a691, type: 3}
   m_Name: FilmGrain
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   type:
     m_OverrideState: 1
@@ -61,12 +61,12 @@ MonoBehaviour:
     max: 200
   greenOutRedIn:
     m_OverrideState: 1
-    m_Value: 32
+    m_Value: -200
     min: -200
     max: 200
   greenOutGreenIn:
     m_OverrideState: 0
-    m_Value: 100
+    m_Value: 200
     min: -200
     max: 200
   greenOutBlueIn:
@@ -104,25 +104,25 @@ MonoBehaviour:
   active: 0
   m_AdvancedMode: 0
   threshold:
-    m_OverrideState: 1
-    m_Value: 224.12
+    m_OverrideState: 0
+    m_Value: 1.77
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1111333.2
+    m_Value: 11.3
     min: 0
   scatter:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
     min: 0
     max: 1
   clamp:
     m_OverrideState: 1
-    m_Value: 65472
+    m_Value: 1
     min: 0
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0, g: 1, b: 0.9892149, a: 1}
+    m_Value: {r: 1, g: 0.10849059, b: 0.10849059, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
@@ -139,7 +139,7 @@ MonoBehaviour:
     m_Value: {fileID: 0}
   dirtIntensity:
     m_OverrideState: 1
-    m_Value: 90.33
+    m_Value: 0
     min: 0
 --- !u!114 &-3774484159365594072
 MonoBehaviour:
@@ -209,6 +209,25 @@ MonoBehaviour:
     m_Value: 0
     min: -100
     max: 100
+--- !u!114 &-2370635429774774687
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
+  m_Name: ChromaticAberration
+  m_EditorClassIdentifier: 
+  active: 0
+  m_AdvancedMode: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
+    min: 0
+    max: 1
 --- !u!114 &-1613136787295026084
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -266,6 +285,8 @@ MonoBehaviour:
   - {fileID: -6276081570822155935}
   - {fileID: -3774484159365594072}
   - {fileID: -3333134833390507422}
+  - {fileID: -2370635429774774687}
+  - {fileID: 7183886831339785573}
 --- !u!114 &91065670339655582
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -343,3 +364,26 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 3.26
     min: 0
+--- !u!114 &7183886831339785573
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
+  m_Name: LiftGammaGain
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  lift:
+    m_OverrideState: 0
+    m_Value: {x: 0.9037222, y: 0.94083774, z: 1, w: 0}
+  gamma:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1, z: 1, w: 0.40752354}
+  gain:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1, z: 1, w: 0}

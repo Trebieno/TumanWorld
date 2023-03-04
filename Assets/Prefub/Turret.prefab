@@ -147,7 +147,7 @@ AudioSource:
   m_GameObject: {fileID: 1592336277217666097}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8357910079180783729, guid: e6d0e05b36460904fabc6603fb2a46dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: 7cbcf9b404d4d60429e09ffbe910ed41, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
@@ -490,7 +490,7 @@ AudioSource:
   m_GameObject: {fileID: 3536350304319891518}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -8357910079180783729, guid: e6d0e05b36460904fabc6603fb2a46dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: e11a5a019377fbd4c81caa0adcb4c236, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
@@ -1013,7 +1013,7 @@ GameObject:
   - component: {fileID: 8277229815038711867}
   m_Layer: 11
   m_Name: Turret
-  m_TagString: Untagged
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1076,27 +1076,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f3bd7c4a1dd704e9dc8096dfc97949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turret: 1
   radiusTargets: 2.61
   radiusPlayer: 0.6
-  hitCollidersTargets: []
-  hitCollidersPlayer: []
   maxPowerTime: 120
   curPowerTime: 120
   textPowerTime: {fileID: 93280636248672948}
   indicatorActive: {fileID: 1868481097996632792}
   player: {fileID: 0}
   isPower: 0
-  triggerEnemy:
+  enemyMask:
     serializedVersion: 2
     m_Bits: 256
-  triggerPlayer:
-    serializedVersion: 2
-    m_Bits: 64
   maxHealth: 170
   curHealth: 170
   textHealth: {fileID: 7286152326107663752}
+  maximimTimeDismantling: 1
   Target: {fileID: 0}
-  rotationSpeed: 1
+  rotationSpeed: 11.07
   _dulo: {fileID: 5212847037488870064}
   targets: []
   _audioShoot: {fileID: 4578576805046835425}
