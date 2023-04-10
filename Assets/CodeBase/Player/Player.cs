@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using Feeling;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -17,9 +18,9 @@ public class Player : MonoBehaviour
 
     public bool Flashlight;
 
-    [SerializeField] private GameObject _imageFlaslight;
-
     public bool Pickaxe;
+
+    [SerializeField] private GameObject _imageFlaslight;
 
     [SerializeField] private GameObject _imagePickaxe;
 
@@ -33,6 +34,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _radiusUse;
     [SerializeField] private LayerMask _use;
     [SerializeField] private Transform _usePoint;
+    [SerializeField] private GameObject _deadMenu;
+    [SerializeField] private Slider _destroySlider;
 
     
     private Movement _movement;
@@ -42,10 +45,14 @@ public class Player : MonoBehaviour
     private Leveling _leveling;
     private Economic _economic;
     private UpgradablePerks _upgradablePerks;
+    private Inventory _inventory;
 
+    
+    public Slider DestroySlider => _destroySlider;
     public Movement Movement => _movement;
     public Shooting Shooting => _shooting;
     public Health Health => _health;
+    public Inventory Inventory => _inventory;
     public Mining Mining 
     {
         get{
@@ -122,15 +129,18 @@ public class Player : MonoBehaviour
         _leveling = GetComponent<Leveling>();
         _economic = GetComponent<Economic>();
         _upgradablePerks = GetComponent<UpgradablePerks>();
+        _inventory = GetComponent<Inventory>();
 
         _imageFlaslight.gameObject.SetActive(false);
         _imagePickaxe.gameObject.SetActive(false);
 
         UpdateUI();
         _health.Died += Health_OnDied;
+        PlayerCash.Instance.Player = this;
+        _destroySlider.gameObject.SetActive(false);
     }
 
-    Turret previusTurret;
+    ObjectGame previusObject;
     private void Update()
     {
         hitCollidersUse = Physics2D.OverlapCircleAll(_usePoint.position, _radiusUse, _use).ToList();
@@ -138,23 +148,35 @@ public class Player : MonoBehaviour
         if(hitCollidersUse.Count > 0)
         {
             Collider2D collider = hitCollidersUse[0];
-            if(collider.CompareTag("Turret"))
+            if(collider.CompareTag("Object"))
             {
-                TurretsAll.Instance.Turrets.RemoveAll(x => x == null);
-                Turret turret = TurretsAll.Instance.Turrets.Find(x => x.transform == collider.transform);
-                turret.Active();
-                previusTurret = turret;
+                Objects.Instance.ObjectsGame.RemoveAll(x => x == null);
+                ObjectGame objectGame = Objects.Instance.ObjectsGame.Find(x => x.transform == collider.transform);
+                objectGame.Active();
+                previusObject = objectGame;              
+            }
+            else if(collider.CompareTag("Loot"))
+            {
+                Loots.Instance.Items.RemoveAll(x => x == null);
+                Item item = Loots.Instance.Items.Find(x => x.transform == collider.transform);
+                _inventory.AddItem(item.ItemScriptableObject, item.Amount);
+                Destroy(collider);
             }
         }
+
             
-        if(previusTurret != null && hitCollidersUse.Find(x => x.transform == previusTurret.transform) == null)
-            previusTurret.NotActive();
+        if(previusObject != null && hitCollidersUse.Find(x => x.transform == previusObject.transform) == null)
+        {
+            previusObject.NotActive();
+            _destroySlider.gameObject.SetActive(false);
+        }
         
     }
 
     private void OnDestroy() => _health.Died -= Health_OnDied;
 
-    private void Health_OnDied() => RestartGame();
+    private void Health_OnDied() => StateDeadMenu(true);
+    private void StateDeadMenu(bool state) => _deadMenu.SetActive(state);
 
 
     public void UpdateUI()
@@ -163,10 +185,9 @@ public class Player : MonoBehaviour
         UpdateBattory();        
     }
 
-    private void RestartGame()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
+    public void RestartGame() => SceneManager.LoadScene("Game");
+    
+
 
     public void UpdateBattory() => _textBattory.text = BattoryCount.ToString();
     

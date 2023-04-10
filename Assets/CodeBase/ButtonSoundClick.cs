@@ -18,6 +18,12 @@ public class ButtonSoundClick : MonoBehaviour
         _hoverFx.playOnAwake = false;
         _clickFx.playOnAwake = false;
 
+        _hoverFx.volume = Buttons.Instance.Volume;
+        _clickFx.volume = Buttons.Instance.Volume;
+
+        _hoverFx.pitch = Buttons.Instance.Pitch;
+        _clickFx.pitch = Buttons.Instance.Pitch;
+
         _eventTrigger = gameObject.AddComponent<EventTrigger>();
 
         EventTrigger.Entry entry1 = new EventTrigger.Entry();

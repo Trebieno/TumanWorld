@@ -24,9 +24,8 @@ public class UpgradablePerks : MonoBehaviour
     [SerializeField] private float _moneyIncreaseStep = 10;
     [SerializeField] private float _expirienceIncreaseStep = 2;
     [SerializeField] private float _fireSpeedIncreaseStep = 3;
-    [SerializeField] private int _ammoIncreaseStep = 5;
+    [SerializeField] private int _ammoIncreaseStep = 2;
 
-    [SerializeField] private TMP_Text _textMainScreenScore;
     public event Action<int> ScoreChanged;
 
     public int Score
@@ -50,8 +49,6 @@ public class UpgradablePerks : MonoBehaviour
         _startingExp = _player.Leveling.ExpirienceMultiplier;
         _startingFireSpeed = _player.Shooting.DelayShoot;
         _startingAmmo = _player.Shooting.CurrentAmmo;
-
-        _textMainScreenScore.text = $"Очки: {Score.ToString()}";
     }
 
     private void OnDestroy()
@@ -62,8 +59,6 @@ public class UpgradablePerks : MonoBehaviour
     private void Leveling_OnLevelChanged(int obj)
     {        
         Score += 3;
-        _textMainScreenScore.gameObject.SetActive(true);
-        _textMainScreenScore.text = $"Очки: {Score.ToString()}";
     }
 
     public void UpgradeSkills(int typeId)

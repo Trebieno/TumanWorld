@@ -16,7 +16,7 @@ public class MoneyCounter : MonoBehaviour
     {
         _textMoney = GetComponent<TMP_Text>();
         _economic.MoneyChanged += Economic_OnMoneyChanged;
-        _textMoney.text = _economic.Money.ToString("0.00");
+        _textMoney.text = _economic.Money.ToString("0");
     }
 
     private void Start()

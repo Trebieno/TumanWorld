@@ -120,6 +120,7 @@ public class Store : MonoBehaviour
     {
         _textFinalPrice.text = ((int)_oreCost * (int)_sliderOreSell.value).ToString();
         _textCountSell.text = $"{((int)_sliderOreSell.value).ToString()} / {(_player.Mining.CurrentOre).ToString()}";
+        _sliderOreSell.maxValue = _player.Mining.CurrentOre;
     }
 
     

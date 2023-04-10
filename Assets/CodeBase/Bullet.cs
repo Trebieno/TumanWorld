@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     {
         if(other.transform.CompareTag("Enemy"))
         {
-            other.transform.GetComponent<Character>().SetDamage(damage);
+            other.transform.GetComponent<IAttackeble>().SetDamage(damage);
         }
         Destroy(gameObject);
     }

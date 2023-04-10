@@ -10,11 +10,13 @@ public class MenuView : MonoBehaviour
     [SerializeField] private GameObject _storeMenu;
     [SerializeField] private GameObject _exitMenu;
     [SerializeField] private GameObject _scrollMenu;
+    [SerializeField] private GameObject _deadMenu;
     
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            
             if (_storeMenu.activeSelf)
             {
                 _storeMenu.SetActive(false);
@@ -24,6 +26,7 @@ public class MenuView : MonoBehaviour
             }
             else if (_exitMenu.activeSelf)
             {
+                AudioListener.pause = false;
                 Time.timeScale = 1;
                 _player.StateShooting(true);
                 _scrollMenu.SetActive(true);
@@ -45,6 +48,16 @@ public class MenuView : MonoBehaviour
                 _exitMenu.SetActive(true);
             }
         }
+
+        if(_deadMenu.activeSelf)
+        {
+            Time.timeScale = 0;
+            _scrollMenu.SetActive(false);
+            _exitMenu.SetActive(false);
+            _player.StateShooting(false);
+            _storeMenu.SetActive(false);
+            _scoreMenu.SetActive(false);
+        }
     }
 
     public void ExitMainMenu()
@@ -55,6 +68,7 @@ public class MenuView : MonoBehaviour
 
     public void BackGame()
     {
+        AudioListener.pause = false;
         Time.timeScale = 1;
         _player.StateShooting(true);
         _scrollMenu.SetActive(true);

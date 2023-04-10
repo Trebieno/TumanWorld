@@ -6,11 +6,14 @@ public class ScoreMenu : MonoBehaviour
     [SerializeField] private GameObject _exitMenu;
     [SerializeField] private GameObject _ScrollMenu;
     private Shooting _shooting;
+    private Leveling _leveling;
 
     private void Start() 
     {
         _shooting  = GetComponent<Shooting>();
+        _leveling = GetComponent<Leveling>();
     }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.C) && !_exitMenu.activeSelf) 
@@ -20,11 +23,14 @@ public class ScoreMenu : MonoBehaviour
             {
                 _shooting.enabled = false;
                 Switching();
+                if (_leveling.ImageNewLvl.activeSelf)
+                    _leveling.ImageNewLvl.SetActive(false);
             }
             else
             {
                 _shooting.enabled = true;
                 Switching();
+                
             }   
         }
     }

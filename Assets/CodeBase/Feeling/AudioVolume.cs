@@ -53,45 +53,45 @@ public class AudioVolume : MonoBehaviour
     private void Start()
     {   
         _volumeValueAll = PlayerPrefs.GetFloat(_volumeParameterAll, Mathf.Log10(_sliderVolumeAll.value) * _multiplier);
-        if(_volumeValueAll == 0) _volumeValueAll = 0.001f;
+        if(_volumeValueAll == 0) _volumeValueAll = 0.01f;
         _sliderVolumeAll.value = Mathf.Pow(10, _volumeValueAll / _multiplier);
 
         _volumeValueMusic = PlayerPrefs.GetFloat(_volumeParameterMusic, Mathf.Log10(_sliderVolumeMusic.value) * _multiplier);
-        if(_volumeValueMusic == 0) _volumeValueMusic = 0.001f;
+        if(_volumeValueMusic == 0) _volumeValueMusic = 0.01f;
         _sliderVolumeMusic.value = Mathf.Pow(10, _volumeValueMusic / _multiplier);
 
         _volumeValueEffect = PlayerPrefs.GetFloat(_volumeParameterEffect, Mathf.Log10(_sliderVolumeEffect.value) * _multiplier);
-        if(_volumeValueEffect == 0) _volumeValueEffect = 0.001f;
+        if(_volumeValueEffect == 0) _volumeValueEffect = 0.01f;
         _sliderVolumeEffect.value = Mathf.Pow(10, _volumeValueEffect / _multiplier);
 
         
         
         
 
-        All_OnVolumeChanged(_volumeValueAll);
-        Music_OnVolumeChanged(_volumeValueMusic);
-        Effect_OnVolumeChanged(_volumeValueEffect);
+        All_OnVolumeChanged(_sliderVolumeAll.value);
+        Music_OnVolumeChanged(_sliderVolumeMusic.value);
+        Effect_OnVolumeChanged(_sliderVolumeEffect.value);
     }
 
     private void All_OnVolumeChanged(float value)
     {        
         _volumeValueAll = Mathf.Log10(value) * _multiplier;
         _mixer.SetFloat(_volumeParameterAll, _volumeValueAll);
-        _textVolumeAll.text = (_sliderVolumeAll.value * 100).ToString("0.0");
+        _textVolumeAll.text = (_sliderVolumeAll.value * 100).ToString("0");
     }
 
     private void Music_OnVolumeChanged(float value)
     {
         _volumeValueMusic = Mathf.Log10(value) * _multiplier;
         _mixer.SetFloat(_volumeParameterMusic, _volumeValueMusic);
-        _textVolumeMusic.text = (_sliderVolumeMusic.value * 100).ToString("0.0");
+        _textVolumeMusic.text = (_sliderVolumeMusic.value * 100).ToString("0");
     }
 
     private void Effect_OnVolumeChanged(float value)
     {
         _volumeValueEffect = Mathf.Log10(value) * _multiplier;
         _mixer.SetFloat(_volumeParameterEffect, _volumeValueEffect);
-        _textVolumeEffect.text = (_sliderVolumeEffect.value * 100).ToString("0.0");
+        _textVolumeEffect.text = (_sliderVolumeEffect.value * 100).ToString("0");
     }
 
     private void OnDisable()

@@ -13,9 +13,13 @@ public class Leveling : MonoBehaviour
     [SerializeField] private AudioSource _audioLvlUp;
 
     public event Action<int> LevelChanged; 
-    public event Action<float, float> ExpirienceChanged; 
+    public event Action<float, float> ExpirienceChanged;
+
+    [SerializeField] private GameObject _imageNewLvl;
 
     public int Level => _level;
+
+    public GameObject ImageNewLvl => _imageNewLvl;
 
     public float MaxExpirience => _maxExpirience;
 
@@ -51,9 +55,9 @@ public class Leveling : MonoBehaviour
         _curExp = 0;
         
         LevelChanged?.Invoke(_level);
-        
+        ExpirienceChanged?.Invoke(_curExp, _maxExpirience);
         _audioLvlUp.Play();
-        
+        _imageNewLvl.SetActive(true);
         //Instantiate(_particleLvlUp, transform.position, transform.rotation);
     }
 

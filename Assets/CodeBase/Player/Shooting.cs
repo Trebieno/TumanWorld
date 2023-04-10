@@ -152,7 +152,7 @@ public class Shooting : MonoBehaviour
 
     public void AddAmmo(int ammo)
     {
-        _maximumAmmo += (_maximumAmmo / 100) * ammo;
+        _maximumAmmo += ammo;
     }
 
     public void SetAmmo(int ammo)

@@ -45,18 +45,24 @@ public class Character : MonoBehaviour, IAttackeble
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
-
+        _player = PlayerCash.Instance.Player;
         _audioDamage = GetComponent<AudioSource>();
         _rb = GetComponent<Rigidbody2D>();
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        _level = Random.Range(_player.Leveling.Level / 2, _player.Leveling.Level + 5);
-        _exp = Random.Range(_player.Leveling.Level, _player.Leveling.Level + 5);
+        
+        EnemyAll.Instance.Characters.Add(this);
+    }
+
+    public void InitializeSpecifications(int level)
+    {        
+        _level = level;
+        _exp = Random.Range(_level, _level + 5);
         maxHealth = Random.Range(10, _level);
         curHealth = maxHealth;
         damage = Random.Range(1, _level + 3);
-        moveSpeed = Random.Range(0.7f, _level / 80); // с 100 на 80
+        moveSpeed = Random.Range(0.7f, _level / 80); // с 100 на 80 
+        if(_agent == null)
+            _agent = GetComponent<NavMeshAgent>();
         _agent.speed = moveSpeed;
-        EnemyAll.Instance.Characters.Add(this);
     }
 
     private void Update()
