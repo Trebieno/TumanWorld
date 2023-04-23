@@ -15,7 +15,7 @@ public class Mining : MonoBehaviour
         get => _curOre;
         private set
         {
-            _curOre = value;
+            _curOre = value;            
             OreChanged?.Invoke(_curOre);
         }
     }

@@ -76,9 +76,11 @@ public class SpawnPoint : MonoBehaviour, IAttackeble
         Vector3 centrPoint = transform.position;
         Vector3 randomPoint = centrPoint + new Vector3(Random.value-0.5f,Random.value-0.5f,Random.value-0.5f).normalized * _radiusReproduction;
 
-        Instantiate(_spawnPrefab, randomPoint, Quaternion.identity);
+        Instantiate(_spawnPrefab, randomPoint, Quaternion.identity).Reset();
         _curTimeSpawnReproduction = Random.Range(_maxTimeSpawnReproduction/2, _maxTimeSpawnReproduction*2);
         _curExp += 5;
+        if(_curExp >= _maxExp)
+            UpgradeLevel();
     }
 
     private void SpawnNpc()
@@ -90,6 +92,8 @@ public class SpawnPoint : MonoBehaviour, IAttackeble
         npc.InitializeSpecifications(_level);
         _curTimeSpawnNpc = Random.Range(_maxTimeSpawnNpc/2, _maxTimeSpawnNpc*2);
         _curExp += 1;
+        if(_curExp >= _maxExp)
+            UpgradeLevel();
     }
     
 
@@ -105,7 +109,7 @@ public class SpawnPoint : MonoBehaviour, IAttackeble
     private void UpgradeLevel()
     {
         _level += 1;
-        _maxExp += (_maxExp * 10) / 100;
+        _maxExp += (_maxExp * 40) / 100;
         _curExp = 0;
 
         _audioLvlUp.Play();
@@ -128,10 +132,24 @@ public class SpawnPoint : MonoBehaviour, IAttackeble
             {
                 int randomIndex = Random.Range(0, lootObjects.Count);
 
-                Instantiate(lootObjects[randomIndex], transform.position, transform.rotation);
+                Vector3 centrPoint = transform.position;
+                Vector3 randomPoint = centrPoint + new Vector3(Random.value-0.5f,Random.value-0.5f,Random.value-0.5f).normalized * 0.5f;
+                Instantiate(lootObjects[randomIndex], randomPoint, new Quaternion(0, 0, Random.Range(0, 355), 0));
             }
         }
     }
+
+    public void Reset()
+    {
+        _curExp = 0;
+        _maxExp = 20;
+        _maxHealth = 100;
+        _curHealth = _maxHealth;
+        _level = 1;
+        _maxTimeSpawnNpc = 20;
+        _curTimeSpawnNpc = _maxTimeSpawnNpc;
+    }
+
     public void SetDamage(float damage)
     {            
         _curHealth -= damage;

@@ -34,19 +34,54 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemScriptableObject item, int amount)
     {
-        var slot = slots.Find(x => x == item);
+        // var slot = slots.Find(x => x.Item == item && x.Amount < item.MaximumAmount);
         
-        if(slot != null)
-            slot.Amount += amount;
+        // if(slot != null)
+        // {
+        //     slot.Amount += amount;
+        //     slot.SetText(slot.Amount);
+        // }
 
-        else
+        // else
+        // {
+        //     var emptySlot = slots.Find(x => x.IsEmpty == true);
+        //     if(emptySlot != null)
+        //     {
+        //         emptySlot.Item = item;
+        //         emptySlot.Amount = amount;
+        //         emptySlot.IsEmpty = false;
+        //         emptySlot.SetIcon(item.Icon);
+        //         emptySlot.SetText(amount);
+        //     }
+        // }
+
+        switch (item.ItemType)
         {
-            var emptySlot = slots.Find(x => x.IsEmpty == true);
-            emptySlot.Item = item;
-            emptySlot.Amount = amount;
-            emptySlot.IsEmpty = false;
+            case ItemType.Clip:
+                PlayerCash.Instance.Player.AddClip(amount);
+                break;
+            
+            case ItemType.Ore:
+                PlayerCash.Instance.Player.Mining.AddOre(amount);
+                break;
+
+            case ItemType.AttackTurret:
+                PlayerCash.Instance.Player.AttackTurretCount += amount;
+                break;
+
+            case ItemType.MiningTurret:
+                PlayerCash.Instance.Player.MineTurretCount += amount;
+                break;
+            
+            case ItemType.SpikeTrap:
+                PlayerCash.Instance.Player.SpikeTrapCount += amount;
+                break;
+            
+            case ItemType.MineTrap:
+                PlayerCash.Instance.Player.MineTrapCount += amount;
+                break;            
         }
 
-
+        PlayerCash.Instance.Player.UpdateScrollView();
     }
 }

@@ -26,7 +26,7 @@ public class Character : MonoBehaviour, IAttackeble
     private Vector2 _movement;
     private AudioSource _audioDamage;
     private Player _player;
-    private NavMeshAgent _agent;
+    private NavMeshAgent _agent;    
 
     [Space(10)] [SerializeField] private AudioSource _audioDeath;
     [SerializeField] private SpriteRenderer _skin;
@@ -37,11 +37,13 @@ public class Character : MonoBehaviour, IAttackeble
 
     [Space(10)] [SerializeField] private Transform _attackPoint;
 
+    private Collider2D _colliderTarget;
     private Collider2D _collider;
 
 
     private void Start()
     {
+        _collider = GetComponent<Collider2D>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
@@ -81,7 +83,7 @@ public class Character : MonoBehaviour, IAttackeble
         {
             TurretsAll.Instance.Turrets.RemoveAll(x => x == null);
             int rnd = Random.Range(0, 100);
-            if (rnd > 50)
+            if (30 >= rnd)
                 _target = TurretsAll.Instance.Turrets[Random.Range(0, TurretsAll.Instance.Turrets.Count - 1)].transform;
             else
                 _target = _player.transform;
@@ -134,12 +136,13 @@ public class Character : MonoBehaviour, IAttackeble
 
                 Instantiate(lootObjects[randomIndex], transform.position, transform.rotation);
             }
+            
 
             _player.Leveling.AddExp(_exp + _player.Leveling.ExpirienceMultiplier);
             _player.Leveling.CheckUpdateLevel();
 
             _player = null;
-            GetComponent<Collider2D>().enabled = false;
+            _collider.enabled = false;
             _skin.enabled = false;
             _audioDeath.Play();
             Instantiate(_particleDeath, transform.position, transform.rotation);

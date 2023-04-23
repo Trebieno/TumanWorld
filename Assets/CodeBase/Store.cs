@@ -89,7 +89,7 @@ public class Store : MonoBehaviour
 
     public void Buy(string type)
     {
-        if (type == "ship" && _player.Economic.Money >= 40) TypeBuy(40, () => _player.ShipCount += 1);
+        if (type == "ship" && _player.Economic.Money >= 40) TypeBuy(40, () => _player.SpikeTrapCount += 1);
         if (type == "light" && _player.Economic.Money >= 65) TypeBuy(65, () => _player.LightCount += 1);
         if (type == "clip" && _player.Economic.Money >= 20) TypeBuy(20, () => _player.AddClip(1));
         if (type == "health" && _player.Economic.Money >= 15) TypeBuy(15, _player.Health.Healing);

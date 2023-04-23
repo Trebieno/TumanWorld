@@ -33,6 +33,7 @@ public class Turret : ObjectGame, IAttackeble
     {
         textPowerTime.gameObject.SetActive(false);
         textHealth.gameObject.SetActive(false);
+        TurretsAll.Instance.Turrets.Add(this);
         Objects.Instance.ObjectsGame.Add(this);
         onStart.Invoke();
     }

@@ -5,9 +5,4 @@ public class TurretItem : ItemScriptableObject
 {
     public float damageAmount;
     public float healthAmount;
-
-    private void Start()
-    {
-        ItemType = ItemType.Turret;
-    }
 }

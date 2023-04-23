@@ -9,6 +9,8 @@ public class ObjectGame : MonoBehaviour
     protected bool isDownKey = false;
     protected float currentTimeDismantling = 0;
     protected GameObjects typeObject;
+
+    public GameObjects TypeObject => typeObject;
     private void Start()
     {
         player = PlayerCash.Instance.Player;
@@ -32,7 +34,7 @@ public class ObjectGame : MonoBehaviour
                 break;
 
             case GameObjects.Ship:
-                player.ShipCount += 1;
+                player.SpikeTrapCount += 1;
                 break;
         }
 

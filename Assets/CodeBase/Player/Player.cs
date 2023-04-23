@@ -14,7 +14,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _textBattory;
 
-    public int ShipCount;
+    public int SpikeTrapCount;
+
+    public int MineTrapCount; 
 
     public bool Flashlight;
 
@@ -36,6 +38,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _usePoint;
     [SerializeField] private GameObject _deadMenu;
     [SerializeField] private Slider _destroySlider;
+    [SerializeField] private Inventory _inventory;
+    [SerializeField] private GameObject _updateTurretMenu;
 
     
     private Movement _movement;
@@ -45,7 +49,6 @@ public class Player : MonoBehaviour
     private Leveling _leveling;
     private Economic _economic;
     private UpgradablePerks _upgradablePerks;
-    private Inventory _inventory;
 
     
     public Slider DestroySlider => _destroySlider;
@@ -90,7 +93,7 @@ public class Player : MonoBehaviour
     public void UpdateScrollView()
     {
         if (_scrollViewResourse.Index == 0)
-            _scrollViewResourse.TextInventory.text = ShipCount.ToString();
+            _scrollViewResourse.TextInventory.text = SpikeTrapCount.ToString();
         if (_scrollViewResourse.Index == 1)
             _scrollViewResourse.TextInventory.text = LightCount.ToString();
         if (_scrollViewResourse.Index == 2)
@@ -129,7 +132,7 @@ public class Player : MonoBehaviour
         _leveling = GetComponent<Leveling>();
         _economic = GetComponent<Economic>();
         _upgradablePerks = GetComponent<UpgradablePerks>();
-        _inventory = GetComponent<Inventory>();
+
 
         _imageFlaslight.gameObject.SetActive(false);
         _imagePickaxe.gameObject.SetActive(false);
@@ -140,7 +143,8 @@ public class Player : MonoBehaviour
         _destroySlider.gameObject.SetActive(false);
     }
 
-    ObjectGame previusObject;
+    private ObjectGame _previusObject;
+    private bool isOpened;
     private void Update()
     {
         hitCollidersUse = Physics2D.OverlapCircleAll(_usePoint.position, _radiusUse, _use).ToList();
@@ -153,21 +157,37 @@ public class Player : MonoBehaviour
                 Objects.Instance.ObjectsGame.RemoveAll(x => x == null);
                 ObjectGame objectGame = Objects.Instance.ObjectsGame.Find(x => x.transform == collider.transform);
                 objectGame.Active();
-                previusObject = objectGame;              
+                _previusObject = objectGame;
+
+                if(objectGame.TypeObject == GameObjects.AttackTurret || objectGame.TypeObject == GameObjects.MiningTurret)
+                {
+                    if(Input.GetKeyDown(KeyCode.X))
+                    {
+                        isOpened = !isOpened;
+                        if(isOpened)
+                            _updateTurretMenu.SetActive(true);
+                        
+                        else
+                            _updateTurretMenu.SetActive(false);
+                    }
+                }
             }
-            else if(collider.CompareTag("Loot"))
+            else if(collider.CompareTag("Loot") && Input.GetKeyDown(KeyCode.E))
             {
+                Debug.Log("Подбираю");
                 Loots.Instance.Items.RemoveAll(x => x == null);
                 Item item = Loots.Instance.Items.Find(x => x.transform == collider.transform);
                 _inventory.AddItem(item.ItemScriptableObject, item.Amount);
-                Destroy(collider);
+                Loots.Instance.Items.RemoveAll(x => x == null);
+                Destroy(item.gameObject);
+
             }
         }
 
             
-        if(previusObject != null && hitCollidersUse.Find(x => x.transform == previusObject.transform) == null)
+        if(_previusObject != null && hitCollidersUse.Find(x => x.transform == _previusObject.transform) == null)
         {
-            previusObject.NotActive();
+            _previusObject.NotActive();
             _destroySlider.gameObject.SetActive(false);
         }
         

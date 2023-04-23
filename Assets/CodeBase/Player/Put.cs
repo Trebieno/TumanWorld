@@ -38,7 +38,7 @@ public class Put : MonoBehaviour
 
     private void Update()
     {
-        if(_player.ShipCount > 0 && _scrollViewResourse.Index == 0)
+        if(_player.SpikeTrapCount > 0 && _scrollViewResourse.Index == 0)
             Build(_shipPutTime, _shipPrefab, 0, AudioEffects.Instance.AudioBuldingShip);
 
         else if(_player.LightCount > 0 && _scrollViewResourse.Index == 1)
@@ -98,7 +98,7 @@ public class Put : MonoBehaviour
                 _sliderBuild.value = 0;
                 
                 if(index == 0)
-                    _player.ShipCount -= 1;
+                    _player.SpikeTrapCount -= 1;
                 
                 if(index == 1)
                     _player.LightCount -= 1;

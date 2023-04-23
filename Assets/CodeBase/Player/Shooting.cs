@@ -153,6 +153,7 @@ public class Shooting : MonoBehaviour
     public void AddAmmo(int ammo)
     {
         _maximumAmmo += ammo;
+        AmmoChanged?.Invoke();
     }
 
     public void SetAmmo(int ammo)

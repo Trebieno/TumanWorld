@@ -11,6 +11,7 @@ TagManager:
   - Light
   - Ship
   - Object
+  - Loot
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Bullet
   - Light
   - Ship
-  - 
+  - Loot
   - 
   - 
   - 
