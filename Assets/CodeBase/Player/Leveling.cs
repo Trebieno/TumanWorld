@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Leveling : MonoBehaviour
 {
-    [SerializeField] private float _maxExpirience;
+    [SerializeField] private float _maxExp;
     [SerializeField] private float _curExp;
     
     [SerializeField] private int _level;
@@ -21,7 +21,7 @@ public class Leveling : MonoBehaviour
 
     public GameObject ImageNewLvl => _imageNewLvl;
 
-    public float MaxExpirience => _maxExpirience;
+    public float MaxExpirience => _maxExp;
 
     public float CurrentExpirience
     {
@@ -29,7 +29,7 @@ public class Leveling : MonoBehaviour
         private set
         {
             _curExp = value;
-            ExpirienceChanged?.Invoke(_curExp, _maxExpirience);
+            ExpirienceChanged?.Invoke(_curExp, _maxExp);
         }
     }
 
@@ -40,22 +40,26 @@ public class Leveling : MonoBehaviour
         _audioLvlUp.clip = AudioEffects.Instance.AudioLvlUp;
     }
 
-    public void AddExp(float exp) => CurrentExpirience += exp;
-    
+    public void AddExp(float exp)
+    {
+        CurrentExpirience += exp;
+        CheckUpdateLevel();
+    }
+
     public void CheckUpdateLevel()
     {
-        if(_curExp >=_maxExpirience)
+        if(_curExp >=_maxExp)
             UpgradeLevel();
     }
     
     private void UpgradeLevel()
     {
         _level += 1;
-        _maxExpirience += (_maxExpirience * 10) / 100;
+        _maxExp += (_maxExp * 10) / 100;
         _curExp = 0;
         
         LevelChanged?.Invoke(_level);
-        ExpirienceChanged?.Invoke(_curExp, _maxExpirience);
+        ExpirienceChanged?.Invoke(_curExp, _maxExp);
         _audioLvlUp.Play();
         _imageNewLvl.SetActive(true);
         //Instantiate(_particleLvlUp, transform.position, transform.rotation);

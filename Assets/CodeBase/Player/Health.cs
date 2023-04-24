@@ -42,7 +42,7 @@ public class Health : MonoBehaviour, IAttackeble
             _curHealth = _maxHealth;
     }
 
-    public void SetDamage(float damage)
+    public void SetDamage(float damage, Turret turret = null)
     {
         //if(!_audioHealting.isPlaying)
             //_audioHealting.Play();

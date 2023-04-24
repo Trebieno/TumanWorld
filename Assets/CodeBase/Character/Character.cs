@@ -104,11 +104,11 @@ public class Character : MonoBehaviour, IAttackeble
         if (_curCulldown > 0)
             _curCulldown -= Time.fixedDeltaTime;
 
-        _collider = Physics2D.OverlapCircle(_attackPoint.position, _radius, _attackMask);
+        _colliderTarget = Physics2D.OverlapCircle(_attackPoint.position, _radius, _attackMask);
 
-        if (_collider != null && _curCulldown <= 0)
+        if (_colliderTarget != null && _curCulldown <= 0)
         {
-            _collider.GetComponent<IAttackeble>().SetDamage(damage);
+            _colliderTarget.GetComponent<IAttackeble>().SetDamage(damage);
             _curCulldown = _maxCulldown;
         }
     }
@@ -124,7 +124,7 @@ public class Character : MonoBehaviour, IAttackeble
         Gizmos.DrawWireSphere(_attackPoint.position, _radius);
     }
 
-    public void SetDamage(float damage)
+    public void SetDamage(float damage, Turret turret)
     {
         curHealth -= damage;
         _audioDamage.Play();
@@ -137,9 +137,11 @@ public class Character : MonoBehaviour, IAttackeble
                 Instantiate(lootObjects[randomIndex], transform.position, transform.rotation);
             }
             
-
-            _player.Leveling.AddExp(_exp + _player.Leveling.ExpirienceMultiplier);
-            _player.Leveling.CheckUpdateLevel();
+            if(turret == null)
+                _player.Leveling.AddExp(_exp + _player.Leveling.ExpirienceMultiplier);                
+            else
+                turret.AddExp(_exp);
+            
 
             _player = null;
             _collider.enabled = false;

@@ -371,8 +371,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -473489851254352019, guid: b7b07accbc3dcd64b848e5f5552299b2, type: 3}
+  m_Color: {r: 0.24528301, g: 0.03355287, b: 0.03355287, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -423,7 +423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3361784488787197990}
   - component: {fileID: 3361784488787197991}
-  - component: {fileID: 3361784488787197985}
+  - component: {fileID: 7646128160698565513}
   m_Layer: 16
   m_Name: SpawPoint
   m_TagString: Enemy
@@ -439,8 +439,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3361784488787197988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.5039997, y: 3, z: 0}
-  m_LocalScale: {x: 0.48527, y: 0.48527, z: 0.48527}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 3361784487948504699}
   - {fileID: 3361784488688858354}
@@ -475,7 +475,7 @@ MonoBehaviour:
   _level: 1
   _maxExp: 20
   _curExp: 0
-  _maxTimeSpawnReproduction: 20
+  _maxTimeSpawnReproduction: 22.87
   _curTimeSpawnReproduction: 10
   _maxTimeSpawnNpc: 13
   _curTimeSpawnNpc: 10
@@ -483,8 +483,8 @@ MonoBehaviour:
   _curTimeHideBar: 0
   _radiusSpawn: 0.61
   _radiusReproduction: 2.02
---- !u!61 &3361784488787197985
-BoxCollider2D:
+--- !u!58 &7646128160698565513
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -496,19 +496,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: -0.023940563, y: -0.017955542}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 1.2122395
 --- !u!1 &3361784489349577373
 GameObject:
   m_ObjectHideFlags: 0

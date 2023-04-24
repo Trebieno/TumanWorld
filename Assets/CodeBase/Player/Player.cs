@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _deadMenu;
     [SerializeField] private Slider _destroySlider;
     [SerializeField] private Inventory _inventory;
-    [SerializeField] private GameObject _updateTurretMenu;
+    [SerializeField] private UpdateTurretMenu _updateTurretMenu;
 
     
     private Movement _movement;
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
     private Economic _economic;
     private UpgradablePerks _upgradablePerks;
 
-    
+    public UpdateTurretMenu UpgradableTurretPerks => _updateTurretMenu;
     public Slider DestroySlider => _destroySlider;
     public Movement Movement => _movement;
     public Shooting Shooting => _shooting;
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
         _economic = GetComponent<Economic>();
         _upgradablePerks = GetComponent<UpgradablePerks>();
 
-
+        _updateTurretMenu.gameObject.SetActive(false);
         _imageFlaslight.gameObject.SetActive(false);
         _imagePickaxe.gameObject.SetActive(false);
 
@@ -145,6 +145,13 @@ public class Player : MonoBehaviour
 
     private ObjectGame _previusObject;
     private bool isOpened;
+    private Turret _turret;
+
+    public void OnClickUpdateTurretMenu(int typeId)
+    {
+        _turret.UpgradeSkills(typeId);
+    }
+
     private void Update()
     {
         hitCollidersUse = Physics2D.OverlapCircleAll(_usePoint.position, _radiusUse, _use).ToList();
@@ -156,19 +163,45 @@ public class Player : MonoBehaviour
             {
                 Objects.Instance.ObjectsGame.RemoveAll(x => x == null);
                 ObjectGame objectGame = Objects.Instance.ObjectsGame.Find(x => x.transform == collider.transform);
+
                 objectGame.Active();
                 _previusObject = objectGame;
 
                 if(objectGame.TypeObject == GameObjects.AttackTurret || objectGame.TypeObject == GameObjects.MiningTurret)
                 {
+                    var turret = TurretsAll.Instance.Turrets.Find(x => x.transform == collider.transform);
+                    _turret = turret;
+                    if(turret != null)
+                        _updateTurretMenu.UpdateTextInfo(turret.Damage,
+                                                        turret.RotationSpeed,
+                                                        turret.CurHealth,
+                                                        turret.MaxHealth,
+                                                        turret.CurAmmo,
+                                                        turret.MaxAmmo,
+                                                        turret.Score,
+                                                        turret.CurrentExpirience,
+                                                        turret.MaxExpirience,
+                                                        turret.Level,
+                                                        (int)turret.Power,
+                                                        turret.RadiusTargets,
+                                                        turret.OreCell);
                     if(Input.GetKeyDown(KeyCode.X))
                     {
                         isOpened = !isOpened;
                         if(isOpened)
-                            _updateTurretMenu.SetActive(true);
+                        {
+                            _updateTurretMenu.gameObject.SetActive(true);
+                            Shooting.enabled = false;
+                            _movement.enabled = false;
+                        }
                         
                         else
-                            _updateTurretMenu.SetActive(false);
+                        {
+                            _updateTurretMenu.gameObject.SetActive(false);
+                            Shooting.enabled = true;
+                            _movement.enabled = true;
+                        }
+                        
                     }
                 }
             }

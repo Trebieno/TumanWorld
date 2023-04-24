@@ -118,5 +118,7 @@ public enum Perks
     Money,
     Expirience,
     FireSpeed,
-    Ammo
+    Ammo,
+    Radius,
+    Time
 }

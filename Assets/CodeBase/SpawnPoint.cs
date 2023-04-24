@@ -112,7 +112,7 @@ public class SpawnPoint : MonoBehaviour, IAttackeble
         _maxExp += (_maxExp * 40) / 100;
         _curExp = 0;
 
-        _audioLvlUp.Play();
+        // _audioLvlUp.Play();
         //Instantiate(_particleLvlUp, transform.position, transform.rotation);
     }
 
@@ -150,7 +150,7 @@ public class SpawnPoint : MonoBehaviour, IAttackeble
         _curTimeSpawnNpc = _maxTimeSpawnNpc;
     }
 
-    public void SetDamage(float damage)
+    public void SetDamage(float damage, Turret turret = null)
     {            
         _curHealth -= damage;
         if (_curHealth <= 0)

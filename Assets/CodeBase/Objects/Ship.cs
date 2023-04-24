@@ -23,7 +23,7 @@ public class Ship : ObjectGame
             if(_charge > 0)
             {
                 _audio.Play();
-                other.GetComponent<Character>().SetDamage(_damage);
+                EnemyAll.Instance.Characters.Find(x => x.transform == other.transform).SetDamage(_damage, null);
                 _charge -= 1;
                 if(_charge == 0)
                     Destroy(gameObject, _audio.clip.length);

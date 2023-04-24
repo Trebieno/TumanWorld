@@ -153,7 +153,7 @@ Transform:
   m_GameObject: {fileID: 5581924549761977205}
   m_LocalRotation: {x: -0.00000032782552, y: -0, z: 0.70710695, w: 0.70710665}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.43, y: 0.43, z: 0.43}
   m_Children: []
   m_Father: {fileID: 7839822329359853219}
   m_RootOrder: 2
@@ -198,7 +198,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 4035678787659865102, guid: 1111516a8493db8449c042aa27094b1c, type: 3}
+  m_Sprite: {fileID: 5198394779838958293, guid: b7b07accbc3dcd64b848e5f5552299b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -233,7 +233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6673357591113966543}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.135, y: 0, z: 0}
+  m_LocalPosition: {x: 0.111, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7839822329359853219}
@@ -269,8 +269,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7839822329359853228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.18}
+  m_LocalScale: {x: 0.59745, y: 0.59745, z: 0.8535}
   m_Children:
   - {fileID: 320868199979039107}
   - {fileID: 5778491860388324896}
@@ -309,7 +309,7 @@ MonoBehaviour:
   _attackMask:
     serializedVersion: 2
     m_Bits: 2112
-  _radius: 0.1
+  _radius: 0.11
   _attackPoint: {fileID: 5778491860388324896}
 --- !u!50 &7839822329359853229
 Rigidbody2D:
@@ -345,7 +345,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02707737, y: 0.0022564828}
+  m_Offset: {x: -0.027077377, y: 0.0050349683}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -356,7 +356,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38625377, y: 0.46297234}
+  m_Size: {x: 0.38625377, y: 0.89640236}
   m_EdgeRadius: 0
 --- !u!114 &4658280868716069268
 MonoBehaviour:
@@ -383,7 +383,7 @@ MonoBehaviour:
   - {x: -0.25858513, y: 0.17884487, z: 0}
   m_ShapePathHash: -473685811
   m_Mesh: {fileID: 0}
-  m_InstanceId: 97012
+  m_InstanceId: 108308
 --- !u!82 &775204529893356362
 AudioSource:
   m_ObjectHideFlags: 0

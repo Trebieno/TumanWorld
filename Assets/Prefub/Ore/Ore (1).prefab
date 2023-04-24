@@ -365,7 +365,7 @@ Transform:
   m_GameObject: {fileID: 3573186930166357616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.57944, y: 0.57944, z: 0.57944}
+  m_LocalScale: {x: 0.21527356, y: 0.21527356, z: 0.21527356}
   m_Children:
   - {fileID: 3573186930355845953}
   - {fileID: 8765324754483490878}
@@ -412,7 +412,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1061163366127578352, guid: 5b4739d5503e1304ba53e91d05df0e7c, type: 3}
+  m_Sprite: {fileID: -4778005305831842634, guid: b7b07accbc3dcd64b848e5f5552299b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -439,34 +439,22 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 0.77827245, y: -0.21056595}
-  - {x: 0.68168765, y: -0.41859686}
-  - {x: 0.60594594, y: -0.54600805}
-  - {x: 0.48009846, y: -0.6480396}
-  - {x: 0.4683889, y: -0.65681106}
-  - {x: 0.29218936, y: -0.7578022}
-  - {x: 0.1920945, y: -0.80027896}
-  - {x: -0.18034281, y: -0.79312015}
-  - {x: -0.4949994, y: -0.574756}
-  - {x: -0.559863, y: -0.47922546}
-  - {x: -0.6274438, y: -0.2887242}
-  - {x: -0.6886394, y: -0.16610026}
-  - {x: -0.7137527, y: 0.06627205}
-  - {x: -0.5338201, y: 0.35050625}
-  - {x: -0.545164, y: 0.39499784}
-  - {x: -0.41425395, y: 0.522699}
-  - {x: -0.24040559, y: 0.57146}
-  - {x: -0.06688875, y: 0.60320175}
-  - {x: 0.10065901, y: 0.6144718}
-  - {x: 0.23168448, y: 0.6002201}
-  - {x: 0.28676307, y: 0.5929828}
-  - {x: 0.32079434, y: 0.57520545}
-  - {x: 0.48315462, y: 0.39843833}
-  - {x: 0.5480233, y: 0.32271484}
-  - {x: 0.72778445, y: 0.14876561}
-  - {x: 0.76571304, y: 0.052112553}
-  - {x: 0.76409835, y: -0.23068663}
-  - {x: 0.7087771, y: -0.3691702}
+  - {x: 1.6938654, y: 0.9969955}
+  - {x: 1.2910713, y: 1.4356378}
+  - {x: 0.64218324, y: 1.5792485}
+  - {x: 0.019041307, y: 1.2381227}
+  - {x: -0.37464032, y: 1.6286079}
+  - {x: -0.9095225, y: 1.6397758}
+  - {x: -1.5123456, y: 1.4721038}
+  - {x: -1.7641315, y: 0.85740393}
+  - {x: -1.603315, y: 0.23233159}
+  - {x: -1.6676118, y: -1.1874809}
+  - {x: -0.8190405, y: -1.6519423}
+  - {x: 0.18102486, y: -1.3239697}
+  - {x: 0.905333, y: -1.4759213}
+  - {x: 1.3814445, y: -1.2547259}
+  - {x: 1.7545735, y: -0.059567306}
+  - {x: 1.728657, y: 0.9077125}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -483,8 +471,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a72f444bd95da54c8d50e39d90c2678, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxOre: 78
-  _curOre: 117
+  _maxOre: 30
+  _curOre: 30
   _curResetTime: 0
   _maxResetTime: 0
   _textCountOre: {fileID: 3573186929780139188}
@@ -506,9 +494,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.016708516, y: -0.036759045}
+  m_Offset: {x: -0.003505837, y: -0.03675896}
   serializedVersion: 2
-  m_Radius: 0.967187
+  m_Radius: 2.8023982
 --- !u!82 &492709692908943437
 AudioSource:
   m_ObjectHideFlags: 0
@@ -649,7 +637,7 @@ RectTransform:
   m_GameObject: {fileID: 3573186930355845952}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.7258043, y: 1.7258043, z: 1.7258043}
+  m_LocalScale: {x: 3.994892, y: 3.994892, z: 3.994892}
   m_Children:
   - {fileID: 3573186929780139186}
   - {fileID: 3573186930403403904}
@@ -658,7 +646,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.011187}
   m_SizeDelta: {x: 1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3573186930355845964
@@ -851,7 +839,7 @@ AudioSource:
   m_GameObject: {fileID: 4796871326887631978}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6076653850957295441, guid: e6d0e05b36460904fabc6603fb2a46dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0128cb5ef033d5d46bd7f85a068f2686, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.3

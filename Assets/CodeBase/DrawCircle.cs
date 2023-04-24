@@ -4,10 +4,12 @@ using System.Collections;
 [RequireComponent(typeof(LineRenderer))]
 public class DrawCircle: MonoBehaviour {
     [SerializeField] private float _thetaScale = 0.01f;
-    [SerializeField] private float _radius = 3f;
+    [SerializeField] private Turret _turret;
+    [SerializeField] private float _radius => _turret.RadiusTargets;
     [SerializeField] private int _size;
     [SerializeField] private LineRenderer _lineDrawer;
     [SerializeField] private float _theta = 0f;
+
 
     private void Start() {
         _lineDrawer = GetComponent<LineRenderer>();

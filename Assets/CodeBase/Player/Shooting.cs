@@ -107,7 +107,7 @@ public class Shooting : MonoBehaviour
             _audioFire.Play();
 
             Bullet bullet = Instantiate(_bulletPrefub, _firePoint.position, _firePoint.rotation);
-            bullet.damage = _bulletDamage;
+            bullet.Damage = _bulletDamage;
             _rb = bullet.GetComponent<Rigidbody2D>();
             _rb.AddForce(_firePoint.up * _bulletForce, ForceMode2D.Impulse);
 

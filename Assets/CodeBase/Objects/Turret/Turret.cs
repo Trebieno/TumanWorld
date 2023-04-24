@@ -24,10 +24,55 @@ public class Turret : ObjectGame, IAttackeble
     [SerializeField] protected float curHealth;
 
     [SerializeField] protected TextMeshProUGUI textHealth;
+    [SerializeField] protected float rotationSpeed;
+    [SerializeField] protected float damage;
+    [SerializeField] protected float curDelayShoot;
+    [SerializeField] protected float maxDelayShoot;
+    [SerializeField] protected int score;
+    [SerializeField] protected int maxAmmo = 30;
+    [SerializeField] protected int curAmmo = 30;
+    [SerializeField] private int _level;
 
     protected event Action onStart; 
     protected event Action onUpdate;
     protected event Action onUse;
+
+    [Header("Upgratable")]
+    [SerializeField] private float _maxHealthIncreaseStep = 5;
+    [SerializeField] private float _speedIncreaseStep = 1;
+    [SerializeField] private float _damageIncreaseStep = 3;
+    [SerializeField] private float _fireSpeedIncreaseStep = 3;
+    [SerializeField] private int _ammoIncreaseStep = 2;
+    [SerializeField] private int _powerIncreaseStep = 10;
+    [SerializeField] private float _radiusIncreaseStep = 5;
+
+    [SerializeField] private int _oreCell;
+    [SerializeField] private float _maxExp;
+    [SerializeField] private float _curExp;
+    public float MaxExpirience => _maxExp;
+
+    public float CurrentExpirience
+    {
+        get => _curExp;
+        private set
+        {
+            _curExp = value;
+        }
+    }
+
+    public float Damage => damage;
+    public float RotationSpeed => rotationSpeed;
+    public float MaxHealth => maxHealth;
+    public float CurHealth => curHealth;
+    public int MaxAmmo => maxAmmo;
+    public int CurAmmo => curAmmo;
+    public int Level => _level;
+    public int Score => score;
+    public float Power => curPowerTime;
+    public float RadiusTargets => radiusTargets;
+    public int OreCell => _oreCell;
+
+    private UpdateTurretMenu _updateTurretMenu;
 
     private void Start()
     {
@@ -36,6 +81,9 @@ public class Turret : ObjectGame, IAttackeble
         TurretsAll.Instance.Turrets.Add(this);
         Objects.Instance.ObjectsGame.Add(this);
         onStart.Invoke();
+
+
+        _updateTurretMenu = PlayerCash.Instance.Player.UpgradableTurretPerks;
     }
 
     private void Update()
@@ -137,10 +185,10 @@ public class Turret : ObjectGame, IAttackeble
 
     public void UpdateUIHealth()
     {
-        textHealth.text = curHealth.ToString() + "/" + maxHealth;
+        textHealth.text = Math.Round(curHealth, 0) + "/" + Math.Round(maxHealth, 0);
     }
 
-    public void SetDamage(float damage)
+    public void SetDamage(float damage, Turret turret)
     {
         curHealth -= damage;
         UpdateUIHealth();
@@ -148,6 +196,73 @@ public class Turret : ObjectGame, IAttackeble
         {
             Destroy(gameObject);
         }
+    }
+
+    public void UpgradeSkills(int typeId)
+    {
+        Perks type = (Perks)typeId;
+        if (score <= 0 && _oreCell > PlayerCash.Instance.Player.Mining.CurrentOre) return;
+
+        switch (type)
+        {
+            case Perks.Health:                
+                maxHealth += (maxHealth / 100) * _maxHealthIncreaseStep;
+                curHealth = maxHealth;
+                break;
+
+            case Perks.Speed:
+                rotationSpeed += (rotationSpeed / 100) * _speedIncreaseStep;
+                break;
+
+            case Perks.Damage:
+                damage += (damage / 100) * _damageIncreaseStep;
+                break;
+
+            case Perks.FireSpeed:
+                maxDelayShoot += (maxDelayShoot / 100) * _fireSpeedIncreaseStep;
+                break;
+
+            case Perks.Ammo:
+                maxAmmo += _ammoIncreaseStep;                
+                break;
+
+            case Perks.Radius:
+                radiusTargets += (radiusTargets / 100) * _radiusIncreaseStep;
+                break;
+            
+            case Perks.Time:
+                maxPowerTime += (maxPowerTime / 100) * _powerIncreaseStep;
+                curPowerTime = maxPowerTime;
+                break;
+        }
+        if(score > 0)
+            score -= 1;
+        else
+        {
+            PlayerCash.Instance.Player.Mining.CurrentOre -= _oreCell;
+            _oreCell += (_oreCell / 100) * 10;
+        }
+        UpdateUIHealth();
+    }
+
+    public void AddExp(float exp)
+    {
+        CurrentExpirience += exp;
+        CheckUpdateLevel();
+    }
+
+    public void CheckUpdateLevel()
+    {
+        if(_curExp >=_maxExp)
+            UpgradeLevel();
+    }
+    
+    private void UpgradeLevel()
+    {
+        _level += 1;
+        _maxExp += (_maxExp * 10) / 100;
+        _curExp = 0;
+        score += 1;
     }
 }
 

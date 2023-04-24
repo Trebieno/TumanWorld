@@ -11,7 +11,6 @@ public class AttackTurret : Turret
     private float DetectionDistance = 3f;
     public Transform Target;
 
-    [SerializeField] private float rotationSpeed;
     private Rigidbody2D _rb;
     [SerializeField] private Transform _dulo;
     [SerializeField] private List<Transform> targets = new List<Transform>();
@@ -22,14 +21,8 @@ public class AttackTurret : Turret
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Bullet _bulletPrefub;
     [SerializeField] private float _bulletForce;
-    [SerializeField] private float _bulletDamage;
-
-    [SerializeField] private float _curDelayShoot;
-    [SerializeField] private float _maxDelayShoot;
 
     [SerializeField] private float _delayReload;
-    [SerializeField] private int _maxAmmo = 30;
-    [SerializeField] private int _curAmmo = 30;
 
     [SerializeField] private Slider _reloadSlider;
 
@@ -139,8 +132,8 @@ public class AttackTurret : Turret
             _isDelaingShoot = true;
 
             base.player.UpdateUI();
-            _curDelayShoot -= Time.deltaTime;
-            if(_curDelayShoot <= 0)
+            curDelayShoot -= Time.deltaTime;
+            if(curDelayShoot <= 0)
                 _isDelaingShoot = false;
         }
 
@@ -170,20 +163,21 @@ public class AttackTurret : Turret
 
     private void Shoot()
     {
-        if (_curAmmo > 0 && !_isDelaingShoot)
+        if (curAmmo > 0 && !_isDelaingShoot)
         {
-            _curAmmo -= 1;
+            curAmmo -= 1;
             _audioShoot.Play();
             Bullet bullet = Instantiate(_bulletPrefub, _firePoint.position, _firePoint.rotation);        
-            bullet.damage = _bulletDamage;
+            bullet.Damage = damage;
+            _bulletPrefub.Turret = this;
             _rb = bullet.GetComponent<Rigidbody2D>();
             _rb.AddForce(_firePoint.up * _bulletForce, ForceMode2D.Impulse);
 
             _isDelaingShoot = true;
-            _curDelayShoot = _maxDelayShoot;
+            curDelayShoot = maxDelayShoot;
         }
 
-        else if(_curAmmo <= 0)
+        else if(curAmmo <= 0)
         {
             if(!_reloadSlider.gameObject.activeSelf)
                     _reloadSlider.gameObject.SetActive(true);
@@ -205,7 +199,7 @@ public class AttackTurret : Turret
     private void Reload(float delay)
     {
         _audioReload.Stop();
-        _curAmmo = _maxAmmo;
+        curAmmo = maxAmmo;
         player.UpdateUI();
         _isDelaingReload = false;
         _reloadSlider.gameObject.SetActive(false);

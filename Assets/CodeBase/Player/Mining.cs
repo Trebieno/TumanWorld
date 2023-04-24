@@ -13,7 +13,7 @@ public class Mining : MonoBehaviour
     public int CurrentOre
     {
         get => _curOre;
-        private set
+        set
         {
             _curOre = value;            
             OreChanged?.Invoke(_curOre);

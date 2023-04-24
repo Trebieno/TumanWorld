@@ -4,9 +4,11 @@ using Feeling;
 public class MineTurret : Turret
 {
     [SerializeField] private AudioSource _audioMiningTurret;
+    [SerializeField] private GameObject _bur;
 
     private void Awake()
     {
+        damage = Time.deltaTime;
         onStart += OnStart;
         onUpdate += OnUpdate;
         typeObject = GameObjects.MiningTurret;
@@ -35,6 +37,7 @@ public class MineTurret : Turret
                     _audioMiningTurret.Play();
 
                 ore.MineTurret();
+                _bur.transform.Rotate(0, 0, rotationSpeed);
             }
         }
     }
@@ -75,7 +78,7 @@ public class MineTurret : Turret
             {
                 if (!player.DestroySlider.gameObject.activeSelf)
                     player.DestroySlider.gameObject.SetActive(true);
-                currentTimeDismantling += Time.deltaTime;
+                currentTimeDismantling += damage;
                 player.DestroySlider.maxValue = maximimTimeDismantling;
                 player.DestroySlider.value = currentTimeDismantling;
             }
