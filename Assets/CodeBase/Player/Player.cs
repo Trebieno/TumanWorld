@@ -192,6 +192,7 @@ public class Player : MonoBehaviour
                         {
                             _updateTurretMenu.gameObject.SetActive(true);
                             Shooting.enabled = false;
+                            Movement.Rb.constraints = RigidbodyConstraints2D.FreezeAll;                            
                             _movement.enabled = false;
                         }
                         
@@ -199,13 +200,14 @@ public class Player : MonoBehaviour
                         {
                             _updateTurretMenu.gameObject.SetActive(false);
                             Shooting.enabled = true;
+                            Movement.Rb.constraints = RigidbodyConstraints2D.None;
                             _movement.enabled = true;
                         }
                         
                     }
                 }
             }
-            else if(collider.CompareTag("Loot") && Input.GetKeyDown(KeyCode.E))
+            else if(collider.CompareTag("Loot"))
             {
                 Debug.Log("Подбираю");
                 Loots.Instance.Items.RemoveAll(x => x == null);
@@ -224,6 +226,24 @@ public class Player : MonoBehaviour
             _destroySlider.gameObject.SetActive(false);
         }
         
+        if(Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            if(Input.GetKeyDown(KeyCode.Keypad2))
+                _upgradablePerks.Score += 50;
+            
+            if(Input.GetKeyDown(KeyCode.Keypad3))
+                _leveling.CurrentExpirience += 50;
+            
+            if(Input.GetKeyDown(KeyCode.Keypad4))
+                _health.CurrentHealth += _health.MaxHealth;
+
+            if(Input.GetKeyDown(KeyCode.Keypad5))
+                _economic.Money += 500;
+            
+            if(Input.GetKeyDown(KeyCode.Keypad6))
+                Mining.CurrentOre += 50;
+        }       
+
     }
 
     private void OnDestroy() => _health.Died -= Health_OnDied;
@@ -238,8 +258,11 @@ public class Player : MonoBehaviour
         UpdateBattory();        
     }
 
-    public void RestartGame() => SceneManager.LoadScene("Game");
-    
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Game");
+        Time.timeScale = 1;
+    }
 
 
     public void UpdateBattory() => _textBattory.text = BattoryCount.ToString();

@@ -622,13 +622,13 @@ MonoBehaviour:
   maxHealth: 140
   curHealth: 140
   textHealth: {fileID: 7045628019988068964}
-  rotationSpeed: 0
-  damage: 0
+  rotationSpeed: 0.5
+  damage: 1
   curDelayShoot: 0
   maxDelayShoot: 0
   score: 0
-  maxAmmo: 30
-  curAmmo: 30
+  maxAmmo: 0
+  curAmmo: 0
   _level: 0
   _maxHealthIncreaseStep: 5
   _speedIncreaseStep: 1
@@ -637,8 +637,8 @@ MonoBehaviour:
   _ammoIncreaseStep: 2
   _powerIncreaseStep: 10
   _radiusIncreaseStep: 5
-  _oreCell: 0
-  _maxExp: 0
+  _oreCell: 10
+  _maxExp: 15
   _curExp: 0
   _audioMiningTurret: {fileID: 6606698759722014258}
   _bur: {fileID: 3990928952269680674}
@@ -651,7 +651,7 @@ AudioSource:
   m_GameObject: {fileID: 3990928953399320636}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 6076653850957295441, guid: e6d0e05b36460904fabc6603fb2a46dd, type: 2}
+  OutputAudioMixerGroup: {fileID: -8357910079180783729, guid: 80eda5e78571a0840ba713ccdbb95bac, type: 2}
   m_audioClip: {fileID: 8300000, guid: 20d79f4abf3a0074ea400fb573abde75, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1

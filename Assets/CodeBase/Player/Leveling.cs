@@ -26,7 +26,7 @@ public class Leveling : MonoBehaviour
     public float CurrentExpirience
     {
         get => _curExp;
-        private set
+         set
         {
             _curExp = value;
             ExpirienceChanged?.Invoke(_curExp, _maxExp);

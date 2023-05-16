@@ -5,152 +5,160 @@ using Feeling;
 
 public class Character : MonoBehaviour, IAttackeble
 {
-    [SerializeField] protected float maxHealth;
-    [SerializeField] protected float curHealth;
-    [SerializeField] protected float moveSpeed;
+   
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float angleOffset = 10f;
+    [SerializeField] private float rotationSpeed = 1000f;
+    [SerializeField] private float maxHealth = 10f;
+    [SerializeField] private int level;
+
     [SerializeField] protected float damage;
     [SerializeField] protected float maxDistanceToPlayer;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private GameObject destructionParticlePrefab;
+    [SerializeField] private AudioClip deathSound;
 
     [Header("Culldown attack")] [SerializeField]
     private float _maxCulldown;
 
     [SerializeField] private float _curCulldown;
 
-    [Space(10)] [SerializeField] private int _level;
     [SerializeField] private int _exp;
-    [SerializeField] private Transform _target;
+    
 
-    [Space(10)] [SerializeField] private List<GameObject> lootObjects;
+    [SerializeField] private GameObject[] lootPrefabs;
+    [SerializeField] private float[] lootChances;
 
-    private Rigidbody2D _rb;
-    private Vector2 _movement;
-    private AudioSource _audioDamage;
-    private Player _player;
-    private NavMeshAgent _agent;    
+    [SerializeField] private AudioClip[] hurtSounds;
+    [SerializeField] private float _spawnRadius = 0.5f;
 
-    [Space(10)] [SerializeField] private AudioSource _audioDeath;
-    [SerializeField] private SpriteRenderer _skin;
-    [SerializeField] private ParticleSystem _particleDeath;
+    [SerializeField] private LayerMask targetMask;
+    [SerializeField] private Transform target;
 
-    [Space(10)] [SerializeField] private LayerMask _attackMask;
-    [SerializeField] private float _radius;
-
-    [Space(10)] [SerializeField] private Transform _attackPoint;
-
-    private Collider2D _colliderTarget;
-    private Collider2D _collider;
-
+    private float currentHealth;
+    private NavMeshAgent navMeshAgent;
+    private AudioSource audioSource;
 
     private void Start()
     {
-        _collider = GetComponent<Collider2D>();
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.updateRotation = false;
-        _agent.updateUpAxis = false;
-        _player = PlayerCash.Instance.Player;
-        _audioDamage = GetComponent<AudioSource>();
-        _rb = GetComponent<Rigidbody2D>();
-        
         EnemyAll.Instance.Characters.Add(this);
-    }
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
 
-    public void InitializeSpecifications(int level)
-    {        
-        _level = level;
-        _exp = Random.Range(_level, _level + 5);
-        maxHealth = Random.Range(10, _level);
-        curHealth = maxHealth;
-        damage = Random.Range(1, _level + 3);
-        moveSpeed = Random.Range(0.7f, _level / 80); // с 100 на 80 
-        if(_agent == null)
-            _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = moveSpeed;
+        // target = PlayerCash.Instance.Player.transform;
+        currentHealth = maxHealth;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
-        if (_target != null)
+        if (target != null)
         {
-            _agent.SetDestination(_target.position);
-            Vector3 direction = _target.transform.position - transform.position;
+            navMeshAgent.SetDestination(target.position);
 
+            Vector2 direction = target.transform.position - transform.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            _rb.rotation = angle;
-            direction.Normalize();
-            _movement = direction;
+
+            Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            Debug.Log(Vector3.Distance(transform.position, target.position));
+            Debug.Log(maxDistanceToPlayer);
+
+            if (Vector3.Distance(transform.position, target.position) <= maxDistanceToPlayer)
+            {
+                if (_curCulldown <= 0f)
+                {
+                    Attack();
+                    _curCulldown = _maxCulldown;
+                }
+                else
+                {
+                    _curCulldown -= Time.deltaTime;
+                }
+            }
         }
-        else if (_target == null && TurretsAll.Instance.Turrets.Count > 0)
+    }
+    
+    public void InitializeSpecifications(int level)
+    {        
+        this.level = level;
+        _exp = Random.Range(this.level, this.level + 5);
+        maxHealth = Random.Range(10, this.level);
+        currentHealth = maxHealth;
+        damage = Random.Range(1, this.level + 5);
+        moveSpeed = Random.Range(0.4f, this.level / 30); // с 80 на 30
+        if(navMeshAgent == null)
+            navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.speed = moveSpeed;
+    }
+
+    public void SetAttackTarget(Transform target)
+    {
+        this.target = target;
+    }
+
+    private int maxHits = 2;
+    private void Attack()
+    {
+        Collider2D[] hitColliders = new Collider2D[maxHits];
+        int numColliders = Physics2D.OverlapCircleNonAlloc(transform.position, maxDistanceToPlayer, hitColliders, targetMask);
+
+        for (int i = 0; i < numColliders; i++)
         {
-            TurretsAll.Instance.Turrets.RemoveAll(x => x == null);
-            int rnd = Random.Range(0, 100);
-            if (30 >= rnd)
-                _target = TurretsAll.Instance.Turrets[Random.Range(0, TurretsAll.Instance.Turrets.Count - 1)].transform;
-            else
-                _target = _player.transform;
+            IAttackeble attackable = hitColliders[i].GetComponent<IAttackeble>();
+            if (attackable != null)
+            {
+                attackable.SetDamage(damage);
+            }
+        }
+    }
+
+
+    public void SetDamage(float damage, Turret turret = null)
+    {
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            Die();
         }
         else
         {
-            _target = _player.transform;
+            int randomSoundIndex = Random.Range(0, hurtSounds.Length-1);
+            audioSource.PlayOneShot(hurtSounds[randomSoundIndex]);
         }
     }
 
-    private void FixedUpdate()
+    private void Die()
     {
-        if (_target != null)
+    
+        // Spawn loot if any available
+        for (int i = 0; i < lootPrefabs.Length; i++)
         {
-            // MoveCharacter(_movement);
+            float randomChance = Random.Range(0f, 1f);
+            if (randomChance <= lootChances[i])
+            {
+                Vector2 spawnPosition = (Vector2)transform.position + Random.insideUnitCircle * _spawnRadius;
+                Instantiate(lootPrefabs[i], spawnPosition, Quaternion.identity);
+            }
         }
 
-        if (_curCulldown > 0)
-            _curCulldown -= Time.fixedDeltaTime;
+        GameObject destructionEffect = Instantiate(destructionParticlePrefab, transform.position, Quaternion.identity);
 
-        _colliderTarget = Physics2D.OverlapCircle(_attackPoint.position, _radius, _attackMask);
+        // Add sound effect for death
+        audioSource.PlayOneShot(deathSound);
 
-        if (_colliderTarget != null && _curCulldown <= 0)
-        {
-            _colliderTarget.GetComponent<IAttackeble>().SetDamage(damage);
-            _curCulldown = _maxCulldown;
-        }
+
+        EnemyAll.Instance.Characters.Remove(this);
+        Destroy(gameObject);
     }
 
-    private void MoveCharacter(Vector2 direction)
-    {
-        _rb.MovePosition(_rb.position + _movement * moveSpeed * Time.fixedDeltaTime);
-    }
-
-    private void OnDrawGizmos()
+    private void OnDrawGizmos() 
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_attackPoint.position, _radius);
-    }
-
-    public void SetDamage(float damage, Turret turret)
-    {
-        curHealth -= damage;
-        _audioDamage.Play();
-        if (curHealth <= 0)
-        {
-            if (Random.Range(0, 100) <= 40)
-            {
-                int randomIndex = Random.Range(0, lootObjects.Count);
-
-                Instantiate(lootObjects[randomIndex], transform.position, transform.rotation);
-            }
-            
-            if(turret == null)
-                _player.Leveling.AddExp(_exp + _player.Leveling.ExpirienceMultiplier);                
-            else
-                turret.AddExp(_exp);
-            
-
-            _player = null;
-            _collider.enabled = false;
-            _skin.enabled = false;
-            _audioDeath.Play();
-            Instantiate(_particleDeath, transform.position, transform.rotation);
-
-
-            Destroy(gameObject, _audioDeath.clip.length);
-        }
+        Gizmos.DrawWireSphere(attackPoint.position, maxDistanceToPlayer);
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObjectGame : MonoBehaviour
 {
+    [SerializeField] protected float maxHealth;
+    [SerializeField] protected float curHealth;
     [SerializeField] protected float maximimTimeDismantling = 1;
     protected Player player;
     protected bool isDownKey = false;
@@ -11,6 +13,7 @@ public class ObjectGame : MonoBehaviour
     protected GameObjects typeObject;
 
     public GameObjects TypeObject => typeObject;
+    public float CurHealth => curHealth;
     private void Start()
     {
         player = PlayerCash.Instance.Player;

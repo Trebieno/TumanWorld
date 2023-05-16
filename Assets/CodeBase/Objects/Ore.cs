@@ -114,15 +114,19 @@ public class Ore : MonoBehaviour
 
         if(_isZeroOre)
         {
-            _curResetTime -= Time.deltaTime;
-            if(_curResetTime <= 0)
-            {
-                _curOre = UnityEngine.Random.Range(30, 100);
-                _curResetTime = _maxResetTime;
-                _textCountOre.text = _curOre.ToString();
-                _isZeroOre = false;
-
-            }
+            SpawnOreSystem.Instance.Spawn(transform.position);
+            OreAll.Instance.Ores.Remove(this);
+            OreAll.Instance.Ores.RemoveAll(x=>x==null);
+            Destroy(gameObject);
+            // _curResetTime -= Time.deltaTime;
+            // if(_curResetTime <= 0)
+            // {
+            //     _curOre = UnityEngine.Random.Range(30, 100);
+            //     _curResetTime = _maxResetTime;
+            //     _textCountOre.text = _curOre.ToString();
+            //     _isZeroOre = false;
+                
+            // }
 
         }
     }
@@ -143,13 +147,16 @@ public class Ore : MonoBehaviour
         }
     }
 
-    public void MineTurret()
+    public void MineTurret(Turret turret)
     {
       //  if(!_audioMining.isPlaying)
       //     _audioMining.Play();
         _sliderMining.maxValue = _curTimeMining;
         _sliderMining.value += Time.deltaTime / 3;
-        if(_sliderMining.value >= _sliderMining.maxValue )
+        if(_curOre > 0 && _sliderMining.value >= _sliderMining.maxValue)
+        {
             MiningOre();
+            turret.AddExp(1);
+        }
     }
 }

@@ -31,7 +31,7 @@ public class UpgradablePerks : MonoBehaviour
     public int Score
     {
         get => _score;
-        private set
+        set
         {
             _score = value;
             ScoreChanged?.Invoke(_score);
@@ -106,6 +106,7 @@ public class UpgradablePerks : MonoBehaviour
         _player.Shooting.SetAmmo(_startingAmmo);
 
         Score += _skillUI.ResetSkill();
+        _player.UpdateUI();
     }
 }
 

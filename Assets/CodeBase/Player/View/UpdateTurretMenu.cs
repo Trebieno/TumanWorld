@@ -22,7 +22,7 @@ public class UpdateTurretMenu : MonoBehaviour
         _healthText.text = $"Жизнь: {Math.Round(currentHealth, 0)}/{Math.Round(maximumHealth, 0)}";
         _ammoText.text = $"Патроны: {ammo}/{maximumAmmo}";
         _countScoreText.text = $"Очки прокачки: {countScore}";
-        _turretInfoText.text = $"Turret {level} level {currentExp}/{maximumExp}";
+        _turretInfoText.text = $"Turret {level} level {Math.Round(currentExp, 0)}/{Math.Round(maximumExp, 0)}";
         _powerText.text = $"Время работы: {power}s";
         _radiusText.text = $"Радиус {Math.Round(radius, 2)}";
         _oreCell.text = $"Цена улучшения рудой: {oreCell}";

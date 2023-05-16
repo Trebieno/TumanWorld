@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using System;
 using Feeling;
 
 public class MoneyCounter : MonoBehaviour
@@ -46,7 +47,7 @@ public class MoneyCounter : MonoBehaviour
         if(_economic.Money < float.Parse(_textMoney.text))
             _audioLoss.Play();
 
-        _textMoney.text = _economic.Money.ToString("0.00");
+        _textMoney.text = Math.Round(_economic.Money, 0).ToString();
 
     }
 }

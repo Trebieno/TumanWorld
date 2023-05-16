@@ -169,7 +169,7 @@ public class AttackTurret : Turret
             _audioShoot.Play();
             Bullet bullet = Instantiate(_bulletPrefub, _firePoint.position, _firePoint.rotation);        
             bullet.Damage = damage;
-            _bulletPrefub.Turret = this;
+            bullet.Turret = this;
             _rb = bullet.GetComponent<Rigidbody2D>();
             _rb.AddForce(_firePoint.up * _bulletForce, ForceMode2D.Impulse);
 

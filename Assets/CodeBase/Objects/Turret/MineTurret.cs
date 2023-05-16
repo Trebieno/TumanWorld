@@ -36,10 +36,13 @@ public class MineTurret : Turret
                 if(!_audioMiningTurret.isPlaying)
                     _audioMiningTurret.Play();
 
-                ore.MineTurret();
+                ore.MineTurret(this);
                 _bur.transform.Rotate(0, 0, rotationSpeed);
             }
         }
+
+        if(!isPower && _audioMiningTurret.isPlaying)
+            _audioMiningTurret.Stop();
     }
 
     public override void Active()

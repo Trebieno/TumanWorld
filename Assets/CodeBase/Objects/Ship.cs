@@ -3,7 +3,6 @@ using UnityEngine;
 public class Ship : ObjectGame
 {
     [SerializeField] private int _damage;
-    [SerializeField] private int _charge;
     private AudioSource _audio;
 
     private void Awake()
@@ -20,12 +19,13 @@ public class Ship : ObjectGame
     {
         if(other.CompareTag("Enemy"))
         {
-            if(_charge > 0)
+            if(curHealth > 0)
             {
                 _audio.Play();
+                EnemyAll.Instance.Characters.RemoveAll(x => x == null);
                 EnemyAll.Instance.Characters.Find(x => x.transform == other.transform).SetDamage(_damage, null);
-                _charge -= 1;
-                if(_charge == 0)
+                curHealth -= 1;
+                if(curHealth == 0)
                     Destroy(gameObject, _audio.clip.length);
             }
         }

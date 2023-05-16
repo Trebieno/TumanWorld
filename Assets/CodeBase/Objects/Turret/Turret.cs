@@ -20,9 +20,6 @@ public class Turret : ObjectGame, IAttackeble
     
     [SerializeField] protected LayerMask enemyMask;
 
-    [SerializeField] protected float maxHealth;
-    [SerializeField] protected float curHealth;
-
     [SerializeField] protected TextMeshProUGUI textHealth;
     [SerializeField] protected float rotationSpeed;
     [SerializeField] protected float damage;
@@ -212,6 +209,8 @@ public class Turret : ObjectGame, IAttackeble
 
             case Perks.Speed:
                 rotationSpeed += (rotationSpeed / 100) * _speedIncreaseStep;
+                if(typeObject == GameObjects.MiningTurret)
+                    damage += (Damage / 100) * _speedIncreaseStep;
                 break;
 
             case Perks.Damage:

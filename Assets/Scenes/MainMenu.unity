@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5781677, y: 0.23}
   m_AnchorMax: {x: 0.9637731, y: 0.7018412}
-  m_AnchoredPosition: {x: 46.520004, y: 1.0039978}
+  m_AnchoredPosition: {x: 46.52001, y: 1.0039978}
   m_SizeDelta: {x: 90.88, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2769799
@@ -432,16 +432,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 264935375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!114 &264935377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -778,7 +788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0233ac3f100e9d49b2e4b9eda30a061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mixer: {fileID: 24100000, guid: e6d0e05b36460904fabc6603fb2a46dd, type: 2}
+  _mixer: {fileID: 24100000, guid: 80eda5e78571a0840ba713ccdbb95bac, type: 2}
   _sliderVolumeAll: {fileID: 1789181480}
   _textVolumeAll: {fileID: 810772014}
   _sliderVolumeMusic: {fileID: 1143979001}
@@ -2293,7 +2303,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5781677, y: 0.23}
   m_AnchorMax: {x: 0.9637731, y: 0.7018412}
-  m_AnchoredPosition: {x: 44.90001, y: 1.0039978}
+  m_AnchoredPosition: {x: 44.900017, y: 1.0039978}
   m_SizeDelta: {x: 87.63, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &772848406
@@ -2975,7 +2985,7 @@ AudioSource:
   m_GameObject: {fileID: 861502208}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 3554665591800548915, guid: e6d0e05b36460904fabc6603fb2a46dd, type: 2}
+  OutputAudioMixerGroup: {fileID: 3554665591800548915, guid: 80eda5e78571a0840ba713ccdbb95bac, type: 2}
   m_audioClip: {fileID: 8300000, guid: 6df7bed4a712cfc4d824f00c0cdec853, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.17
@@ -3299,7 +3309,7 @@ Animator:
   m_GameObject: {fileID: 981360341}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3852ec3b44734db43b57e3b2b7461fd8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9ca8eb45dd9554849bcd5115cf81d07b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3983,7 +3993,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5781677, y: 0.23}
   m_AnchorMax: {x: 0.9637731, y: 0.7018412}
-  m_AnchoredPosition: {x: 44.90001, y: 1.0039978}
+  m_AnchoredPosition: {x: 44.900017, y: 1.0039978}
   m_SizeDelta: {x: 87.63, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1232210672
@@ -4255,7 +4265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.011000001, y: 0.8752812}
   m_AnchorMax: {x: 0.06812445, y: 0.9637813}
-  m_AnchoredPosition: {x: -579.5437, y: 278.34827}
+  m_AnchoredPosition: {x: -579.544, y: 278.34827}
   m_SizeDelta: {x: 61.73079, y: 59.463806}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1326745538

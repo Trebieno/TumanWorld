@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5671297266981378149}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.22}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_Children:
   - {fileID: 5671297267524569118}
   m_Father: {fileID: 0}
@@ -47,7 +47,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0043188035, y: -0.03610535}
+  m_Offset: {x: -0.003372386, y: -0.03333181}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -58,7 +58,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.13520563, y: 0.39096996}
+  m_Size: {x: 0.15270936, y: 0.5490588}
   m_EdgeRadius: 0
 --- !u!114 &5671297266981378154
 MonoBehaviour:
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximimTimeDismantling: 1
   _damage: 10000
-  _charge: 10
+  _charge: 25
 --- !u!82 &4580762077132928795
 AudioSource:
   m_ObjectHideFlags: 0
@@ -84,7 +84,7 @@ AudioSource:
   m_GameObject: {fileID: 5671297266981378149}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8357910079180783729, guid: e6d0e05b36460904fabc6603fb2a46dd, type: 2}
+  OutputAudioMixerGroup: {fileID: -8357910079180783729, guid: 80eda5e78571a0840ba713ccdbb95bac, type: 2}
   m_audioClip: {fileID: 8300000, guid: b203cbb62d9089a4da507fb969c8b171, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -197,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 5671297267524569113}
   m_LocalRotation: {x: -0, y: -0, z: -0.70710677, w: 0.7071068}
   m_LocalPosition: {x: -0.005, y: -0.032, z: 0}
-  m_LocalScale: {x: 0.10771328, y: 0.18357317, z: 0.13728432}
+  m_LocalScale: {x: 0.14810577, y: 0.23176114, z: 0.13728432}
   m_Children: []
   m_Father: {fileID: 5671297266981378152}
   m_RootOrder: 0
@@ -241,7 +241,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 6781848894955781761, guid: b7b07accbc3dcd64b848e5f5552299b2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
