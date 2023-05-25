@@ -83,7 +83,7 @@ public class Turret : ObjectGame, IAttackeble
         _updateTurretMenu = PlayerCash.Instance.Player.UpgradableTurretPerks;
     }
 
-    private void Update()
+    public override void OnTick()
     {
         hitCollidersTargets = Physics2D.OverlapCircleAll(transform.position, radiusTargets, enemyMask);
 

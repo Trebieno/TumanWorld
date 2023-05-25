@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoCache
 {
     public int LightCount;
 
@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _imageFlaslight;
 
     [SerializeField] private GameObject _imagePickaxe;
+    [SerializeField] private GameObject _imagePickaxe_2;
+    [SerializeField] private GameObject _imagePickaxe_3;
 
     public int MineTurretCount;
     public int AttackTurretCount;
@@ -114,6 +116,22 @@ public class Player : MonoBehaviour
         _imagePickaxe.gameObject.SetActive(true);
     }
 
+    public void UpdatePickaxe(int level)
+    {
+        Mining.UpdateTime();
+        if(level == 2)
+        {
+            _imagePickaxe.SetActive(false);
+            _imagePickaxe_2.SetActive(true);
+        }
+        
+        if(level == 3)
+        {
+            _imagePickaxe_2.SetActive(false);
+            _imagePickaxe_3.SetActive(true);
+        }
+    }
+
     public void AddClip(int clip)
     {
         _shooting.AddClip(clip);
@@ -152,7 +170,7 @@ public class Player : MonoBehaviour
         _turret.UpgradeSkills(typeId);
     }
 
-    private void Update()
+    public override void OnTick()
     {
         hitCollidersUse = Physics2D.OverlapCircleAll(_usePoint.position, _radiusUse, _use).ToList();
 
@@ -169,6 +187,7 @@ public class Player : MonoBehaviour
 
                 if(objectGame.TypeObject == GameObjects.AttackTurret || objectGame.TypeObject == GameObjects.MiningTurret)
                 {
+                    TurretsAll.Instance.Turrets.RemoveAll(x => x == null);
                     var turret = TurretsAll.Instance.Turrets.Find(x => x.transform == collider.transform);
                     _turret = turret;
                     if(turret != null)
@@ -207,18 +226,7 @@ public class Player : MonoBehaviour
                     }
                 }
             }
-            else if(collider.CompareTag("Loot"))
-            {
-                Debug.Log("Подбираю");
-                Loots.Instance.Items.RemoveAll(x => x == null);
-                Item item = Loots.Instance.Items.Find(x => x.transform == collider.transform);
-                _inventory.AddItem(item.ItemScriptableObject, item.Amount);
-                Loots.Instance.Items.RemoveAll(x => x == null);
-                Destroy(item.gameObject);
-
-            }
         }
-
             
         if(_previusObject != null && hitCollidersUse.Find(x => x.transform == _previusObject.transform) == null)
         {
@@ -273,6 +281,46 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(_usePoint.position, _radiusUse);
+    }
+
+    public void AddDrop(TypeDrop type, int amount)
+    {
+       switch (type)
+       {
+            case TypeDrop.clip:
+                AddClip(amount);
+                break;
+            
+            case TypeDrop.battory:            
+                BattoryCount += amount;
+                break;
+            
+            case TypeDrop.money:       
+                Economic.Money += Random.Range(amount, amount * Economic.MoneyMultiplier * Economic.MoneyMultiplier);
+                break;
+            
+            case TypeDrop.turretAttack:  
+                AttackTurretCount += amount;
+                break;
+            
+            case TypeDrop.turretMine:       
+                MineTurretCount += amount;
+                break;
+            
+            case TypeDrop.light:          
+                LightCount += amount;  
+                break;
+            
+            case TypeDrop.ore:
+                Mining.AddOre(Random.Range(amount, amount * 3));
+                break;
+            
+            case TypeDrop.ship:       
+                SpikeTrapCount += amount;     
+                break;
+       }
+
+       UpdateUI();
     }
 
     #endregion

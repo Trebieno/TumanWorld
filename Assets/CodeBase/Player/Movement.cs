@@ -1,7 +1,7 @@
 using UnityEngine;
 using Feeling;
 
-public class Movement : MonoBehaviour
+public class Movement : MonoCache
 {
 
     [SerializeField] private float _moveSpeed;
@@ -32,7 +32,7 @@ public class Movement : MonoBehaviour
         _audioSteps.clip = AudioEffects.Instance.AudioSteps[_index];
     }
 
-    private void Update()
+    public override void OnTick()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");

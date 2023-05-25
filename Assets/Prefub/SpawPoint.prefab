@@ -473,18 +473,20 @@ MonoBehaviour:
   _maxHealth: 20
   _curHealth: 20
   _level: 1
-  _maxExp: 10
+  _maxExp: 7
   _curExp: 0
-  _maxTimeSpawnReproduction: 22
+  _maxTimeSpawnReproduction: 20
   _curTimeSpawnReproduction: 10
-  _maxTimeSpawnNpc: 13
+  _maxTimeSpawnNpc: 9
   _curTimeSpawnNpc: 0
   _maxTimeHideBar: 2.98
   _curTimeHideBar: 0
   _radiusSpawn: 0.61
   _radiusReproduction: 2.02
-  _limitNpc: 100
-  _limitSpawn: 13
+  _limitNpc: 150
+  _limitSpawn: 20
+  possibleTargets: []
+  attackRange: 0
 --- !u!58 &7646128160698565513
 CircleCollider2D:
   m_ObjectHideFlags: 0

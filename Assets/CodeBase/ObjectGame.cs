@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectGame : MonoBehaviour
+public class ObjectGame : MonoCache, IAttackeble
 {
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float curHealth;
     [SerializeField] protected float maximimTimeDismantling = 1;
+    [SerializeField] protected GameObject drop; // Выпадаемый дроп
+    [SerializeField] protected int percent; //Процент выпадения дропа
     protected Player player;
     protected bool isDownKey = false;
     protected float currentTimeDismantling = 0;
     protected GameObjects typeObject;
+
 
     public GameObjects TypeObject => typeObject;
     public float CurHealth => curHealth;
@@ -65,8 +68,6 @@ public class ObjectGame : MonoBehaviour
         {
             if (currentTimeDismantling < maximimTimeDismantling)
             {
-                Debug.Log(player);
-                Debug.Log(player.DestroySlider);
                 if(!player.DestroySlider.gameObject.activeSelf)
                     player.DestroySlider.gameObject.SetActive(true);
                 currentTimeDismantling += Time.deltaTime;
@@ -89,17 +90,32 @@ public class ObjectGame : MonoBehaviour
     {
 
     }
+
+    public virtual void SetDamage(float damage, Turret turret = null)
+    {
+        curHealth -= damage;
+        if(curHealth <= 0)
+        {
+
+            Vector3 centrPoint = transform.position;
+            Vector3 randomPoint = centrPoint + new Vector3(Random.value-0.5f,Random.value-0.5f,Random.value-0.5f).normalized * 0.3f;
+            if(drop != null && Random.Range(0, 100) <= percent)
+                Instantiate(drop, randomPoint, Quaternion.identity);
+            Destroy(gameObject);
+        }
+    }
 }
 
 public enum GameObjects
 {
-    MiningTurret,
-    AttackTurret,
+    Ore,
     Light,
     Ship,
-    Radar,
-    Ore,
+    MiningTurret,
+    AttackTurret,
+    Clip,
     Wall,
     Tree,
+    Radar,
     Grass,
 }

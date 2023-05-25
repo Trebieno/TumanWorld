@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class SpawnPoint : MonoBehaviour, IAttackeble
+public class SpawnPoint : MonoCache, IAttackeble
 {
     [SerializeField] private Character _npcPrefub;
     [SerializeField] private SpawnPoint _spawnPrefab;
@@ -50,7 +50,7 @@ public class SpawnPoint : MonoBehaviour, IAttackeble
         SpawnPoints.Instance.SpawnPointsList.Add(this);
     }
 
-    private void Update() 
+    public override void OnTick()
     {
         if(_curTimeSpawnNpc > 0)
             _curTimeSpawnNpc -= Time.deltaTime;
@@ -71,26 +71,7 @@ public class SpawnPoint : MonoBehaviour, IAttackeble
             _healthSlider.gameObject.SetActive(false);
 
 
-        // получаем список всех возможных целей
-        possibleTargets = Objects.Instance.ObjectsGame.ToArray();
-
-        // ищем цель с наибольшим весом
-        float maxWeight = 0;
-        ObjectGame target = null;
-
-        foreach (ObjectGame possibleTarget in possibleTargets) 
-        {
-            float weight = CalculateWeight(possibleTarget);
-
-            if (weight > maxWeight) 
-            {
-                maxWeight = weight;
-                if(Random.Range(1, 100) <= 30)
-                    target = possibleTarget;
-                else
-                    target = PlayerCash.Instance.Player.transform;
-            }
-        }
+       
 
         // если есть цель, находящаяся в дистанции атаки, атакуем ее
         // if (target != null && Vector3.Distance(transform.position, target.transform.position) < attackRange) {
@@ -166,7 +147,34 @@ public class SpawnPoint : MonoBehaviour, IAttackeble
 
         var npc = Instantiate(_npcPrefub, spawnPoint, Quaternion.identity);
         npc.InitializeSpecifications(_level);
-        npc.SetAttackTarget(PlayerCash.Instance.Player.transform);
+
+
+        Objects.Instance.ObjectsGame.RemoveAll(x => x == null);
+        
+         // получаем список всех возможных целей
+        possibleTargets = Objects.Instance.ObjectsGame.ToArray();
+
+
+        // ищем цель с наибольшим весом
+        float maxWeight = 0;
+        Transform targetTransform = null;
+
+        foreach (ObjectGame possibleTarget in possibleTargets) 
+        {
+            float weight = CalculateWeight(possibleTarget);
+
+            if (weight > maxWeight) 
+            {
+                maxWeight = weight;
+                if(Random.Range(1, 100) <= 100)
+                    targetTransform = possibleTarget.transform;
+                else
+                    targetTransform = PlayerCash.Instance.Player.transform;                
+
+                npc.SetAttackTarget(targetTransform);
+            }
+        }
+
         _curExp += 1;
         if(_curExp >= _maxExp)
             UpgradeLevel();

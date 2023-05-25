@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Feeling;
 
-public class Put : MonoBehaviour
+public class Put : MonoCache
 {
     [Header("Prefabs")]
     [SerializeField] private GameObject _lampPrefab;
@@ -36,7 +36,7 @@ public class Put : MonoBehaviour
         _audioBuildFinaly.clip = AudioEffects.Instance.AudioBuildFinaly;
     }
 
-    private void Update()
+    public override void OnTick()
     {
         if(_player.SpikeTrapCount > 0 && _scrollViewResourse.Index == 0)
             Build(_shipPutTime, _shipPrefab, 0, AudioEffects.Instance.AudioBuldingShip);
@@ -98,7 +98,10 @@ public class Put : MonoBehaviour
                 _sliderBuild.value = 0;
                 
                 if(index == 0)
+                {
                     _player.SpikeTrapCount -= 1;
+                    PathFinderUpdater.Instance.Scan();
+                }
                 
                 if(index == 1)
                     _player.LightCount -= 1;

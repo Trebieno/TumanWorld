@@ -24,4 +24,8 @@ public class Mining : MonoBehaviour
     public float GetTimeMiningOre() => _timeMiningOre;
     public int GetMiningMultiplier() => _miningMultiplier;
     
+    public void UpdateTime()
+    {
+        _timeMiningOre += (_timeMiningOre/100) * 50;
+    }
 }

@@ -244,7 +244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 425a273c42018e949bcb56d569779c03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
+  curHealth: 0
   maximimTimeDismantling: 1
+  drop: {fileID: 160080721791465505, guid: 476d5c735cf2bc84cb7672bf9b7ada0b, type: 3}
+  percent: 4
 --- !u!58 &5277070721361123292
 CircleCollider2D:
   m_ObjectHideFlags: 0

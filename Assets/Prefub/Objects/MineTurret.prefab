@@ -608,7 +608,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b381a26e6c5ae4ea9973711d52c872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 140
+  curHealth: 140
   maximimTimeDismantling: 1
+  drop: {fileID: 1494385103689733999, guid: 7905c450c67dc4647b98f7f98133a64c, type: 3}
+  percent: 3
   radiusTargets: 0.62
   radiusPlayer: 0.6
   maxPowerTime: 120
@@ -619,8 +623,6 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 512
-  maxHealth: 140
-  curHealth: 140
   textHealth: {fileID: 7045628019988068964}
   rotationSpeed: 0.5
   damage: 1

@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
 using System.Collections;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 using System;
 using Feeling;
+using Cinemachine;
 
-public class Shooting : MonoBehaviour
+public class Shooting : MonoCache
 {
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Bullet _bulletPrefub;
@@ -25,14 +25,25 @@ public class Shooting : MonoBehaviour
     [SerializeField] private AudioSource _audioReload;
     [SerializeField] private AudioSource _audioFire;
 
+    [Header("Camera Shake Settings")]
+    [SerializeField] private CinemachineVirtualCamera _vCamera;
+    [SerializeField] private float _amplitude;
+    [SerializeField] private float _frequency;
+    [SerializeField] private float _timeShake;
+
+    [Header("Camera Shake Timer")]
+    [SerializeField] private float _currentTimer;
+    [SerializeField] private float _maximumTimer;
+
     private bool _isFire;
     private bool _isDelaingShoot;
     private bool _isDelaingReload;
     private Rigidbody2D _rb;
+    private CinemachineBasicMultiChannelPerlin _cameraShake;
 
     public int MaximumAmmo => _maximumAmmo;
     public int CurrentAmmo => _currentAmmo;
-    public int Clips => _clips;
+    public int Clips {get {return _clips;} set{ _clips = value;}}
     public float BulletDamage => _bulletDamage;
     public float DelayShoot => _delayShoot;
 
@@ -47,7 +58,7 @@ public class Shooting : MonoBehaviour
         _audioFire.clip = AudioEffects.Instance.AudioFire;
     }
 
-    private void Update()
+    public override void OnTick()
     {
         if (Input.GetButtonDown("Fire1"))
         {
@@ -63,7 +74,9 @@ public class Shooting : MonoBehaviour
         {
             if (!_isDelaingShoot)
             {
+                StartCoroutine(Shake());
                 Shoot();
+                
             }
         }
         else if (!_isFire && _isDelaingReload)
@@ -115,6 +128,17 @@ public class Shooting : MonoBehaviour
             _isDelaingShoot = true;
             StartCoroutine(Delay(_delayShoot));
         }
+    }
+
+    private IEnumerator Shake ()
+    {
+        var camera = _vCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        camera.m_AmplitudeGain = _amplitude;
+        camera.m_FrequencyGain = _frequency;
+        yield return new WaitForSeconds(_delayShoot);
+
+        camera.m_AmplitudeGain = 0;
+        camera.m_FrequencyGain = 0;
     }
 
     private IEnumerator Delay(float delay)

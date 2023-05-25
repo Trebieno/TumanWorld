@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Feeling;
+using Pathfinding;
 
-public class Character : MonoBehaviour, IAttackeble
+public class Character : MonoCache, IAttackeble
 {
    
     [SerializeField] private float moveSpeed = 5f;
@@ -14,9 +15,9 @@ public class Character : MonoBehaviour, IAttackeble
 
     [SerializeField] protected float damage;
     [SerializeField] protected float maxDistanceToPlayer;
-    [SerializeField] private Transform attackPoint;
-    [SerializeField] private GameObject destructionParticlePrefab;
-    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private GameObject _destructionParticlePrefab;
+    [SerializeField] private AudioClip _deathSound;
 
     [Header("Culldown attack")] [SerializeField]
     private float _maxCulldown;
@@ -26,48 +27,38 @@ public class Character : MonoBehaviour, IAttackeble
     [SerializeField] private int _exp;
     
 
-    [SerializeField] private GameObject[] lootPrefabs;
-    [SerializeField] private float[] lootChances;
+    [SerializeField] private GameObject[] _lootPrefabs;
+    [SerializeField] private float[] _lootChances;
 
-    [SerializeField] private AudioClip[] hurtSounds;
+    [SerializeField] private AudioClip[] _hurtSounds;
     [SerializeField] private float _spawnRadius = 0.5f;
 
-    [SerializeField] private LayerMask targetMask;
-    [SerializeField] private Transform target;
+    [SerializeField] private LayerMask _targetMask;
+    [SerializeField] private Transform _target;
 
-    private float currentHealth;
-    private NavMeshAgent navMeshAgent;
-    private AudioSource audioSource;
+    [SerializeField] private AIDestinationSetter _agent;
+    [SerializeField] private AIPath _aiPath;
+    private float _currentHealth;
+    private AudioSource _audioSource;
 
     private void Start()
     {
         EnemyAll.Instance.Characters.Add(this);
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.updateRotation = false;
-        navMeshAgent.updateUpAxis = false;
-
+        // _agent = GetComponent<AIDestinationSetter>();
+        // _aiPath = GetComponent<AIPath>();
         // target = PlayerCash.Instance.Player.transform;
-        currentHealth = maxHealth;
+        _currentHealth = maxHealth;
 
-        audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
-    private void Update()
+    public override void OnTick()
     {
-        if (target != null)
+        if (_target != null)
         {
-            navMeshAgent.SetDestination(target.position);
+            _agent.target = _target;
 
-            Vector2 direction = target.transform.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-            Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-            Debug.Log(Vector3.Distance(transform.position, target.position));
-            Debug.Log(maxDistanceToPlayer);
-
-            if (Vector3.Distance(transform.position, target.position) <= maxDistanceToPlayer)
+            if (Vector3.Distance(_attackPoint.position, _target.position) <= maxDistanceToPlayer)
             {
                 if (_curCulldown <= 0f)
                 {
@@ -80,6 +71,49 @@ public class Character : MonoBehaviour, IAttackeble
                 }
             }
         }
+
+        else
+        {
+            Objects.Instance.ObjectsGame.RemoveAll(x => x == null);
+        
+            // получаем список всех возможных целей
+            ObjectGame[] possibleTargets = Objects.Instance.ObjectsGame.ToArray();
+
+
+            // ищем цель с наибольшим весом
+            float maxWeight = 0;            
+
+            foreach (ObjectGame possibleTarget in possibleTargets) 
+            {
+                float weight = CalculateWeight(possibleTarget);
+
+                if (weight > maxWeight) 
+                {
+                    maxWeight = weight;
+                    if(Random.Range(1, 100) <= 20)
+                        _target = possibleTarget.transform;
+                }
+            }
+
+            if(_target == null)
+                _target = PlayerCash.Instance.Player.transform;
+        }
+    }
+
+    private float CalculateWeight(ObjectGame possibleTarget) 
+    {
+        float weight = 0;
+
+        // оцениваем параметры цели и присваиваем ей вес
+        float distance = Vector3.Distance(transform.position, possibleTarget.transform.position);
+        weight += (1000 - distance) / 1000;
+        
+        float health = possibleTarget.CurHealth;
+        weight += health / 100;
+
+        // можно добавить другие параметры, например тип или количество защиты
+
+        return weight;
     }
     
     public void InitializeSpecifications(int level)
@@ -87,24 +121,24 @@ public class Character : MonoBehaviour, IAttackeble
         this.level = level;
         _exp = Random.Range(this.level, this.level + 5);
         maxHealth = Random.Range(10, this.level);
-        currentHealth = maxHealth;
+        _currentHealth = maxHealth;
         damage = Random.Range(1, this.level + 5);
-        moveSpeed = Random.Range(0.4f, this.level / 30); // с 80 на 30
-        if(navMeshAgent == null)
-            navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = moveSpeed;
+        moveSpeed = Random.Range(1f, this.level / 30); // с 80 на 30
+        if(_agent == null)
+            _agent = GetComponent<AIDestinationSetter>();
+        _aiPath.maxSpeed = moveSpeed;
     }
 
     public void SetAttackTarget(Transform target)
     {
-        this.target = target;
+        this._target = target;
     }
 
-    private int maxHits = 2;
+    private int maxHits = 5;
     private void Attack()
     {
         Collider2D[] hitColliders = new Collider2D[maxHits];
-        int numColliders = Physics2D.OverlapCircleNonAlloc(transform.position, maxDistanceToPlayer, hitColliders, targetMask);
+        int numColliders = Physics2D.OverlapCircleNonAlloc(transform.position, maxDistanceToPlayer, hitColliders, _targetMask);
 
         for (int i = 0; i < numColliders; i++)
         {
@@ -119,16 +153,21 @@ public class Character : MonoBehaviour, IAttackeble
 
     public void SetDamage(float damage, Turret turret = null)
     {
-        currentHealth -= damage;
+        _currentHealth -= damage;
 
-        if (currentHealth <= 0)
+        if (_currentHealth <= 0)
         {
             Die();
+
+            if(turret == null)
+                PlayerCash.Instance.Player.Leveling.AddExp(_exp);
+            else
+                turret.AddExp(_exp);
         }
         else
         {
-            int randomSoundIndex = Random.Range(0, hurtSounds.Length-1);
-            audioSource.PlayOneShot(hurtSounds[randomSoundIndex]);
+            int randomSoundIndex = Random.Range(0, _hurtSounds.Length-1);
+            _audioSource.PlayOneShot(_hurtSounds[randomSoundIndex]);
         }
     }
 
@@ -136,22 +175,19 @@ public class Character : MonoBehaviour, IAttackeble
     {
     
         // Spawn loot if any available
-        for (int i = 0; i < lootPrefabs.Length; i++)
+        for (int i = 0; i < _lootPrefabs.Length; i++)
         {
             float randomChance = Random.Range(0f, 1f);
-            if (randomChance <= lootChances[i])
+            if (randomChance <= _lootChances[i])
             {
                 Vector2 spawnPosition = (Vector2)transform.position + Random.insideUnitCircle * _spawnRadius;
-                Instantiate(lootPrefabs[i], spawnPosition, Quaternion.identity);
+                Instantiate(_lootPrefabs[i], spawnPosition, Quaternion.identity);
             }
         }
 
-        GameObject destructionEffect = Instantiate(destructionParticlePrefab, transform.position, Quaternion.identity);
+        GameObject destructionEffect = Instantiate(_destructionParticlePrefab, transform.position, Quaternion.identity);
 
-        // Add sound effect for death
-        audioSource.PlayOneShot(deathSound);
-
-
+        _audioSource.PlayOneShot(_deathSound);
         EnemyAll.Instance.Characters.Remove(this);
         Destroy(gameObject);
     }
@@ -159,6 +195,6 @@ public class Character : MonoBehaviour, IAttackeble
     private void OnDrawGizmos() 
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, maxDistanceToPlayer);
+        Gizmos.DrawWireSphere(_attackPoint.position, maxDistanceToPlayer);
     }
 }

@@ -72,9 +72,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b154977cfae7064ba4aac948a27196d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 25
+  curHealth: 25
   maximimTimeDismantling: 1
+  drop: {fileID: 3120559876382388846, guid: de2e5f49c16c5e149bd398cddcabd3a8, type: 3}
+  percent: 2
   _damage: 10000
-  _charge: 25
 --- !u!82 &4580762077132928795
 AudioSource:
   m_ObjectHideFlags: 0

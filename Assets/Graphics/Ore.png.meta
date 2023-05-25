@@ -372,9 +372,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 574
-        y: 52
-        width: 88
-        height: 97
+        y: 43
+        width: 155
+        height: 106
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -389,22 +389,22 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ore_13
+      name: Ore_1
       rect:
         serializedVersion: 2
-        x: 627
-        y: 46
-        width: 94
-        height: 72
+        x: 624
+        y: 88
+        width: 12
+        height: 36
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d6b6681eb5136570800000000000000
-      internalID: 8458628431329277651
+      spriteID: 9598412c1d5d52520800000000000000
+      internalID: 2676780650422634841
       vertices: []
       indices: 
       edges: []

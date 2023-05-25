@@ -85,7 +85,6 @@ public class MenuView : MonoBehaviour
     public void ExitMenu()
     {
         _storeMenu.SetActive(!_storeMenu.activeSelf);
-        Debug.Log((!_storeMenu.activeSelf).ToString());
         if (_storeMenu.activeSelf)
         {
             _player.GetComponent<Movement>().enabled = false;

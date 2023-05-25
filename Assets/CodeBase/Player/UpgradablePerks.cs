@@ -26,6 +26,7 @@ public class UpgradablePerks : MonoBehaviour
     [SerializeField] private float _fireSpeedIncreaseStep = 3;
     [SerializeField] private int _ammoIncreaseStep = 2;
 
+
     public event Action<int> ScoreChanged;
 
     public int Score

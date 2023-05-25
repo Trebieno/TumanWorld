@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using Feeling;
 
-public class Ore : MonoBehaviour
+public class Ore : MonoCache
 {
     [SerializeField] private int _maxOre;
     [SerializeField] private int _curOre;
@@ -76,7 +76,7 @@ public class Ore : MonoBehaviour
          }
     }
 
-    private void Update() 
+    public override void OnTick()
     {
         if(Input.GetKeyDown(KeyCode.Q) && _isTrigger)
         {
@@ -107,7 +107,7 @@ public class Ore : MonoBehaviour
             if(!_audioMining.isPlaying)
                 _audioMining.Play();
             _sliderMining.maxValue = _curTimeMining;
-            _sliderMining.value += Time.deltaTime;
+            _sliderMining.value += _player.Mining.GetTimeMiningOre()/60; 
             if(_sliderMining.value >= _sliderMining.maxValue )
                 MiningOre();
         }
@@ -117,6 +117,7 @@ public class Ore : MonoBehaviour
             SpawnOreSystem.Instance.Spawn(transform.position);
             OreAll.Instance.Ores.Remove(this);
             OreAll.Instance.Ores.RemoveAll(x=>x==null);
+            PathFinderUpdater.Instance.Scan();
             Destroy(gameObject);
             // _curResetTime -= Time.deltaTime;
             // if(_curResetTime <= 0)
@@ -152,8 +153,11 @@ public class Ore : MonoBehaviour
       //  if(!_audioMining.isPlaying)
       //     _audioMining.Play();
         _sliderMining.maxValue = _curTimeMining;
-        _sliderMining.value += Time.deltaTime / 3;
-        if(_curOre > 0 && _sliderMining.value >= _sliderMining.maxValue)
+        _sliderMining.value += Time.deltaTime / 8;
+        
+        
+
+        if(_sliderMining.value >= _sliderMining.maxValue)
         {
             MiningOre();
             turret.AddExp(1);
